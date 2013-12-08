@@ -54,7 +54,7 @@ public abstract class StumblrData {
      * @return this.shortDesc
      */
     public String getShortDesc() {
-        return this.getShortDesc();
+        return this.shortDesc;
     }
 
     /**
