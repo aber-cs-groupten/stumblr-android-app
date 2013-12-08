@@ -13,7 +13,7 @@ public abstract class CreateWaypoint extends ActionBarActivity {
      */
     public void stumblrOnCreate(Bundle savedInstanceState) {
         // Called by super().onCreate
-        setContentView(R.layout.activity_abstract);
+        setContentView(R.layout.activity_create_waypoint);
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
