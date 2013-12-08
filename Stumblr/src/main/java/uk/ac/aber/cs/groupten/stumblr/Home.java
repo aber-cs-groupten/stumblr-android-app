@@ -2,7 +2,7 @@ package uk.ac.aber.cs.groupten.stumblr;
 
 import android.os.Bundle;
 
-import uk.ac.aber.cs.group10.stumblr.data.Route;
+import uk.ac.aber.cs.groupten.stumblr.data.Route;
 
 public abstract class Home extends AbstractActivity {
     /**

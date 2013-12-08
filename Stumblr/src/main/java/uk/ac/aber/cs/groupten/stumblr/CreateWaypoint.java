@@ -3,8 +3,8 @@ package uk.ac.aber.cs.groupten.stumblr;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 
-import uk.ac.aber.cs.group10.stumblr.data.Route;
-import uk.ac.aber.cs.group10.stumblr.data.Waypoint;
+import uk.ac.aber.cs.groupten.stumblr.data.Route;
+import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
 
 public abstract class CreateWaypoint extends ActionBarActivity {
     /**

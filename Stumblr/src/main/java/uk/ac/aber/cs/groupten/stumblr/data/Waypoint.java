@@ -1,23 +1,10 @@
-package uk.ac.aber.cs.group10.stumblr.data;
+package uk.ac.aber.cs.groupten.stumblr.data;
 
 import android.graphics.Bitmap;
 import android.location.Location;
 
 import java.util.Date;
 import java.util.LinkedList;
-
-/*
-     FAIL WHALE
-
-              '.
-  .-""-._     \ \.--|
- /       "-..__) .-'
-|     _         /
-\'-.__,   .__.,'
- `'----'._\--'
-
- Source: (http://strawp.net/files/fail_whale.txt)
- */
 
 /**
  * Created by charles on 29/11/13.

@@ -1,4 +1,4 @@
-package uk.ac.aber.cs.group10.stumblr.data;
+package uk.ac.aber.cs.groupten.stumblr.data;
 
 import java.net.URL;
 import java.util.LinkedList;

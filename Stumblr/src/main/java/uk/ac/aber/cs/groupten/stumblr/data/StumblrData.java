@@ -1,4 +1,4 @@
-package uk.ac.aber.cs.group10.stumblr.data;
+package uk.ac.aber.cs.groupten.stumblr.data;
 
 /**
  * Abstract class containing basic common structure for all Stumblr data formats.
