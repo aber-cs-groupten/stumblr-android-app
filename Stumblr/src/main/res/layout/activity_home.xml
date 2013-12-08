@@ -1,0 +1,24 @@
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create Route"
+        android:id="@+id/create_route_button"
+        android:layout_marginTop="64dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Routes"
+        android:id="@+id/view_routes_button"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/create_route_button"
+        android:layout_alignEnd="@+id/create_route_button" />
+
+</RelativeLayout>
