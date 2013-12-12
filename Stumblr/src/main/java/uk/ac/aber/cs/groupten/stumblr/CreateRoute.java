@@ -4,7 +4,11 @@ import android.os.Bundle;
 
 import uk.ac.aber.cs.groupten.stumblr.data.Route;
 
-public abstract class CreateRoute extends DataEntryActivity {
+public class CreateRoute extends DataEntryActivity {
+    public CreateRoute() {
+        super();
+    }
+
     /**
      * Loads the activity on creation (using a bundle if one is present)
      * @param savedInstanceState The bundle containing the saved instance state.
@@ -25,10 +29,10 @@ public abstract class CreateRoute extends DataEntryActivity {
     /**
      * Create a new Route object (using the information entered by the user)
      */
-    public abstract void createNewRoute();
+    public void createNewRoute() {};
 
     /**
      * Start the WaypointList activity (list the current Route).
      */
-    public abstract void startWaypointListIntent(Route r);
+    public void startWaypointListIntent(Route r) {};
 }
