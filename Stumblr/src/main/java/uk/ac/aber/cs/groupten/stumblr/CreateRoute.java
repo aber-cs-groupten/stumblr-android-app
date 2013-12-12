@@ -12,7 +12,7 @@ public abstract class CreateRoute extends DataEntryActivity {
     @Override
     public void stumblrOnCreate(Bundle savedInstanceState) {
         // Called by super().onCreate
-        setContentView(R.layout.activity_abstract);
+        setContentView(R.layout.activity_create_route);
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
