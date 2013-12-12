@@ -2,7 +2,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@android:color/holo_green_light">
+    android:background="#8ecc82">
 
     <EditText
         android:layout_width="fill_parent"
@@ -20,7 +20,12 @@
         android:enabled="true"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:height="@dimen/abc_action_bar_title_text_size" />
+        android:height="@dimen/abc_action_bar_title_text_size"
+        android:minHeight="@dimen/abc_action_bar_title_text_size"
+        android:minLines="1"
+        android:visibility="visible"
+        android:textSize="@dimen/abc_action_bar_title_text_size"
+        android:textIsSelectable="true" />
 
     <TextView
         android:layout_width="wrap_content"

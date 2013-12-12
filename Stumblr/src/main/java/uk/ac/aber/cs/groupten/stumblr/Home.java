@@ -2,7 +2,6 @@ package uk.ac.aber.cs.groupten.stumblr;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 
 import uk.ac.aber.cs.groupten.stumblr.data.Route;
@@ -26,8 +25,7 @@ public class Home extends AbstractActivity {
     /**
      * Begin the Route entry activity
      */
-    public void startCreateRouteIntent(Route r) {
-        Intent createRouteIntent = new Intent(this, CreateRoute.class);
-
+    public void startCreateRouteIntent(View v) {
+        startActivity(new Intent(this, CreateRoute.class));
     }
 }
