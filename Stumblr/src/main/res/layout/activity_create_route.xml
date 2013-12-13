@@ -80,7 +80,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="63dp"
-        android:onClick="finish()"
+        android:onClick="end"
         android:singleLine="false" />
 
 </RelativeLayout>
