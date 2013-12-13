@@ -14,9 +14,7 @@ public abstract class WaypointList extends AbstractActivity {
         setContentView(R.layout.activity_abstract);
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new AbstractActivity.PlaceholderFragment())
-                    .commit();
+            // do stuff
         }
     }
 

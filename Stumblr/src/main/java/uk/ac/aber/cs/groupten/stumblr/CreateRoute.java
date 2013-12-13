@@ -17,19 +17,7 @@ public class CreateRoute extends DataEntryActivity {
     public void stumblrOnCreate(Bundle savedInstanceState) {
         // Called by super().onCreate
         setContentView(R.layout.activity_create_route);
-
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new AbstractActivity.PlaceholderFragment())
-                    .commit();
-        }
     }
-
-
-    /**
-     * Create a new Route object (using the information entered by the user)
-     */
-    public void createNewRoute() {};
 
     /**
      * Start the WaypointList activity (list the current Route).

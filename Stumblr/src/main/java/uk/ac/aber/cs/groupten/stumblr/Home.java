@@ -16,9 +16,7 @@ public class Home extends AbstractActivity {
         setContentView(R.layout.activity_home);
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
+            // do stuff
         }
     }
 
@@ -26,6 +24,6 @@ public class Home extends AbstractActivity {
      * Begin the Route entry activity
      */
     public void startCreateRouteIntent(View v) {
-        startActivity(new Intent(this, CreateRoute.class));
+        startActivity(new Intent(getApplicationContext(), CreateRoute.class));
     }
 }

@@ -14,9 +14,7 @@ public abstract class FinishRoute extends AbstractActivity {
         setContentView(R.layout.activity_abstract);
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
+            // Do stuff
         }
     }
 

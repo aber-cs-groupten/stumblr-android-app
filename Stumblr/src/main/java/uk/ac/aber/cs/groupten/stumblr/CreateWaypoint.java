@@ -32,8 +32,6 @@ public class CreateWaypoint extends ActionBarActivity {
 
     }
 
-
-
     /**
      * Loads the activity on creation (using a bundle if one is present)
      * @param savedInstanceState The bundle containing the saved instance state.
@@ -45,9 +43,7 @@ public class CreateWaypoint extends ActionBarActivity {
         setContentView(R.layout.activity_abstract);
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new AbstractActivity.PlaceholderFragment())
-                    .commit();
+            // Do stuff
         }
     }
 
