@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public abstract class AbstractActivity extends ActionBarActivity {
+    public String APP_TAG = "stumblr";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
