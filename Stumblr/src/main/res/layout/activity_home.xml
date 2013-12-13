@@ -4,7 +4,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     tools:context="uk.ac.aber.cs.groupten.stumblr.Home"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#009999">
 
     <Button
         android:layout_width="wrap_content"

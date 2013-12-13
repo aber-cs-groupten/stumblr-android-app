@@ -3,6 +3,7 @@
 
     <string name="app_name">Stumblr</string>
     <string name="route_title">Route Title</string>
+    <string name="route_desc">Route Description</string>
     <string name="action_settings">Settings</string>
 
 </resources>

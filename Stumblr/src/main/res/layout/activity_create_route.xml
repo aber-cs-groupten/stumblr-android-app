@@ -2,39 +2,85 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="#8ecc82">
+    android:background="#009999">
 
     <EditText
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="false"
-        android:layout_alignWithParentIfMissing="false"
-        android:layout_centerHorizontal="true"
-        android:autoText="false"
-        android:background="@android:color/background_light"
+        android:id="@id/title"
+        android:inputType="text"
+        android:singleLine="true"
+        android:maxLength="100"
+        android:textStyle="normal"
+        android:visibility="visible"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false"
+        android:background="#1D7373"
+        android:minWidth="320dip"
+        android:layout_marginTop="29dp"
+        android:minHeight="30dip"
         android:clickable="true"
         android:editable="true"
-        android:enabled="true"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:height="@dimen/abc_action_bar_title_text_size"
-        android:minHeight="@dimen/abc_action_bar_title_text_size"
-        android:minLines="1"
-        android:visibility="visible"
-        android:textSize="@dimen/abc_action_bar_title_text_size"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:textIsSelectable="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/route_title"
         android:id="@+id/textView"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true" />
+        android:layout_alignWithParentIfMissing="false"
+        android:layout_alignLeft="@id/title"
+        android:layout_below="@id/title" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/routeDescription"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentEnd="false"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="false"
+        android:background="#1D7373"
+        android:maxLength="400"
+        android:maxLines="20"
+        android:minHeight="120dip"
+        android:selectAllOnFocus="false"
+        android:phoneNumber="false"
+        android:textAlignment="textStart"
+        android:minWidth="320dip"
+        android:textIsSelectable="true"
+        android:textStyle="normal"
+        android:visibility="visible"
+        android:longClickable="false"
+        android:enabled="false"
+        android:focusable="true"
+        android:editable="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/route_desc"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/routeDescription"
+        android:layout_alignLeft="@+id/routeDescription" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go back!"
+        android:id="@+id/button"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="63dp"
+        android:onClick="finish()"
+        android:singleLine="false" />
+
 </RelativeLayout>
