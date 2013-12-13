@@ -36,8 +36,6 @@ public class CreateWaypoint extends ActionBarActivity {
      * Loads the activity on creation (using a bundle if one is present)
      * @param savedInstanceState The bundle containing the saved instance state.
      */
-
-
     public void stumblrOnCreate(Bundle savedInstanceState) {
         // Called by super().onCreate
         setContentView(R.layout.activity_abstract);

@@ -20,10 +20,11 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="View Routes"
+        android:text="Start Camera (Test)"
         android:id="@+id/view_routes_button"
         android:layout_centerVertical="true"
         android:layout_alignRight="@+id/create_route_button"
-        android:layout_alignEnd="@+id/create_route_button" />
+        android:layout_alignEnd="@+id/create_route_button"
+        android:onClick="startCamera" />
 
 </RelativeLayout>
