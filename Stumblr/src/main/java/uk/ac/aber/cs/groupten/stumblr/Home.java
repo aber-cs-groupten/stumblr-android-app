@@ -37,7 +37,7 @@ public class Home extends AbstractActivity {
     }
 
 
-
+// SENDING-POST //
     private class NetworkTask extends AsyncTask<String, Void, HttpResponse> {
         @Override
         protected HttpResponse doInBackground(String... params) {
@@ -89,8 +89,7 @@ public class Home extends AbstractActivity {
         }
         return data;
     }
-
-
+// END SENDING-POST //
 
     /**
      * Begin the Route entry activity
@@ -99,6 +98,8 @@ public class Home extends AbstractActivity {
         startActivity(new Intent(getApplicationContext(), CreateRoute.class));
     }
 
+
+// TAKING-PHOTO //
     /**
      * Start Camera activity
      */
@@ -119,4 +120,5 @@ public class Home extends AbstractActivity {
             }
         }
     }
+// END TAKING-PHOTO //
 }
