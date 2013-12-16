@@ -10,8 +10,11 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -66,6 +69,19 @@ public class Home extends AbstractActivity {
             }
         }
 
+        public class PlaceholderFragment extends Fragment {
+
+            public PlaceholderFragment() {
+            }
+
+            @Override
+            public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                     Bundle savedInstanceState) {
+                View rootView = inflater.inflate(R.layout.fragment_abstract, container, false);
+                return rootView;
+            }
+        }
+
         @Override
         public void onStatusChanged(String s, int i, Bundle bundle) {
             //implemented LocationListener Methods
@@ -80,6 +96,7 @@ public class Home extends AbstractActivity {
         public void onProviderDisabled(String s) {
             //implemented LocationListener Methods
         }
+    }
 
 
         // SENDING-POST //
@@ -167,4 +184,4 @@ public class Home extends AbstractActivity {
     }
 // END TAKING-PHOTO //
 }
-}
+
