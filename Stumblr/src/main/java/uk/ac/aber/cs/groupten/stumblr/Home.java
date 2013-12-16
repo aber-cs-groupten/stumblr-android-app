@@ -99,7 +99,7 @@ public class Home extends AbstractActivity {
     }
 
 
-        // SENDING-POST //
+    // SENDING-POST //
     private class NetworkTask extends AsyncTask<String, Void, HttpResponse> {
         @Override
         protected HttpResponse doInBackground(String... params) {
