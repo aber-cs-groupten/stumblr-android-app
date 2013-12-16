@@ -1,6 +1,7 @@
 package uk.ac.aber.cs.groupten.stumblr;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -13,13 +14,14 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import java.util.List;
 
 import uk.ac.aber.cs.groupten.stumblr.data.Route;
 import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
 
-public class CreateWaypoint extends ActionBarActivity {
+public class CreateWaypoint extends Activity {
 
     protected Context context;
     protected Criteria criteria;
@@ -27,6 +29,8 @@ public class CreateWaypoint extends ActionBarActivity {
     protected LocationListener locationListener;
     protected LocationManager locationManager;
     protected static String SINGLE_LOCATION_UPDATE_ACTION;
+    TextView textLat;
+    TextView textLong;
 
     public CreateWaypoint() {
 
@@ -38,12 +42,40 @@ public class CreateWaypoint extends ActionBarActivity {
      */
     public void stumblrOnCreate(Bundle savedInstanceState) {
         // Called by super().onCreate
-        setContentView(R.layout.activity_abstract);
+       // setContentView(R.layout.activity_abstract);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home);
+
+        textLat = (TextView)findViewById(R.id.textLat);
+        textLong = (TextView)findViewById(R.id.textLong);
+
+        LocationManager locMan = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        LocationListener locLis = new myLocationListener();
+
+
+        locMan.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locLis);
+
 
         if (savedInstanceState == null) {
             // Do stuff
         }
     }
+
+
+    class myLocationListener implements LocationListener{
+
+
+        @Override
+        public void onLocationChanged(Location location) {
+            if(location != null)
+            {
+                double lng = location.getLongitude();
+                double lat = location.getLatitude();
+
+                textLat.setText(Double.toString(lat));
+                textLong.setText(Double.toString(lng));
+            }
+        }
 
     /**
      * Create a new Waypoint based on user input.
@@ -51,7 +83,7 @@ public class CreateWaypoint extends ActionBarActivity {
     public  void createWaypoint(String title, String shortDesc, int index, Context context){
         Waypoint wp = new Waypoint(title, shortDesc, index);
 
-            this.context = context;
+        //    this.context = context;
             locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
             // Coarse accuracy is specified here to get the fastest possible result.
             // The calling Activity will likely (or have already) request ongoing
@@ -156,10 +188,7 @@ public class CreateWaypoint extends ActionBarActivity {
 
     // Define a listener that responds to location updates
     //LocationListener locationListener = new LocationListener() {
-        public void onLocationChanged(Location location) {
-            // Called when a new location is found by the network location provider.
-       //     makeUseOfNewLocation(location);
-        }
+
 
         public void onStatusChanged(String provider, int status, Bundle extras) {
 
@@ -172,7 +201,8 @@ public class CreateWaypoint extends ActionBarActivity {
         public void onProviderDisabled(String provider) {
 
         }
-    };
+    }
+}
 
 
 
