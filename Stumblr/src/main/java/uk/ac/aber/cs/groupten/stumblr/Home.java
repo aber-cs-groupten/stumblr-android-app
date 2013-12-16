@@ -1,7 +1,11 @@
 package uk.ac.aber.cs.groupten.stumblr;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,6 +13,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
@@ -27,17 +32,57 @@ public class Home extends AbstractActivity {
      * Loads the activity on creation (using a bundle if one is present)
      * @param savedInstanceState The bundle containing the saved instance state.
      */
+
+    TextView textLat;
+    TextView textLong;
+
     public void stumblrOnCreate(Bundle savedInstanceState) {
         // Called by super().onCreate
         setContentView(R.layout.activity_home);
+
+        textLat = (TextView)findViewById(R.id.textLat);
+        textLong = (TextView)findViewById(R.id.textLong);
+
+        LocationManager locMan = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        LocationListener locLis = new myLocationListener();
+        locMan.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locLis);
 
         if (savedInstanceState == null) {
             // do stuff
         }
     }
 
+    class myLocationListener implements LocationListener{
 
-// SENDING-POST //
+        @Override
+        public void onLocationChanged(Location location) {
+            if(location != null)
+            {
+                double lng = location.getLongitude();
+                double lat = location.getLatitude();
+
+                textLat.setText(Double.toString(lat));
+                textLong.setText(Double.toString(lng));
+            }
+        }
+
+        @Override
+        public void onStatusChanged(String s, int i, Bundle bundle) {
+            //implemented LocationListener Methods
+        }
+
+        @Override
+        public void onProviderEnabled(String s) {
+            //implemented LocationListener Methods
+        }
+
+        @Override
+        public void onProviderDisabled(String s) {
+            //implemented LocationListener Methods
+        }
+
+
+        // SENDING-POST //
     private class NetworkTask extends AsyncTask<String, Void, HttpResponse> {
         @Override
         protected HttpResponse doInBackground(String... params) {
@@ -121,4 +166,5 @@ public class Home extends AbstractActivity {
         }
     }
 // END TAKING-PHOTO //
+}
 }

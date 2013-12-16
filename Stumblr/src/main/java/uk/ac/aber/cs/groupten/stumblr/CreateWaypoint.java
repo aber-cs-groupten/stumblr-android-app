@@ -21,7 +21,7 @@ import java.util.List;
 import uk.ac.aber.cs.groupten.stumblr.data.Route;
 import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
 
-public class CreateWaypoint extends Activity {
+public class CreateWaypoint extends AbstractActivity {
 
     protected Context context;
     protected Criteria criteria;
@@ -29,8 +29,7 @@ public class CreateWaypoint extends Activity {
     protected LocationListener locationListener;
     protected LocationManager locationManager;
     protected static String SINGLE_LOCATION_UPDATE_ACTION;
-    TextView textLat;
-    TextView textLong;
+
 
     public CreateWaypoint() {
 
@@ -44,16 +43,6 @@ public class CreateWaypoint extends Activity {
         // Called by super().onCreate
        // setContentView(R.layout.activity_abstract);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-
-        textLat = (TextView)findViewById(R.id.textLat);
-        textLong = (TextView)findViewById(R.id.textLong);
-
-        LocationManager locMan = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        LocationListener locLis = new myLocationListener();
-
-
-        locMan.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locLis);
 
 
         if (savedInstanceState == null) {
@@ -62,20 +51,7 @@ public class CreateWaypoint extends Activity {
     }
 
 
-    class myLocationListener implements LocationListener{
 
-
-        @Override
-        public void onLocationChanged(Location location) {
-            if(location != null)
-            {
-                double lng = location.getLongitude();
-                double lat = location.getLatitude();
-
-                textLat.setText(Double.toString(lat));
-                textLong.setText(Double.toString(lng));
-            }
-        }
 
     /**
      * Create a new Waypoint based on user input.
@@ -202,7 +178,7 @@ public class CreateWaypoint extends Activity {
 
         }
     }
-}
+
 
 
 
