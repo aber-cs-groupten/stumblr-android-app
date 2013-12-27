@@ -23,6 +23,14 @@ public class Home extends AbstractActivity {
      * Begin the Route entry activity
      */
     public void startCreateRouteIntent(View v) {
+        startActivity(new Intent(getApplicationContext(), CreateRoute.class));
+    }
+
+    /**
+     * *** REMOVE ***
+     */
+    // TODO Method is for debugging. remove.
+    public void startCreateWaypointIntent(View v) {
         startActivity(new Intent(getApplicationContext(), CreateWaypoint.class));
     }
 }

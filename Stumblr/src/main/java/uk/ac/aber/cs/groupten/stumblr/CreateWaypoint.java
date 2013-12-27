@@ -24,16 +24,6 @@ import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
 import uk.ac.aber.cs.groupten.stumblr.system.AndroidLocation;
 
 public class CreateWaypoint extends AbstractActivity {
-
-    protected Context context;
-    protected Criteria criteria;
-    protected PendingIntent singleUpdatePI;
-    protected LocationListener locationListener;
-    protected LocationManager locationManager;
-    protected static String SINGLE_LOCATION_UPDATE_ACTION;
-
-    public static final int CAMERA_REQ_CODE = 1337;
-
     /**
      * Loads the activity on creation (using a bundle if one is present)
      * @param savedInstanceState The bundle containing the saved instance state.
@@ -46,15 +36,15 @@ public class CreateWaypoint extends AbstractActivity {
             // Do stuff
         }
 
-        getImage();
         getLocation();
     }
 
     /**
      * Obtain a photo from user and add it to current Waypoint.
      */
-    public void getImage(){
-        startCamera();
+    public void getImage(View v){
+        startCamera(v);
+        // TODO
     }
 
     /**
@@ -80,7 +70,7 @@ public class CreateWaypoint extends AbstractActivity {
     /*
      * Camera stuff
      */
-    public void startCamera() {
+    public void startCamera(View v) {
         startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE), CAMERA_REQ_CODE);
     }
 
