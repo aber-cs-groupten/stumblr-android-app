@@ -7,6 +7,6 @@
     <string name="route_title">Route Title</string>
     <string name="route_desc">Route Description</string>
 
-    <string name="location_image">Location Image</string><string name="next">Next</string>
+    <string name="location_image">Location Image</string><string name="next">Next</string><string name="create_waypoint">Create Waypoint</string>
 
 </resources>
