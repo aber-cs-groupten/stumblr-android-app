@@ -1,32 +1,9 @@
-<RelativeLayout
+<LinearLayout
+    android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="#FFFFFF">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@id/routeTitleBox"
-        android:inputType="text"
-        android:singleLine="true"
-        android:maxLength="100"
-        android:textStyle="normal"
-        android:visibility="visible"
-        android:layout_alignParentEnd="false"
-        android:layout_alignParentStart="false"
-        android:minWidth="320dip"
-        android:layout_marginTop="29dp"
-        android:minHeight="30dip"
-        android:clickable="true"
-        android:editable="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:textIsSelectable="true"
-        android:enabled="true"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:autoText="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -34,22 +11,16 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/route_title"
         android:id="@+id/routeTitle"
-        android:layout_alignWithParentIfMissing="false"
-        android:layout_alignLeft="@id/routeTitleBox"
-        android:layout_below="@id/routeTitleBox" />
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:inputType="textMultiLine"
         android:ems="10"
         android:id="@+id/routeDescriptionBox"
-        android:layout_below="@+id/routeTitle"
-        android:layout_marginTop="57dp"
-        android:layout_alignLeft="@+id/routeTitle"
-        android:layout_alignStart="@+id/routeTitle"
-        android:layout_alignRight="@id/routeTitleBox"
-        android:layout_alignEnd="@id/routeTitleBox" />
+        android:layout_gravity="center_horizontal" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -57,22 +28,27 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/route_desc"
         android:id="@+id/routeDescription"
-        android:layout_below="@+id/routeDescriptionBox"
-        android:layout_alignLeft="@+id/routeDescriptionBox"
-        android:layout_alignStart="@+id/routeDescriptionBox" />
+        android:layout_marginTop="80dip"
+        android:layout_marginLeft="10dip" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/routeDescriptionBox"
+        android:minWidth="320dip"
+        android:layout_marginLeft="10dip"
+        android:layout_gravity="center_horizontal" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/next"
         android:id="@+id/nextButton"
-        android:layout_marginTop="85dp"
-        android:layout_below="@+id/routeDescription"
-        android:layout_alignLeft="@+id/routeDescription"
-        android:layout_alignStart="@+id/routeDescription"
         android:enabled="true"
         android:clickable="true"
         android:focusableInTouchMode="false"
-        android:focusable="false" />
+        android:focusable="false"
+        android:layout_marginTop="30dip"
+        android:layout_gravity="center_horizontal" />
 
-</RelativeLayout>
+</LinearLayout>
