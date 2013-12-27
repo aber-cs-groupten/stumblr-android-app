@@ -10,11 +10,21 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create Route"
+        android:text="@string/create_route"
         android:id="@+id/create_route_button"
         android:layout_marginTop="68dp"
         android:onClick="startCreateRouteIntent"
         android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create Waypoint"
+        android:id="@+id/create_waypoint_button"
+        android:layout_marginTop="73dp"
+        android:onClick="startCreateWaypointIntent"
+        android:layout_below="@+id/create_route_button"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
