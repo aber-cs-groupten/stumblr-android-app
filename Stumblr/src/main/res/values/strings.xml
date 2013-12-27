@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <!-- Menus -->
     <string name="app_name">Stumblr</string>
     <string name="action_settings">Settings</string>
 
+    <!-- Home -->
+    <string name="create_waypoint">Create Waypoint</string>
+    <string name="create_route">Create Route</string>
+
+    <!-- CreateRoute -->
     <string name="route_title">Route Title</string>
     <string name="route_desc">Route Description</string>
+    <string name="next">Next</string>
 
-    <string name="location_image">Location Image</string><string name="next">Next</string><string name="create_waypoint">Create Waypoint</string>
-
+    <!-- CreateWaypoint -->
+    <string name="location_image">Location Image</string>
+    <string name="take_photo">Take Photo</string>
 </resources>
