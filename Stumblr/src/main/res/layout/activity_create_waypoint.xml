@@ -1,0 +1,28 @@
+<RelativeLayout
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context="uk.ac.aber.cs.groupten.stumblr.Home"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#ffffff">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/create_waypoint"
+        android:id="@+id/create_waypoint_button"
+        android:onClick="startCreateRouteIntent"
+        android:layout_marginBottom="39dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:layout_above="@+id/create_waypoint_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="78dp" />
+
+</RelativeLayout>
