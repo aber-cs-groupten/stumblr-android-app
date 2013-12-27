@@ -10,7 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public abstract class AbstractActivity extends ActionBarActivity {
-    public String APP_TAG = "stumblr";
+    public static final String TAG = "STUMBLR";
+    public static final int CAMERA_REQ_CODE = 1337;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
