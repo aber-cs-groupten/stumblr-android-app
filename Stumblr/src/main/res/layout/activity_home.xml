@@ -5,26 +5,16 @@
     android:layout_height="fill_parent"
     tools:context="uk.ac.aber.cs.groupten.stumblr.Home"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="#009999">
+    android:background="#ffffff">
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Create Route"
         android:id="@+id/create_route_button"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="68dp"
+        android:onClick="startCreateRouteIntent"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="startCreateRouteIntent"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start Camera (Test)"
-        android:id="@+id/view_routes_button"
-        android:layout_centerVertical="true"
-        android:layout_alignRight="@+id/create_route_button"
-        android:layout_alignEnd="@+id/create_route_button"
-        android:onClick="startCamera" />
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

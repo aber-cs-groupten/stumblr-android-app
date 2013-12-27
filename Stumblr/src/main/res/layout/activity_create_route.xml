@@ -2,12 +2,12 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="#009999">
+    android:background="#FFFFFF">
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@id/title"
+        android:id="@id/routeTitleBox"
         android:inputType="text"
         android:singleLine="true"
         android:maxLength="100"
@@ -15,7 +15,6 @@
         android:visibility="visible"
         android:layout_alignParentEnd="false"
         android:layout_alignParentStart="false"
-        android:background="#1D7373"
         android:minWidth="320dip"
         android:layout_marginTop="29dp"
         android:minHeight="30dip"
@@ -23,64 +22,57 @@
         android:editable="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textIsSelectable="true" />
+        android:textIsSelectable="true"
+        android:enabled="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:autoText="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/route_title"
-        android:id="@+id/textView"
+        android:id="@+id/routeTitle"
         android:layout_alignWithParentIfMissing="false"
-        android:layout_alignLeft="@id/title"
-        android:layout_below="@id/title" />
+        android:layout_alignLeft="@id/routeTitleBox"
+        android:layout_below="@id/routeTitleBox" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textMultiLine"
         android:ems="10"
-        android:id="@+id/routeDescription"
-        android:layout_marginTop="20dp"
-        android:layout_alignParentStart="false"
-        android:layout_alignParentEnd="false"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="false"
-        android:background="#1D7373"
-        android:maxLength="400"
-        android:maxLines="20"
-        android:minHeight="120dip"
-        android:selectAllOnFocus="false"
-        android:phoneNumber="false"
-        android:textAlignment="textStart"
-        android:minWidth="320dip"
-        android:textIsSelectable="true"
-        android:textStyle="normal"
-        android:visibility="visible"
-        android:longClickable="false"
-        android:enabled="false"
-        android:focusable="true"
-        android:editable="true" />
+        android:id="@+id/routeDescriptionBox"
+        android:layout_below="@+id/routeTitle"
+        android:layout_marginTop="57dp"
+        android:layout_alignLeft="@+id/routeTitle"
+        android:layout_alignStart="@+id/routeTitle"
+        android:layout_alignRight="@id/routeTitleBox"
+        android:layout_alignEnd="@id/routeTitleBox" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/route_desc"
-        android:id="@+id/textView2"
-        android:layout_below="@+id/routeDescription"
-        android:layout_alignLeft="@+id/routeDescription" />
+        android:id="@+id/routeDescription"
+        android:layout_below="@+id/routeDescriptionBox"
+        android:layout_alignLeft="@+id/routeDescriptionBox"
+        android:layout_alignStart="@+id/routeDescriptionBox" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Go back!"
-        android:id="@+id/button"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="63dp"
-        android:onClick="end"
-        android:singleLine="false" />
+        android:text="@string/next"
+        android:id="@+id/nextButton"
+        android:layout_marginTop="85dp"
+        android:layout_below="@+id/routeDescription"
+        android:layout_alignLeft="@+id/routeDescription"
+        android:layout_alignStart="@+id/routeDescription"
+        android:enabled="true"
+        android:clickable="true"
+        android:focusableInTouchMode="false"
+        android:focusable="false" />
 
 </RelativeLayout>
