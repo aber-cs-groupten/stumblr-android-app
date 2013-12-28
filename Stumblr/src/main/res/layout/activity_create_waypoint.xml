@@ -8,8 +8,45 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/take_photo"
-        android:id="@+id/button"
+        android:id="@+id/takePhoto"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="120dip"
+        android:layout_marginTop="40dip"
         android:onClick="getImage" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:minHeight="50dp"
+        android:minWidth="50dp"
+        android:maxHeight="320dp"
+        android:maxWidth="320dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="GPS Update Count"
+        android:id="@+id/gpsUpdates"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Lat"
+        android:id="@+id/latitude"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Lon"
+        android:id="@+id/longitude"
+        android:layout_gravity="center_horizontal" />
 </LinearLayout>

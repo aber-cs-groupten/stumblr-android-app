@@ -15,5 +15,5 @@
 
     <!-- CreateWaypoint -->
     <string name="location_image">Location Image</string>
-    <string name="take_photo">Take Photo</string>
+    <string name="take_photo">Take Photo</string><string name="updateLocation">Update Location</string>
 </resources>
