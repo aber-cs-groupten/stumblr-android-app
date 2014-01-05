@@ -1,6 +1,5 @@
 package uk.ac.aber.cs.groupten.stumblr;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -47,7 +46,6 @@ public class CreateWaypoint extends AbstractActivity implements LocationListener
      *                      Location interaction                      *
      * ****************************************************************
      */
-
     /**
      * Obtain coordinates from Android system and add to current Waypoint.
      */
@@ -82,7 +80,6 @@ public class CreateWaypoint extends AbstractActivity implements LocationListener
      *                        Camera interaction                      *
      * ****************************************************************
      */
-
     /**
      * Obtain a photo from user and add it to current Waypoint.
      */
@@ -117,10 +114,9 @@ public class CreateWaypoint extends AbstractActivity implements LocationListener
 
     /*
      * ****************************************************************
-     *                        Other information                       *
+     *                               Other                            *
      * ****************************************************************
      */
-
     /**
      * Set a timestamp on the current Waypoint.
      */
