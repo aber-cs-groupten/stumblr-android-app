@@ -137,13 +137,13 @@ public class CreateWaypoint extends AbstractActivity implements LocationListener
         return imageEncoded;
     }
 
-    //DECODE
-    // @TargetApi(8) // Target API level is 8
+    /* Commented out due to not being sure if it is necessary
     public Bitmap decodeBase64(String input)
     {
         byte[] decodedByte = Base64.decode(input, 0);
         return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
     }
+    */
 
 
     /*
