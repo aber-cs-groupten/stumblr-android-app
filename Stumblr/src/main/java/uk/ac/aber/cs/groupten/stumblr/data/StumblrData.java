@@ -50,11 +50,22 @@ public abstract class StumblrData {
     }
 
     /**
-     * Returns the short description
-     * @return this.shortDesc
+     * Returns the short description.
+     * @return shortDesc
      */
     public String getShortDesc() {
         return this.shortDesc;
+    }
+
+    /**
+     * Sanitises given text by removing prohibited characters.
+     * @param input The text to sanitise.
+     * @return The sanitised string.
+     */
+    public String sanitiseStringInput(String input) {
+        // Replaces ALL characters not defined in the regular expression below
+        String sanitised = input.replaceAll("[^a-zA-Z0-9,.!?:;-]*", "");
+        return sanitised;
     }
 
     /**
