@@ -1,9 +1,11 @@
 package uk.ac.aber.cs.groupten.stumblr.data;
 
+import android.os.Parcelable;
+
 /**
  * Abstract class containing basic common structure for all Stumblr data formats.
  */
-public abstract class StumblrData {
+public abstract class StumblrData implements Parcelable {
     /**
      * The title of the given piece of data. This can be extended to Waypoints, Routes
      * and any other piece of relevant data inside the structure of Stumblr.

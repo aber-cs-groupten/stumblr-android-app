@@ -23,7 +23,8 @@ public class Home extends AbstractActivity {
      * Begin the Route entry activity
      */
     public void startCreateRouteIntent(View v) {
-        startActivity(new Intent(getApplicationContext(), CreateRoute.class));
+        Intent i = new Intent(getApplicationContext(), CreateRoute.class);
+        startActivity(i);
     }
 
     /**
