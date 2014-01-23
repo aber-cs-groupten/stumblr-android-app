@@ -8,10 +8,12 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Date;
 
 import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
@@ -109,6 +111,38 @@ public class CreateWaypoint extends AbstractActivity implements LocationListener
                 Log.v(TAG, imgDimensions);
             }
         }
+    }
+
+    /*
+     * ****************************************************************
+     *                         Base64 Encoding                        *
+     * ****************************************************************
+     */
+
+    // TODO @Martin - find source for this information and reference properly
+    public void startBase64Intent(View v) {
+        //  startActivity(new Intent())
+    }
+
+    // @TargetApi(8) // Target API level is 8
+    public String encodeTobase64(Bitmap image)
+    {
+        Bitmap immagex = image;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        immagex.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
+
+        Log.e("LOOK", imageEncoded);
+        return imageEncoded;
+    }
+
+    //DECODE
+    // @TargetApi(8) // Target API level is 8
+    public Bitmap decodeBase64(String input)
+    {
+        byte[] decodedByte = Base64.decode(input, 0);
+        return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 
 
