@@ -11,11 +11,6 @@ import java.util.LinkedList;
  */
 public class Route extends StumblrData {
     /**
-     * Used for calculating times.
-     */
-    private Calendar calendar;
-
-    /**
      * Timestamp for start of walk.
      */
     private long startTime;
@@ -41,7 +36,8 @@ public class Route extends StumblrData {
      * @return The current time.
      */
     public long getCurrentTime() {
-
+        Calendar c = Calendar.getInstance();
+        return c.getTimeInMillis();
     }
 
     /**
@@ -64,8 +60,24 @@ public class Route extends StumblrData {
      * Returns the last Waypoint in the Route.
      * @return The last Waypoint in the Route.
      */
-    public LinkedList<Waypoint> getWaypoint() {
+    public Waypoint getWaypoint() {
+        return this.route.getLast();
+    }
+
+    /**
+     * Returns the LinkedList of Waypoint objects.
+     * @return The LinkedList of Waypoint objects.
+     */
+    public LinkedList<Waypoint> getWaypointList() {
         return this.route;
+    }
+
+    /**
+     * Sets the LinkedList of Waypoint objects.
+     * @param wl The list of waypoint objects.
+     */
+    public void setWaypointList(LinkedList<Waypoint> wl) {
+        this.route = wl;
     }
 
     /**
@@ -92,7 +104,7 @@ public class Route extends StumblrData {
      */
     public Route(String title, String shortDesc, String longDesc) {
         super(title, shortDesc);
-        this.startTime = Calendar.getTimeInMillis();
+        this.startTime = getCurrentTime();
     }
 
     /**
@@ -134,5 +146,6 @@ public class Route extends StumblrData {
         this.setTitle(inParcel.readString());
         this.setShortDesc(inParcel.readString());
         this.setLongDesc(inParcel.readString());
+
     }
 }
