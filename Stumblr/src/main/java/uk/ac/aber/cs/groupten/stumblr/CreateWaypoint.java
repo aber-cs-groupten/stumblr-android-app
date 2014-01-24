@@ -43,6 +43,9 @@ public class CreateWaypoint extends AbstractActivity implements LocationListener
         gpsUpdateCount = 0;
     }
 
+    /* Create waypoint method. Returns text from way point title
+     * and short description edit text fields. 
+     */
     public void createWaypoint(){
         wpTitle = ((TextView)findViewById(R.id.wpTitle)).getText().toString();
         wpShortDesc = ((TextView)findViewById(R.id.wpshortdesc_box)).getText().toString();
