@@ -1,5 +1,7 @@
 package uk.ac.aber.cs.groupten.stumblr.data;
 
+import android.os.Parcel;
+
 import java.net.URL;
 import java.util.LinkedList;
 
@@ -27,7 +29,7 @@ public class Route extends StumblrData {
     }
 
     /**
-     * Adds a Waypoint to the tail of the Route LinkedList
+     * Adds a Waypoint to the tail of the Route
      * @param w The waypoint to add
      */
     public void addWaypoint(Waypoint w) {
@@ -35,15 +37,27 @@ public class Route extends StumblrData {
     }
 
     /**
-     * Returns the last Waypoint to the LinkedList.
+     * Returns the last Waypoint in the Route.
      * @return The last Waypoint in the Route.
      */
     public Waypoint getWaypoint() {
         return this.route.getLast();
     }
 
+    /**
+     * Returns the long description of the Route.
+     * @return The long description of the Route.
+     */
     public String getLongDesc() {
         return this.longDesc;
+    }
+
+    /**
+     * Sets the long description.
+     * @param longDesc
+     */
+    public void setLongDesc(String longDesc) {
+        this.longDesc = longDesc;
     }
 
     /**
@@ -54,7 +68,7 @@ public class Route extends StumblrData {
      */
     public Route(String title, String shortDesc, String longDesc) {
         super(title, shortDesc);
-
+        this.longDesc = longDesc;
     }
 
     /**
@@ -64,5 +78,37 @@ public class Route extends StumblrData {
      */
     public URL bundle() {
         return null;
+    }
+
+    /**
+     * Describes contents of parcel.
+     * @return Description
+     */
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    /**
+     * Writes the Route into a Parcel for moving between screens.
+     * @param parcel The parcel to be written to.
+     * @param i Flags.
+     */
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(this.getTitle());
+        parcel.writeString(this.getShortDesc());
+        parcel.writeString(this.getLongDesc());
+        parcel.writeList(this.route);
+    }
+
+    /**
+     * Reads Route data from a parcel.
+     * @param inParcel
+     */
+    public void readFromParcel(Parcel inParcel) {
+        this.setTitle(inParcel.readString());
+        this.setShortDesc(inParcel.readString());
+        this.setLongDesc(inParcel.readString());
     }
 }

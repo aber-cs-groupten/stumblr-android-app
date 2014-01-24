@@ -2,6 +2,7 @@ package uk.ac.aber.cs.groupten.stumblr.data;
 
 import android.graphics.Bitmap;
 import android.location.Location;
+import android.os.Parcel;
 
 import java.util.Date;
 import java.util.LinkedList;
@@ -97,4 +98,13 @@ public class Waypoint extends StumblrData {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+
+    }
 }

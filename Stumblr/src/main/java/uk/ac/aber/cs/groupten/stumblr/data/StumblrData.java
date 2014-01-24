@@ -60,6 +60,14 @@ public abstract class StumblrData implements Parcelable {
     }
 
     /**
+     * Sets the short description.
+     * @param shortDesc
+     */
+    public void setShortDesc(String shortDesc) {
+        this.shortDesc = shortDesc;
+    }
+
+    /**
      * Sanitises given text by removing prohibited characters.
      * @param input The text to sanitise.
      * @return The sanitised string.
