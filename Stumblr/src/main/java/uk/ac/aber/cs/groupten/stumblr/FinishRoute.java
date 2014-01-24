@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import java.util.LinkedList;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -15,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import uk.ac.aber.cs.groupten.stumblr.data.Route;
+import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
 
 public abstract class FinishRoute extends AbstractActivity {
     /**
@@ -77,15 +80,24 @@ public abstract class FinishRoute extends AbstractActivity {
             walk.put("longDescription", testRoute.getLongDesc());
             //walk.put("walkHours", testRoute.getTime());
             //walk.put("walkDistance", testRoute.getDistance());
+            //walk.put("walkCoordinates", testRoute.getCoordinates());
             JSONArray locations = new JSONArray();
             //Add data for each waypoint into the JSON package
-            /*waypoints = testRoute.getWaypoints();
-            for(int i = 0; i < waypoints.length; i++){
-                currentWaypoint = waypoints.get();
-                locations.put(i,currentWaypoint);
-                walk.put("locations", locations);
-                data.put("walk", walk);
-            }*/
+            LinkedList<Waypoint> waypoints = testRoute.getWaypointList();
+            for(int i = 0; i < waypoints.size(); i++){
+                Waypoint currentWaypoint = waypoints.get(i);
+                JSONObject currentJSONWaypoint = new JSONObject();
+                currentJSONWaypoint.put("title", currentWaypoint.getTitle());
+                currentJSONWaypoint.put("description", currentWaypoint.getShortDesc());
+                //currentJSONWaypoint.put("coordinates", currentWaypoint.getCoordinates());
+                //This may have to be base64
+                currentJSONWaypoint.put("image", currentWaypoint.getImage());
+
+
+                locations.put(i,currentJSONWaypoint);
+            }
+            walk.put("locations", locations);
+            data.put("walk", walk);
         } catch (JSONException e) {
             e.printStackTrace();
         }
