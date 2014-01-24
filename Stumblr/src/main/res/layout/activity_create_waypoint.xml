@@ -13,17 +13,6 @@
         android:layout_marginTop="40dip"
         android:onClick="startCamera" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:minHeight="50dp"
-        android:minWidth="50dp"
-        android:maxHeight="320dp"
-        android:maxWidth="320dp" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -49,4 +38,40 @@
         android:text="Lon"
         android:id="@+id/longitude"
         android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wp_title"
+        android:id="@+id/wpTitle" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/wptitle_box" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:minHeight="50dp"
+        android:minWidth="50dp"
+        android:maxHeight="320dp"
+        android:maxWidth="320dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/wpDescription"
+        android:text="@string/wp_shortdesc" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/wpshortdesc_box" />
+
 </LinearLayout>

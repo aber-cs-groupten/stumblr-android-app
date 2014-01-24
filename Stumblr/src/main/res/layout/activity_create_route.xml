@@ -1,5 +1,4 @@
 <LinearLayout
-    android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -8,7 +7,8 @@
     android:clickable="false"
     android:longClickable="true"
     android:textAlignment="inherit"
-    android:visibility="visible">
+    android:visibility="visible"
+    android:orientation="vertical">
 
 
     <TextView
@@ -25,14 +25,14 @@
         android:layout_height="wrap_content"
         android:inputType="textMultiLine"
         android:ems="10"
-        android:id="@+id/routeDescriptionBox"
+        android:id="@+id/shortDescriptionBox"
         android:layout_gravity="center_horizontal" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/route_desc"
+        android:text="@string/short_desc"
         android:id="@+id/routeDescription"
         android:layout_marginTop="80dip"
         android:layout_marginLeft="10dip" />
@@ -40,7 +40,24 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/routeDescriptionBox"
+        android:id="@+id/shortDescriptionBox"
+        android:minWidth="320dip"
+        android:layout_marginLeft="10dip"
+        android:layout_gravity="center_horizontal"
+        android:inputType="textMultiLine"
+        android:minLines="5"
+        android:maxLines="5" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/long_desc"
+        android:id="@+id/textView" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/longDescriptionBox"
         android:minWidth="320dip"
         android:layout_marginLeft="10dip"
         android:layout_gravity="center_horizontal"

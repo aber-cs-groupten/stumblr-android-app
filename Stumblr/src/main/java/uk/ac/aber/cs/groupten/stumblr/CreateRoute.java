@@ -2,12 +2,26 @@ package uk.ac.aber.cs.groupten.stumblr;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import uk.ac.aber.cs.groupten.stumblr.data.Route;
 
 public class CreateRoute extends DataEntryActivity {
+
+     private String shortDesc, longDesc, title;
+
     public CreateRoute() {
         super();
+
+    }
+
+    /* New route method */
+    public void newRoute(){
+
+        shortDesc = ((TextView) findViewById(R.id.shortDescriptionBox)).getText().toString();
+        longDesc = ((TextView) findViewById(R.id.longDescriptionBox)).getText().toString();
+        title = ((TextView) findViewById(R.id.title)).getText().toString();
+        Route newRoute = new Route(title, shortDesc, longDesc);
     }
 
     /**

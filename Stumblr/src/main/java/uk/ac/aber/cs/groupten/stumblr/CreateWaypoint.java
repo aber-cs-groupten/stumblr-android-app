@@ -21,6 +21,8 @@ import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
 public class CreateWaypoint extends AbstractActivity implements LocationListener {
     private LocationManager lm;
     private int gpsUpdateCount;
+    private String wpTitle, wpShortDesc;
+
 
     /**
      * Loads the activity on creation (using a bundle if one is present)
@@ -36,12 +38,17 @@ public class CreateWaypoint extends AbstractActivity implements LocationListener
 
         // Set up location updates (this class implements a Listener)
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        // TODO - use Daniel's code to determine best location based upon freshness, etc
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30000, 10, this);
 
         gpsUpdateCount = 0;
     }
 
+    public void createWaypoint(){
+        wpTitle = ((TextView)findViewById(R.id.wpTitle)).getText().toString();
+        wpShortDesc = ((TextView)findViewById(R.id.wpshortdesc_box)).getText().toString();
+
+       Waypoint newWaypoint = new Waypoint(wpTitle, wpShortDesc);
+    }
 
     /*
      * ****************************************************************

@@ -28,19 +28,15 @@ public class Waypoint extends StumblrData {
      */
     private LinkedList<Location> coordList;
 
-    private int index;
-
     /**
      * Constructor for a Waypoint object.
      * @param title Title of the waypoint.
      * @param shortDesc A short description.
      */
-    public Waypoint(String title, String shortDesc, int index) {
+    public Waypoint(String title, String shortDesc) {
         /* Calls superclass constructor */
         super(title, shortDesc);
 
-        /* Sets index variable (used for locating position in array */
-        this.index = index;
 
         /* Uses Android system to get time. */
         this.timestamp = new Date();
