@@ -77,12 +77,4 @@ public abstract class StumblrData implements Parcelable {
         String sanitised = input.replaceAll("[^a-zA-Z0-9,.!?:;-]*", "");
         return sanitised;
     }
-
-    /**
-     * Sets the current short description.
-     * @param shortDesc The short description to set.
-     */
-    public void getShortDesc(String shortDesc) {
-        this.shortDesc = shortDesc;
-    }
 }
