@@ -3,12 +3,28 @@ package uk.ac.aber.cs.groupten.stumblr.data;
 import android.os.Parcel;
 
 import java.net.URL;
+import java.util.Calendar;
 import java.util.LinkedList;
 
 /**
  * Created by charles on 29/11/13.
  */
 public class Route extends StumblrData {
+    /**
+     * Used for calculating times.
+     */
+    private Calendar calendar;
+
+    /**
+     * Timestamp for start of walk.
+     */
+    private long startTime;
+
+    /**
+     * Timestamp for end of walk.
+     */
+    private long endTime;
+
     /**
      * A slightly longer description of the contents of the route. Set by the user when
      * they create a Route.
@@ -19,6 +35,14 @@ public class Route extends StumblrData {
      * A LinkedList of Waypoint objects that the Route comprises of.
      */
     private LinkedList<Waypoint> route;
+
+    /**
+     * Returns current time.
+     * @return The current time.
+     */
+    public long getCurrentTime() {
+
+    }
 
     /**
      * Checks if the data in the Route is valid or not, and returns a boolean.
@@ -40,8 +64,8 @@ public class Route extends StumblrData {
      * Returns the last Waypoint in the Route.
      * @return The last Waypoint in the Route.
      */
-    public Waypoint getWaypoint() {
-        return this.route.getLast();
+    public LinkedList<Waypoint> getWaypoint() {
+        return this.route;
     }
 
     /**
@@ -68,7 +92,7 @@ public class Route extends StumblrData {
      */
     public Route(String title, String shortDesc, String longDesc) {
         super(title, shortDesc);
-        this.longDesc = longDesc;
+        this.startTime = Calendar.getTimeInMillis();
     }
 
     /**
