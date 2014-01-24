@@ -3,12 +3,23 @@ package uk.ac.aber.cs.groupten.stumblr.data;
 import android.os.Parcel;
 
 import java.net.URL;
+import java.util.Calendar;
 import java.util.LinkedList;
 
 /**
  * Created by charles on 29/11/13.
  */
 public class Route extends StumblrData {
+    /**
+     * Timestamp for start of walk.
+     */
+    private long startTime;
+
+    /**
+     * Timestamp for end of walk.
+     */
+    private long endTime;
+
     /**
      * A slightly longer description of the contents of the route. Set by the user when
      * they create a Route.
@@ -19,6 +30,15 @@ public class Route extends StumblrData {
      * A LinkedList of Waypoint objects that the Route comprises of.
      */
     private LinkedList<Waypoint> route;
+
+    /**
+     * Returns current time.
+     * @return The current time.
+     */
+    public long getCurrentTime() {
+        Calendar c = Calendar.getInstance();
+        return c.getTimeInMillis();
+    }
 
     /**
      * Checks if the data in the Route is valid or not, and returns a boolean.
@@ -45,6 +65,22 @@ public class Route extends StumblrData {
     }
 
     /**
+     * Returns the LinkedList of Waypoint objects.
+     * @return The LinkedList of Waypoint objects.
+     */
+    public LinkedList<Waypoint> getWaypointList() {
+        return this.route;
+    }
+
+    /**
+     * Sets the LinkedList of Waypoint objects.
+     * @param wl The list of waypoint objects.
+     */
+    public void setWaypointList(LinkedList<Waypoint> wl) {
+        this.route = wl;
+    }
+
+    /**
      * Returns the long description of the Route.
      * @return The long description of the Route.
      */
@@ -68,7 +104,7 @@ public class Route extends StumblrData {
      */
     public Route(String title, String shortDesc, String longDesc) {
         super(title, shortDesc);
-        this.longDesc = longDesc;
+        this.startTime = getCurrentTime();
     }
 
     /**
@@ -110,5 +146,6 @@ public class Route extends StumblrData {
         this.setTitle(inParcel.readString());
         this.setShortDesc(inParcel.readString());
         this.setLongDesc(inParcel.readString());
+
     }
 }
