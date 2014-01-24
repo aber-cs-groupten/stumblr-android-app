@@ -67,21 +67,25 @@ public abstract class FinishRoute extends AbstractActivity {
 
     private JSONObject getData() {
         //Data to be sent:
+        Route testRoute = new Route("Test Title", "Test Short Description", "Test Long Description");
         JSONObject data = new JSONObject();
         try {
             JSONObject walk = new JSONObject();
-            walk.put("walkTitle", "Road Runner");
-            walk.put("shortDescription", "meep meep!");
-            walk.put("longDescription", "meep meep meep meep!");
-            walk.put("walkHours", 42.0);
-            walk.put("walkDistance", 42.0);
+            //Get data out of the Route object and add to the JSON package
+            walk.put("walkTitle", testRoute.getTitle());
+            walk.put("shortDescription", testRoute.getShortDesc());
+            walk.put("longDescription", testRoute.getLongDesc());
+            //walk.put("walkHours", testRoute.getTime());
+            //walk.put("walkDistance", testRoute.getDistance());
             JSONArray locations = new JSONArray();
-            locations.put(1);
-            locations.put(2);
-            locations.put(3);
-            locations.put(4);
-            walk.put("locations", locations);
-            data.put("walk", walk);
+            //Add data for each waypoint into the JSON package
+            /*waypoints = testRoute.getWaypoints();
+            for(int i = 0; i < waypoints.length; i++){
+                currentWaypoint = waypoints.get();
+                locations.put(i,currentWaypoint);
+                walk.put("locations", locations);
+                data.put("walk", walk);
+            }*/
         } catch (JSONException e) {
             e.printStackTrace();
         }
