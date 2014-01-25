@@ -34,7 +34,6 @@ public class Home extends AbstractActivity {
     // TODO Method is for debugging. remove.
     public void startCreateWaypointIntent(View v) {
         Intent i = new Intent(getApplicationContext(), CreateWaypoint.class);
-        i.putExtra("testObject", new Waypoint("x", "y"));
         startActivity(i);
     }
 }

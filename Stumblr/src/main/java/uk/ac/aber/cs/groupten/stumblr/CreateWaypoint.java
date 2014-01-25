@@ -41,14 +41,6 @@ public class CreateWaypoint extends AbstractActivity implements LocationListener
 
         // Initialise Waypoint Object.
         waypoint = new Waypoint();
-
-        Bundle b = getIntent().getExtras();
-        Waypoint test = (Waypoint) b.getParcelable("testObject");
-        if (test != null) {
-            Log.v(TAG, test.getTitle());
-        } else {
-            Log.v(TAG, "Empty!");
-        }
     }
 
     /**
