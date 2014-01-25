@@ -4,29 +4,22 @@ import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Parcel;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 
-/**
- * Created by charles on 29/11/13.
- */
 public class Waypoint extends StumblrData {
     /* title and shortDesc are declared in StumblrData and are accessed through get/set methods */
+
+    /**
+     * Arrival timestamp for Waypoint.
+     */
+    private long timestamp;
 
     /**
      * Image contained within Waypoint.
      */
     private Bitmap image;
-
-    /**
-     * Time at which Waypoint was created.
-     */
-    private Date timestamp;
-
-    /**
-     * List of coordinates (from the last location to the current location)
-     */
-    private LinkedList<Location> coordList;
 
     /**
      * Constructor for a Waypoint object.
@@ -36,12 +29,7 @@ public class Waypoint extends StumblrData {
     public Waypoint(String title, String shortDesc) {
         /* Calls superclass constructor */
         super(title, shortDesc);
-
-
-        /* Uses Android system to get time. */
-        this.timestamp = new Date();
-        /* Initialise LinkedList */
-        this.coordList = new LinkedList<Location>();
+        timestamp = getCurrentTime();
     }
 
     /**
@@ -50,23 +38,6 @@ public class Waypoint extends StumblrData {
      */
     public boolean isValidData() {
         return false;
-    }
-
-    /**
-     * Add a coordinate to the list.
-     * @param c The location to be added to the tail of the LinkedList.
-     */
-    public void addCoordinate(Location c) {
-        this.coordList.addLast(c);
-    }
-
-    /**
-     * Returns coordinate instance at specified index.
-     * @param index Specified index of coordinate.
-     * @return The specified coordinate.
-     */
-    public Location getCoordinate(int index) {
-        return this.coordList.get(index);
     }
 
     /**
@@ -85,22 +56,34 @@ public class Waypoint extends StumblrData {
         return this.image;
     }
 
-    /**
-     * Returns current timestamp.
-     * @return The current timestamp.
-     */
-    public Date getTimestamp() {
-        return this.timestamp;
-    }
-
-
+    // TODO
     @Override
     public int describeContents() {
         return 0;
     }
 
+    /**
+     * Writes the Waypoint into a Parcel for moving between Activities.
+     * @param parcel The parcel to be written to.
+     * @param i Flags.
+     */
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeLong(this.timestamp);
+        parcel.writeString(this.getTitle());
+        parcel.writeString(this.getShortDesc());
+        parcel.writeValue(this.image);
+    }
+
+    /**
+     * Reads Route data from a parcel.
+     * @param inParcel
+     */
+    public void readFromParcel(Parcel inParcel) {
+        this.timestamp = inParcel.readLong();
+        this.setTitle(inParcel.readString());
+        this.setShortDesc(inParcel.readString());
+        this.image = (Bitmap) inParcel.readValue(null); // TODO test this. Not sure.
 
     }
 }

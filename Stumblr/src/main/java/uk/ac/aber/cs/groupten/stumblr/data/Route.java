@@ -1,15 +1,13 @@
 package uk.ac.aber.cs.groupten.stumblr.data;
 
+import android.location.Location;
 import android.os.Parcel;
 
-import java.net.URL;
-import java.util.Calendar;
 import java.util.LinkedList;
 
-/**
- * Created by charles on 29/11/13.
- */
 public class Route extends StumblrData {
+    private LinkedList<Location> coordinates;
+
     /**
      * Timestamp for start of walk.
      */
@@ -32,12 +30,12 @@ public class Route extends StumblrData {
     private LinkedList<Waypoint> route;
 
     /**
-     * Returns current time.
-     * @return The current time.
+     * Constructor
      */
-    public long getCurrentTime() {
-        Calendar c = Calendar.getInstance();
-        return c.getTimeInMillis();
+    public Route() {
+        /* Initialise LinkedList */
+        this.coordinates = new LinkedList<Location>();
+        startTime = getCurrentTime();
     }
 
     /**
@@ -81,6 +79,22 @@ public class Route extends StumblrData {
     }
 
     /**
+     * Returns list of coordinates.
+     * @return The list of coordinates.
+     */
+    public LinkedList<Location> getCoordinateList() {
+        return this.coordinates;
+    }
+
+    /**
+     * Sets the list of coordinates.
+     * @param list The list of coordinates.
+     */
+    public void setCoordinateList(LinkedList<Location> list) {
+        this.coordinates = list;
+    }
+
+    /**
      * Returns the long description of the Route.
      * @return The long description of the Route.
      */
@@ -108,15 +122,6 @@ public class Route extends StumblrData {
     }
 
     /**
-     * To be implemented. Will return a URL containing filesystem location of bundled Route file
-     * (ready for upload to server)
-     * @return The URL of the bundle
-     */
-    public URL bundle() {
-        return null;
-    }
-
-    /**
      * Describes contents of parcel.
      * @return Description
      */
@@ -136,6 +141,7 @@ public class Route extends StumblrData {
         parcel.writeString(this.getShortDesc());
         parcel.writeString(this.getLongDesc());
         parcel.writeList(this.route);
+        parcel.writeList(this.coordinates);
     }
 
     /**
@@ -146,6 +152,7 @@ public class Route extends StumblrData {
         this.setTitle(inParcel.readString());
         this.setShortDesc(inParcel.readString());
         this.setLongDesc(inParcel.readString());
-
+        inParcel.readList(this.route, null); // Not sure about these two lines yet
+        inParcel.readList(this.coordinates, null); // TODO test this method
     }
 }

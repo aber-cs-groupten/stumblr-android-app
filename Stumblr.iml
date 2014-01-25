@@ -26,58 +26,58 @@
     <output-test url="file://$MODULE_DIR$/build/classes/test" />
     <exclude-output />
     <content url="file://$MODULE_DIR$/Stumblr">
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/build/source/r/defaultFlavor/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/build/source/aidl/defaultFlavor/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/defaultFlavor/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/debug/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/defaultFlavorDebug/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/defaultFlavorDebug/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/debug/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/main/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/defaultFlavor/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/main/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/defaultFlavorDebug/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/debug/assets" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/defaultFlavorDebug/assets" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/debug/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/main/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/defaultFlavorDebug/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/defaultFlavor/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/main/assets" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/defaultFlavor/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/debug/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/defaultFlavor/assets" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/instrumentTest/assets" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/instrumentTest/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/instrumentTest/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/instrumentTestDefaultFlavor/assets" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/instrumentTestDefaultFlavor/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/instrumentTestDefaultFlavor/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/instrumentTestDefaultFlavor/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/instrumentTest/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/instrumentTestDefaultFlavor/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/instrumentTest/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/debug/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/defaultFlavor/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/build/res/rs/defaultFlavor/debug" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/defaultFlavor/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/main/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/defaultFlavorDebug/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/defaultFlavorDebug/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/debug/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/instrumentTest/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/instrumentTestDefaultFlavor/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/instrumentTest/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/instrumentTestDefaultFlavor/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/build/res/rs/test/defaultFlavor/debug" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/Stumblr/build/source/buildConfig/defaultFlavor/debug" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/Stumblr/build/source/rs/defaultFlavor/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/build/res/rs/defaultFlavor/debug" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/defaultFlavorDebug/aidl" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/defaultFlavorDebug/assets" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/defaultFlavorDebug/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/defaultFlavorDebug/jni" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/defaultFlavorDebug/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/defaultFlavorDebug/res" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/defaultFlavorDebug/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/build/source/r/test/defaultFlavor/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/build/source/aidl/test/defaultFlavor/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/build/source/buildConfig/test/defaultFlavor/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/build/source/rs/test/defaultFlavor/debug" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/build/res/rs/test/defaultFlavor/debug" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/defaultFlavor/aidl" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/defaultFlavor/assets" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/defaultFlavor/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/defaultFlavor/jni" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/defaultFlavor/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/defaultFlavor/res" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/defaultFlavor/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/instrumentTestDefaultFlavor/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/instrumentTestDefaultFlavor/assets" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/instrumentTestDefaultFlavor/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/instrumentTestDefaultFlavor/jni" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/instrumentTestDefaultFlavor/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/instrumentTestDefaultFlavor/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/instrumentTestDefaultFlavor/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/debug/aidl" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/debug/assets" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/debug/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/debug/jni" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/debug/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/debug/res" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/debug/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/main/aidl" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/main/assets" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/main/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/main/jni" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/main/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/main/res" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/main/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/instrumentTest/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/instrumentTest/assets" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/instrumentTest/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/instrumentTest/jni" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/instrumentTest/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/instrumentTest/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/Stumblr/src/instrumentTest/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/build/source/r/defaultFlavor/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/build/source/aidl/defaultFlavor/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/build/source/buildConfig/test/defaultFlavor/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/build/source/r/test/defaultFlavor/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/build/source/aidl/test/defaultFlavor/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Stumblr/build/source/rs/test/defaultFlavor/debug" isTestSource="true" generated="true" />
       <excludeFolder url="file://$MODULE_DIR$/Stumblr/build/apk" />
       <excludeFolder url="file://$MODULE_DIR$/Stumblr/build/assets" />
       <excludeFolder url="file://$MODULE_DIR$/Stumblr/build/bundles" />
@@ -92,8 +92,8 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 19 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="support-v4-19.0.0" level="project" />
-    <orderEntry type="library" exported="" name="ComAndroidSupportAppcompatV71900.aar" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: support-v4-19.0.0" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: ComAndroidSupportAppcompatV71900.aar" level="project" />
   </component>
 </module>
 

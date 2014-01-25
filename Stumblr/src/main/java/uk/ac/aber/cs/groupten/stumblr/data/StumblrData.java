@@ -1,11 +1,16 @@
 package uk.ac.aber.cs.groupten.stumblr.data;
 
 import android.os.Parcelable;
+import android.util.Log;
+
+import java.util.Calendar;
 
 /**
  * Abstract class containing basic common structure for all Stumblr data formats.
  */
 public abstract class StumblrData implements Parcelable {
+    public final String TAG = "STUMBLR";
+
     /**
      * The title of the given piece of data. This can be extended to Waypoints, Routes
      * and any other piece of relevant data inside the structure of Stumblr.
@@ -17,6 +22,13 @@ public abstract class StumblrData implements Parcelable {
      * extended to other component classes of StumblrData
      */
     private String shortDesc;
+
+    /**
+     * Default constructor
+     */
+    public StumblrData() {
+        Log.v(TAG, "New StumblrData object created");
+    }
 
     /**
      * @param title The title to set.
@@ -34,6 +46,15 @@ public abstract class StumblrData implements Parcelable {
      * MUST be implemented in any subclasses.
      */
     public abstract boolean isValidData();
+
+    /**
+     * Returns current time.
+     * @return The current time.
+     */
+    public long getCurrentTime() {
+        Calendar c = Calendar.getInstance();
+        return c.getTimeInMillis();
+    }
 
     /**
      * Returns the title.
