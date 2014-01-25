@@ -33,8 +33,11 @@ public class Route extends StumblrData {
      * Constructor
      */
     public Route() {
-        /* Initialise LinkedList */
+        // Initialise LinkedLists
         this.coordinates = new LinkedList<Location>();
+        this.route = new LinkedList<Waypoint>();
+
+        // Timestamp
         startTime = getCurrentTime();
     }
 
