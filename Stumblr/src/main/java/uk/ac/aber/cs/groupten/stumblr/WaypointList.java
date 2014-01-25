@@ -8,7 +8,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.LinkedList;
+
 import uk.ac.aber.cs.groupten.stumblr.data.Route;
+import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
 
 /**
  * http://developer.android.com/guide/topics/ui/layout/listview.html
@@ -21,6 +24,9 @@ public class WaypointList extends AbstractActivity {
      * Loads the activity on creation (using a bundle if one is present)
      * @param savedInstanceState The bundle containing the saved instance state.
      */
+
+    private LinkedList<String> menuItems = new LinkedList<String>();
+
     public void stumblrOnCreate(Bundle savedInstanceState) {
         // Called by super().onCreate
         setContentView(R.layout.activity_abstract);
@@ -39,18 +45,9 @@ public class WaypointList extends AbstractActivity {
         setContentView(R.layout.activity_waypoint_list);
         listView = (ListView) findViewById(R.id.listView);
 
-        String[] values = new String[] { "Android List View",
-                "Adapter implementation",
-                "Simple List View In Android",
-                "Create List View Android",
-                "Android Example",
-                "List View Source Code",
-                "List View Array Adapter",
-                "Android Example List View"
-        };
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, values);
+                android.R.layout.simple_list_item_1, android.R.id.text1, menuItems);
 
         // Assign adapter to ListView
         listView.setAdapter(adapter);
@@ -63,16 +60,20 @@ public class WaypointList extends AbstractActivity {
                                     int position, long id) {
 
                 // ListView Clicked item index
-                int itemPosition     = position;
+                int itemPosition = position;
 
                 // ListView Clicked item value
                 String  itemValue    = (String) listView.getItemAtPosition(position);
-
-                // Show Alert
-                Toast.makeText(getApplicationContext(),
-                        "Position :"+itemPosition+"  ListItem : " +itemValue , Toast.LENGTH_LONG)
-                        .show();
-
+                //If the "Add Waypoint" button is pushed, start the Create Waypoint screen
+                if(itemValue.equals("Add Waypoint")){
+                    startActivity(new Intent(getApplicationContext(), CreateWaypoint.class));
+                }
+                else{
+                    // Show Alert
+                    Toast.makeText(getApplicationContext(),
+                            "Position :" + itemPosition + "  ListItem : " + itemValue,Toast.LENGTH_LONG)
+                            .show();
+                }
             }
 
         });
@@ -86,11 +87,41 @@ public class WaypointList extends AbstractActivity {
         // Do nothing currently
     }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        //When the screen is viewed, update the list and add the "Add Waypoint" button to the end
+        if(hasFocus){
+
+            //THIS IS TEST DATA
+            Route testRoute = new Route("Test Title", "Test Short Description", "Test Long Description");
+            Waypoint testWaypoint1 = new Waypoint("Test1", "Test1Desc");
+            Waypoint testWaypoint2 = new Waypoint("Test2", "Test2Desc");
+            testRoute.addWaypoint(testWaypoint1);
+            testRoute.addWaypoint(testWaypoint2);
+            testRoute.addWaypoint(testWaypoint2);
+            //ENDS TEST DATA
+
+            LinkedList<Waypoint> waypoints = testRoute.getWaypointList();
+
+            for(Waypoint currentWaypoint: waypoints){
+                String currentTitle = currentWaypoint.getTitle();
+                if(!menuItems.contains(currentTitle)){
+                    menuItems.add(currentTitle);
+                }
+            }
+            menuItems.add("Add Waypoint");
+        }
+        //When the screen is un-viewed removed the "Add Waypoint" button
+        else{
+            menuItems.removeLast();
+        }
+    }
+
     /**
      *
      * @param v
      */
-    public void startCreateWaypointIntent(View v) {
+    /*public void startCreateWaypointIntent(View v) {
         startActivity(new Intent(getApplicationContext(), CreateWaypoint.class));
-    }
+    }*/
 }
