@@ -2,6 +2,7 @@ package uk.ac.aber.cs.groupten.stumblr;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -74,12 +75,21 @@ public class WaypointList extends AbstractActivity {
                 else{
                     // Show Alert
                     Toast.makeText(getApplicationContext(),
-                            "Position :" + itemPosition + "  ListItem : " + itemValue,Toast.LENGTH_LONG)
+                            "Position : " + itemPosition + "  ListItem : " + itemValue,Toast.LENGTH_LONG)
                             .show();
                 }
             }
 
         });
+    }
+
+    /**
+     * Passes the current Route object to FinishRoute and starts the activity.
+     */
+    public void finishRoute() {
+        Intent i = new Intent();
+        i.putExtra("route", this.route);
+        startActivity(i);
     }
 
     @Override

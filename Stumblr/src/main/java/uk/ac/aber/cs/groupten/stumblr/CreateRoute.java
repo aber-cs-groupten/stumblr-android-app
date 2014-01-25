@@ -17,7 +17,6 @@ public class CreateRoute extends DataEntryActivity {
 
     /* New route method */
     public void newRoute(){
-
         shortDesc = ((TextView) findViewById(R.id.shortDescriptionBox)).getText().toString();
         longDesc = ((TextView) findViewById(R.id.longDescriptionBox)).getText().toString();
         title = ((TextView) findViewById(R.id.title)).getText().toString();
