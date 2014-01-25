@@ -55,7 +55,8 @@ public class CreateWaypoint extends AbstractActivity implements LocationListener
      * Called when "Create" button in the UI is clicked.
      * Initialises a new Waypoint object with text specified in UI.
      */
-    public void createWaypoint(){
+    public void createWaypoint(){   // PLEASE CAN SOMEONE CHANGE THE NAME OF THIS METHOD
+                                    // IT LOOKS TOO MUCH LIKE A CONSTRUCTOR
         String wpTitle = ((TextView)findViewById(R.id.wpTitle)).getText().toString();
         String wpShortDesc = ((TextView)findViewById(R.id.wpshortdesc_box)).getText().toString();
 
