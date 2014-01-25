@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import uk.ac.aber.cs.groupten.stumblr.data.Route;
+import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
 
 public class Home extends AbstractActivity {
     /**
@@ -32,6 +33,8 @@ public class Home extends AbstractActivity {
      */
     // TODO Method is for debugging. remove.
     public void startCreateWaypointIntent(View v) {
-        startActivity(new Intent(getApplicationContext(), CreateWaypoint.class));
+        Intent i = new Intent(getApplicationContext(), CreateWaypoint.class);
+        i.putExtra("testObject", new Waypoint("x", "y"));
+        startActivity(i);
     }
 }
