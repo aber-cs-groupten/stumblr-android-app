@@ -2,10 +2,11 @@ package uk.ac.aber.cs.groupten.stumblr.data;
 
 import android.location.Location;
 import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.util.LinkedList;
 
-public class Route extends StumblrData {
+public class Route extends StumblrData implements Parcelable {
     private LinkedList<Location> coordinates;
 
     /**
@@ -39,7 +40,7 @@ public class Route extends StumblrData {
     /**
      * Helper method for constructor
      */
-    public void initRoute() {
+    private void initRoute() {
         // Initialise LinkedLists
         this.coordinates = new LinkedList<Location>();
         this.route = new LinkedList<Waypoint>();

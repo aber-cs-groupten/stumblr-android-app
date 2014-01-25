@@ -3,6 +3,7 @@ package uk.ac.aber.cs.groupten.stumblr.data;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -22,6 +23,13 @@ public class Waypoint extends StumblrData {
     private Bitmap image;
 
     /**
+     * Default constructor for Waypoint.
+     */
+    public Waypoint() {
+        initWaypoint();
+    }
+
+    /**
      * Constructor for a Waypoint object.
      * @param title Title of the waypoint.
      * @param shortDesc A short description.
@@ -29,6 +37,20 @@ public class Waypoint extends StumblrData {
     public Waypoint(String title, String shortDesc) {
         /* Calls superclass constructor */
         super(title, shortDesc);
+        initWaypoint();
+    }
+
+    /**
+     * Constructor for a Waypoint object from a Parcel.
+     */
+    public Waypoint(Parcel in) {
+        this.readFromParcel(in);
+    }
+
+    /**
+     * Helper method for initialising Waypoint objects.
+     */
+    private void initWaypoint() {
         timestamp = getCurrentTime();
     }
 
@@ -86,4 +108,18 @@ public class Waypoint extends StumblrData {
         this.image = (Bitmap) inParcel.readValue(null); // TODO test this. Not sure.
 
     }
+
+    /*
+     * From: http://stackoverflow.com/a/18167140
+     */
+    public static final Parcelable.Creator<Waypoint> CREATOR
+            = new Parcelable.Creator<Waypoint>() {
+        public Waypoint createFromParcel(Parcel in) {
+            return new Waypoint(in);
+        }
+
+        public Waypoint[] newArray(int size) {
+            return new Waypoint[size];
+        }
+    };
 }

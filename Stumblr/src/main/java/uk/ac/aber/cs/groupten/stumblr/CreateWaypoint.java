@@ -16,13 +16,12 @@ import android.widget.TextView;
 import java.io.ByteArrayOutputStream;
 import java.util.Date;
 
+import uk.ac.aber.cs.groupten.stumblr.data.Route;
 import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
 
 public class CreateWaypoint extends AbstractActivity implements LocationListener {
+    private Waypoint waypoint;
     private LocationManager lm;
-    private int gpsUpdateCount;
-    private String wpTitle, wpShortDesc;
-
 
     /**
      * Loads the activity on creation (using a bundle if one is present)
@@ -40,18 +39,30 @@ public class CreateWaypoint extends AbstractActivity implements LocationListener
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30000, 10, this);
 
-        gpsUpdateCount = 0;
+        // Initialise Waypoint Object.
+        waypoint = new Waypoint();
+
+        Bundle b = getIntent().getExtras();
+        Waypoint test = (Waypoint) b.getParcelable("testObject");
+        if (test != null) {
+            Log.v(TAG, test.getTitle());
+        } else {
+            Log.v(TAG, "Empty!");
+        }
     }
 
-    /* Create waypoint method. Returns text from way point title
-     * and short description edit text fields. 
+    /**
+     * Called when "Create" button in the UI is clicked.
+     * Initialises a new Waypoint object with text specified in UI.
      */
     public void createWaypoint(){
-        wpTitle = ((TextView)findViewById(R.id.wpTitle)).getText().toString();
-        wpShortDesc = ((TextView)findViewById(R.id.wpshortdesc_box)).getText().toString();
+        String wpTitle = ((TextView)findViewById(R.id.wpTitle)).getText().toString();
+        String wpShortDesc = ((TextView)findViewById(R.id.wpshortdesc_box)).getText().toString();
 
-       Waypoint newWaypoint = new Waypoint(wpTitle, wpShortDesc);
+        waypoint.setTitle(wpTitle);
+        waypoint.setShortDesc(wpShortDesc);
     }
+
 
     /*
      * ****************************************************************
@@ -61,21 +72,9 @@ public class CreateWaypoint extends AbstractActivity implements LocationListener
     /**
      * Obtain coordinates from Android system and add to current Waypoint.
      */
-    /* Adapted from:
-     * https://sites.google.com/site/androidhowto/how-to-1/using-the-gps */
+    /* Adapted from: https://sites.google.com/site/androidhowto/how-to-1/using-the-gps */
     @Override
     public void onLocationChanged(Location loc) {
-        String latString = "Lat: " + String.valueOf(loc.getLatitude());
-        String lonString = "Lon: " + String.valueOf(loc.getLongitude());
-        Log.v(TAG, latString + " " + lonString);
-
-        ((TextView) findViewById(R.id.latitude)).setText(latString);
-        ((TextView) findViewById(R.id.longitude)).setText(lonString);
-
-        gpsUpdateCount++;
-        ((TextView) findViewById(R.id.gpsUpdates)).setText(
-                "GPS Updates: " + String.valueOf(gpsUpdateCount));
-
         // TODO - add to waypoint object
     }
 
@@ -85,7 +84,6 @@ public class CreateWaypoint extends AbstractActivity implements LocationListener
     public void onProviderEnabled(String s) {}
     @Override
     public void onStatusChanged(String s, int i, Bundle b) {}
-
 
     /*
      * ****************************************************************
