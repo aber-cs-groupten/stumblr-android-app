@@ -33,12 +33,31 @@ public class Route extends StumblrData {
      * Constructor
      */
     public Route() {
+        initRoute();
+    }
+
+    /**
+     * Helper method for constructor
+     */
+    public void initRoute() {
         // Initialise LinkedLists
         this.coordinates = new LinkedList<Location>();
         this.route = new LinkedList<Waypoint>();
 
         // Timestamp
         startTime = getCurrentTime();
+    }
+
+    /**
+     * Constructor for Route.
+     * @param title The title of the Route object.
+     * @param shortDesc A short description of the Route.
+     * @param longDesc A longer description of the Route.
+     */
+    public Route(String title, String shortDesc, String longDesc) {
+        super(title, shortDesc);
+        this.setLongDesc(longDesc);
+        initRoute();
     }
 
     /**
@@ -111,17 +130,6 @@ public class Route extends StumblrData {
      */
     public void setLongDesc(String longDesc) {
         this.longDesc = longDesc;
-    }
-
-    /**
-     * Constructor for Route.
-     * @param title The title of the Route object.
-     * @param shortDesc A short description of the Route.
-     * @param longDesc A longer description of the Route.
-     */
-    public Route(String title, String shortDesc, String longDesc) {
-        super(title, shortDesc);
-        this.startTime = getCurrentTime();
     }
 
     /**
