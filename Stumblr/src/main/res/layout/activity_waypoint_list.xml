@@ -6,7 +6,16 @@
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="450dp"
         android:id="@+id/listView"
         android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/finish_route"
+        android:id="@+id/finish_route"
+        android:layout_gravity="center_horizontal"
+        android:longClickable="false" />
+
 </LinearLayout>
