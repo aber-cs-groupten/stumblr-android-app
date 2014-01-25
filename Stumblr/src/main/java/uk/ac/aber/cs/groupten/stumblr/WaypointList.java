@@ -55,6 +55,7 @@ public class WaypointList extends AbstractActivity {
         // Assign adapter to ListView
         listView.setAdapter(adapter);
 
+
         // ListView Item Click Listener
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -88,13 +89,13 @@ public class WaypointList extends AbstractActivity {
 
         if (requestCode == 3141 && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
-            Route newRoute = (Route) extras.get("data"); // This may be null - so test for null below
+            Waypoint newWaypoint = (Waypoint) extras.get("data"); // This may be null - so test for null below
 
-            if (newRoute != null) {
+            if (newWaypoint != null) {
                 // Update the route with the latest waypoint
-                route = newRoute;
+                route.addWaypoint(newWaypoint);
                 // Log message containing the name of the route
-                Log.v(TAG, route.getTitle());
+                Log.v(TAG, ("RESULT RETURNED: " + newWaypoint.getTitle()));
             }
         }
     }
@@ -113,11 +114,11 @@ public class WaypointList extends AbstractActivity {
         if(hasFocus){
 
             //THIS IS TEST DATA
-            Waypoint testWaypoint1 = new Waypoint("Test1", "Test1Desc");
+            /*Waypoint testWaypoint1 = new Waypoint("Test1", "Test1Desc");
             Waypoint testWaypoint2 = new Waypoint("Test2", "Test2Desc");
             route.addWaypoint(testWaypoint1);
             route.addWaypoint(testWaypoint2);
-            route.addWaypoint(testWaypoint2);
+            route.addWaypoint(testWaypoint2);*/
             //ENDS TEST DATA
 
             LinkedList<Waypoint> waypoints = route.getWaypointList();
@@ -128,9 +129,14 @@ public class WaypointList extends AbstractActivity {
                     menuItems.add(currentTitle);
                 }
             }
+
+            if(!menuItems.isEmpty()){
+                Log.v(TAG, ("Last menuItems Value " + menuItems.getLast()));
+            }
+
             menuItems.add("Add Waypoint");
         }
-        //When the screen is un-viewed removed the "Add Waypoint" button
+        //When the screen is un-viewed remove the "Add Waypoint" button
         else{
             menuItems.removeLast();
         }
