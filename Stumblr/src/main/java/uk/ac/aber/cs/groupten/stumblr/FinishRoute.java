@@ -80,7 +80,8 @@ public abstract class FinishRoute extends AbstractActivity {
             walk.put("longDescription", testRoute.getLongDesc());
             //walk.put("walkHours", testRoute.getTime());
             //walk.put("walkDistance", testRoute.getDistance());
-            //walk.put("walkCoordinates", testRoute.getCoordinates());
+            JSONArray coordinates = new JSONArray(testRoute.getCoordinateList());
+            walk.put("walkCoordinates", coordinates);
             JSONArray locations = new JSONArray();
             //Add data for each waypoint into the JSON package
             LinkedList<Waypoint> waypoints = testRoute.getWaypointList();
