@@ -20,7 +20,7 @@ import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
  * For more information on creating a ListView
  */
 public class WaypointList extends AbstractActivity {
-    private LinkedList<String> menuItems;// = new LinkedList<String>();
+    private LinkedList<String> menuItems;
     private ListView listView;
     private Route route;
 
@@ -28,11 +28,6 @@ public class WaypointList extends AbstractActivity {
      * Loads the activity on creation (using a bundle if one is present)
      * @param savedInstanceState The bundle containing the saved instance state.
      */
-
-    //                  V THIS IS TEST DATA V
-    Route route = new Route("Test Title", "Test Short Description", "Test Long Description");
-
-
     public void stumblrOnCreate(Bundle savedInstanceState) {
         // Called by super().onCreate
         setContentView(R.layout.activity_waypoint_list);
@@ -50,8 +45,9 @@ public class WaypointList extends AbstractActivity {
          * Also useful:
          * http://www.vogella.com/tutorials/AndroidListView/article.html
          */
-        listView = (ListView) findViewById(R.id.listView);
+        menuItems = new LinkedList<String>();
 
+        listView = (ListView) findViewById(R.id.listView);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, menuItems);
 
@@ -89,8 +85,8 @@ public class WaypointList extends AbstractActivity {
     /**
      * Passes the current Route object to FinishRoute and starts the activity.
      */
-    public void finishRoute() {
-        Intent i = new Intent();
+    public void finishRoute(View v) {
+        Intent i = new Intent(getApplicationContext(), FinishRoute.class);
         i.putExtra("route", this.route);
         startActivity(i);
     }

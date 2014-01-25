@@ -19,20 +19,19 @@ import org.json.JSONObject;
 import uk.ac.aber.cs.groupten.stumblr.data.Route;
 import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
 
-public abstract class FinishRoute extends AbstractActivity {
+public class FinishRoute extends AbstractActivity {
     /**
      * Loads the activity on creation (using a bundle if one is present)
      * @param savedInstanceState The bundle containing the saved instance state.
      */
     public void stumblrOnCreate(Bundle savedInstanceState) {
         // Called by super().onCreate
-        setContentView(R.layout.activity_abstract);
+        setContentView(R.layout.activity_finish_route);
 
         if (savedInstanceState == null) {
             // Do stuff
         }
     }
-
 
     /*
      * ****************************************************************
@@ -54,12 +53,11 @@ public abstract class FinishRoute extends AbstractActivity {
                 HttpResponse response = httpclient.execute(httppost);
                 return response;
             } catch (Exception e) {
-                Log.e("ERROR", e.toString());
+                Log.e(TAG, e.toString());
                 return null;
             }
         }
     }
-
 
     /**
      * Posts the data to the server
@@ -105,10 +103,4 @@ public abstract class FinishRoute extends AbstractActivity {
         return data;
     }
     // End HTTP POST
-
-
-    /**
-     * Will package and upload the current Route object.
-     */
-    public abstract void uploadRoute(Route r);
 }
