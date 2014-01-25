@@ -3,5 +3,5 @@
 /.idea/workspace.xml
 .DS_Store
 *.iml
-.idea/gradle.xml
+.idea/*.xml
 .idea/libraries/*.xml
