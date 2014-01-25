@@ -11,5 +11,6 @@
         android:layout_height="wrap_content"
         android:text="@string/upload_walk"
         android:id="@+id/button"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:onClick="postData" />
 </FrameLayout>
