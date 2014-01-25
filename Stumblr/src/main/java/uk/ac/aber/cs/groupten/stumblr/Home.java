@@ -4,9 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import uk.ac.aber.cs.groupten.stumblr.data.Route;
-import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
-
 public class Home extends AbstractActivity {
     /**
      * Loads the activity on creation (using a bundle if one is present)
@@ -25,15 +22,6 @@ public class Home extends AbstractActivity {
      */
     public void startCreateRouteIntent(View v) {
         Intent i = new Intent(getApplicationContext(), CreateRoute.class);
-        startActivity(i);
-    }
-
-    /**
-     * *** REMOVE ***
-     */
-    // TODO Method is for debugging. remove.
-    public void startCreateWaypointIntent(View v) {
-        Intent i = new Intent(getApplicationContext(), CreateWaypoint.class);
         startActivity(i);
     }
 }

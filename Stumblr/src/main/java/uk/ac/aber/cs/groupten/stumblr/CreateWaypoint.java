@@ -45,10 +45,9 @@ public class CreateWaypoint extends AbstractActivity implements LocationListener
 
     /**
      * Called when "Create" button in the UI is clicked.
-     * Initialises a new Waypoint object with text specified in UI.
+     * Adds data to the current Waypoint object with text specified in UI.
      */
-    public void finishWaypoint(View v){     // TODO PLEASE CAN SOMEONE CHANGE THE NAME OF THIS METHOD
-                                            // TODO IT LOOKS TOO MUCH LIKE A CONSTRUCTOR
+    public void finishWaypoint(View v){
         String wpTitle = ((TextView)findViewById(R.id.wptitle_box)).getText().toString();
         String wpShortDesc = ((TextView)findViewById(R.id.wpshortdesc_box)).getText().toString();
 
@@ -57,7 +56,7 @@ public class CreateWaypoint extends AbstractActivity implements LocationListener
 
         Intent returnIntent = new Intent();
         returnIntent.putExtra("data", waypoint);
-        setResult(RESULT_OK,returnIntent);
+        setResult(RESULT_OK, returnIntent);
 
         finish();
     }
@@ -105,7 +104,7 @@ public class CreateWaypoint extends AbstractActivity implements LocationListener
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CAMERA_REQ_CODE && resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK && requestCode == CAMERA_REQ_CODE) {
             Bundle extras = data.getExtras();
             Bitmap b = (Bitmap) extras.get("data"); // This may be null - so test for null below
 
@@ -138,7 +137,7 @@ public class CreateWaypoint extends AbstractActivity implements LocationListener
         byte[] b = baos.toByteArray();
         String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
 
-        Log.e(TAG, imageEncoded);
+        Log.v(TAG, imageEncoded);
         return imageEncoded;
     }
 }
