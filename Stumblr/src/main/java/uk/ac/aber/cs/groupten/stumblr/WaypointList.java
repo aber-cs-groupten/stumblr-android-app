@@ -2,6 +2,7 @@ package uk.ac.aber.cs.groupten.stumblr;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -25,6 +26,8 @@ public class WaypointList extends AbstractActivity {
      * @param savedInstanceState The bundle containing the saved instance state.
      */
 
+    //                  V THIS IS TEST DATA V
+    Route route = new Route("Test Title", "Test Short Description", "Test Long Description");
     private LinkedList<String> menuItems = new LinkedList<String>();
 
     public void stumblrOnCreate(Bundle savedInstanceState) {
@@ -66,7 +69,7 @@ public class WaypointList extends AbstractActivity {
                 String  itemValue    = (String) listView.getItemAtPosition(position);
                 //If the "Add Waypoint" button is pushed, start the Create Waypoint screen
                 if(itemValue.equals("Add Waypoint")){
-                    startActivity(new Intent(getApplicationContext(), CreateWaypoint.class));
+                    startActivityForResult(new Intent(getApplicationContext(), CreateWaypoint.class), 3141);
                 }
                 else{
                     // Show Alert
@@ -77,6 +80,23 @@ public class WaypointList extends AbstractActivity {
             }
 
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 3141 && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Route newRoute = (Route) extras.get("data"); // This may be null - so test for null below
+
+            if (newRoute != null) {
+                // Update the route with the latest waypoint
+                route = newRoute;
+                // Log message containing the name of the route
+                Log.v(TAG, route.getTitle());
+            }
+        }
     }
 
     /**
@@ -93,15 +113,14 @@ public class WaypointList extends AbstractActivity {
         if(hasFocus){
 
             //THIS IS TEST DATA
-            Route testRoute = new Route("Test Title", "Test Short Description", "Test Long Description");
             Waypoint testWaypoint1 = new Waypoint("Test1", "Test1Desc");
             Waypoint testWaypoint2 = new Waypoint("Test2", "Test2Desc");
-            testRoute.addWaypoint(testWaypoint1);
-            testRoute.addWaypoint(testWaypoint2);
-            testRoute.addWaypoint(testWaypoint2);
+            route.addWaypoint(testWaypoint1);
+            route.addWaypoint(testWaypoint2);
+            route.addWaypoint(testWaypoint2);
             //ENDS TEST DATA
 
-            LinkedList<Waypoint> waypoints = testRoute.getWaypointList();
+            LinkedList<Waypoint> waypoints = route.getWaypointList();
 
             for(Waypoint currentWaypoint: waypoints){
                 String currentTitle = currentWaypoint.getTitle();
