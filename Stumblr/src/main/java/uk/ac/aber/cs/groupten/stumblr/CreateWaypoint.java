@@ -1,11 +1,8 @@
 package uk.ac.aber.cs.groupten.stumblr;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -14,14 +11,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
-import java.util.Date;
 
-import uk.ac.aber.cs.groupten.stumblr.data.Route;
 import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
 
-public class CreateWaypoint extends AbstractActivity implements LocationListener {
+public class CreateWaypoint extends AbstractActivity {
     private Waypoint waypoint;
-    private LocationManager lm;
+
 
     /**
      * Loads the activity on creation (using a bundle if one is present)
@@ -35,20 +30,15 @@ public class CreateWaypoint extends AbstractActivity implements LocationListener
             // Do stuff
         }
 
-        // Set up location updates (this class implements a Listener)
-        lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30000, 10, this);
-
         // Initialise Waypoint Object.
         waypoint = new Waypoint();
     }
 
     /**
      * Called when "Create" button in the UI is clicked.
-     * Initialises a new Waypoint object with text specified in UI.
+     * Adds data to the current Waypoint object with text specified in UI.
      */
-    public void finishWaypoint(View v){     // TODO PLEASE CAN SOMEONE CHANGE THE NAME OF THIS METHOD
-                                            // TODO IT LOOKS TOO MUCH LIKE A CONSTRUCTOR
+    public void finishWaypoint(View v){
         String wpTitle = ((TextView)findViewById(R.id.wptitle_box)).getText().toString();
         String wpShortDesc = ((TextView)findViewById(R.id.wpshortdesc_box)).getText().toString();
 
@@ -57,31 +47,10 @@ public class CreateWaypoint extends AbstractActivity implements LocationListener
 
         Intent returnIntent = new Intent();
         returnIntent.putExtra("data", waypoint);
-        setResult(RESULT_OK,returnIntent);
+        setResult(RESULT_OK, returnIntent);
 
         finish();
     }
-
-    /*
-     * ****************************************************************
-     *                      Location interaction                      *
-     * ****************************************************************
-     */
-    /**
-     * Obtain coordinates from Android system and add to current Waypoint.
-     */
-    // Adapted from: https://sites.google.com/site/androidhowto/how-to-1/using-the-gps
-    @Override
-    public void onLocationChanged(Location loc) {
-        // TODO - add to waypoint object
-    }
-
-    @Override
-    public void onProviderDisabled(String s) {}
-    @Override
-    public void onProviderEnabled(String s) {}
-    @Override
-    public void onStatusChanged(String s, int i, Bundle b) {}
 
     /*
      * ****************************************************************
@@ -105,7 +74,7 @@ public class CreateWaypoint extends AbstractActivity implements LocationListener
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CAMERA_REQ_CODE && resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK && requestCode == CAMERA_REQ_CODE) {
             Bundle extras = data.getExtras();
             Bitmap b = (Bitmap) extras.get("data"); // This may be null - so test for null below
 
@@ -138,7 +107,7 @@ public class CreateWaypoint extends AbstractActivity implements LocationListener
         byte[] b = baos.toByteArray();
         String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
 
-        Log.e(TAG, imageEncoded);
+        Log.v(TAG, imageEncoded);
         return imageEncoded;
     }
 }

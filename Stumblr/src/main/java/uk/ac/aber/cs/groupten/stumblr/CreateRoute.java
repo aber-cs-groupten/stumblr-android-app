@@ -1,13 +1,18 @@
 package uk.ac.aber.cs.groupten.stumblr;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import uk.ac.aber.cs.groupten.stumblr.data.Route;
 
-public class CreateRoute extends DataEntryActivity {
+public class CreateRoute extends DataEntryActivity implements LocationListener {
+    private LocationManager lm;
     private Route r;
 
     /**
@@ -19,13 +24,12 @@ public class CreateRoute extends DataEntryActivity {
         // Called by super().onCreate
         setContentView(R.layout.activity_create_route);
 
+        // Set up location updates (this class implements a Listener)
+        lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30000, 10, this);
+
         // Create new blank Route object
         r = new Route();
-    }
-
-    // TODO remove this method... shouldn't be here!
-    public void end(View view) {
-        finish();
     }
 
     /**
@@ -48,4 +52,20 @@ public class CreateRoute extends DataEntryActivity {
         i.putExtra("route", r);
         startActivity(i);
     }
+
+    /**
+     * Obtain coordinates from Android system and add to current Waypoint.
+     * Adapted from: https://sites.google.com/site/androidhowto/how-to-1/using-the-gps
+     */
+    @Override
+    public void onLocationChanged(Location loc) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {}
+    @Override
+    public void onProviderEnabled(String s) {}
+    @Override
+    public void onStatusChanged(String s, int i, Bundle b) {}
 }
