@@ -55,7 +55,6 @@ public class CreateWaypoint extends AbstractActivity implements LocationListener
         waypoint.setShortDesc(wpShortDesc);
     }
 
-
     /*
      * ****************************************************************
      *                      Location interaction                      *
@@ -64,7 +63,7 @@ public class CreateWaypoint extends AbstractActivity implements LocationListener
     /**
      * Obtain coordinates from Android system and add to current Waypoint.
      */
-    /* Adapted from: https://sites.google.com/site/androidhowto/how-to-1/using-the-gps */
+    // Adapted from: https://sites.google.com/site/androidhowto/how-to-1/using-the-gps
     @Override
     public void onLocationChanged(Location loc) {
         // TODO - add to waypoint object
@@ -124,38 +123,15 @@ public class CreateWaypoint extends AbstractActivity implements LocationListener
         //  startActivity(new Intent())
     }
 
-    // @TargetApi(8) // Target API level is 8
     public String encodeTobase64(Bitmap image)
     {
-        Bitmap immagex = image;
+        Bitmap imagex = image;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        immagex.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        imagex.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] b = baos.toByteArray();
         String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
 
-        Log.e("LOOK", imageEncoded);
+        Log.e(TAG, imageEncoded);
         return imageEncoded;
-    }
-
-    /* Commented out due to not being sure if it is necessary
-    public Bitmap decodeBase64(String input)
-    {
-        byte[] decodedByte = Base64.decode(input, 0);
-        return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
-    }
-    */
-
-
-    /*
-     * ****************************************************************
-     *                               Other                            *
-     * ****************************************************************
-     */
-    /**
-     * Set a timestamp on the current Waypoint.
-     */
-    public void getTimestamp() {
-        Date date = new Date();
-        Log.v(TAG, date.toString());
     }
 }
