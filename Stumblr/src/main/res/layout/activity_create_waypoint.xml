@@ -14,46 +14,48 @@
         android:onClick="startCamera" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/wp_title"
-        android:id="@+id/wpTitle" />
+        android:id="@+id/wpTitle"
+        android:layout_marginTop="30dp"
+        android:textIsSelectable="false"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginLeft="10dp" />
 
     <EditText
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:id="@+id/wptitle_box" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView"
+        android:id="@+id/wptitle_box"
+        android:inputType="textCapWords"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:minHeight="50dp"
-        android:minWidth="50dp"
-        android:maxHeight="320dp"
-        android:maxWidth="320dp" />
+        android:maxLength="50" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/wpDescription"
-        android:text="@string/wp_shortdesc" />
+        android:text="@string/wp_shortdesc"
+        android:layout_marginTop="30dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginLeft="10dp" />
 
     <EditText
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
+        android:inputType="textMultiLine|textCapSentences"
         android:ems="10"
-        android:id="@+id/wpshortdesc_box" />
+        android:id="@+id/wpshortdesc_box"
+        android:layout_gravity="center_horizontal"
+        android:maxLength="400" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create"
-        android:id="@+id/button"
+        android:text="@string/create"
+        android:id="@+id/create_button"
         android:layout_gravity="center_horizontal"
-        android:onClick="finishWaypoint" />
+        android:onClick="finishWaypoint"
+        android:layout_marginTop="30dp" />
 
 </LinearLayout>
