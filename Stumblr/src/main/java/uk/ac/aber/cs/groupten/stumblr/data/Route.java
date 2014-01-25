@@ -62,6 +62,13 @@ public class Route extends StumblrData implements Parcelable {
     }
 
     /**
+     * Initialise Route object from a Parcel.
+     */
+    public Route(Parcel p) {
+        readFromParcel(p);
+    }
+
+    /**
      * Checks if the data in the Route is valid or not, and returns a boolean.
      * @return If the data is valid or not. (true = valid)
      */
@@ -167,4 +174,18 @@ public class Route extends StumblrData implements Parcelable {
         inParcel.readList(this.route, null); // Not sure about these two lines yet
         inParcel.readList(this.coordinates, null); // TODO test this method
     }
+
+    /*
+     * From: http://stackoverflow.com/a/18167140
+     */
+    public static final Parcelable.Creator<Route> CREATOR
+            = new Parcelable.Creator<Route>() {
+        public Route createFromParcel(Parcel in) {
+            return new Route(in);
+        }
+
+        public Route[] newArray(int size) {
+            return new Route[size];
+        }
+    };
 }
