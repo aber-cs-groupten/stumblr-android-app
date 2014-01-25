@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.LinkedList;
 
@@ -63,7 +64,8 @@ public class FinishRoute extends AbstractActivity {
      * Posts the data to the server
      */
     public void postData(View view) {
-        new NetworkTask().execute();
+        Toast.makeText(getBaseContext(), "(Didn't) Upload file!", 5);
+        //new NetworkTask().execute();
     }
 
     private JSONObject getData() {
