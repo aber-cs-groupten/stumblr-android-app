@@ -20,7 +20,9 @@ import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
  * For more information on creating a ListView
  */
 public class WaypointList extends AbstractActivity {
-    ListView listView;
+    private LinkedList<String> menuItems;// = new LinkedList<String>();
+    private ListView listView;
+    private Route route;
 
     /**
      * Loads the activity on creation (using a bundle if one is present)
@@ -29,13 +31,15 @@ public class WaypointList extends AbstractActivity {
 
     //                  V THIS IS TEST DATA V
     Route route = new Route("Test Title", "Test Short Description", "Test Long Description");
-    private LinkedList<String> menuItems = new LinkedList<String>();
+
 
     public void stumblrOnCreate(Bundle savedInstanceState) {
         // Called by super().onCreate
-        setContentView(R.layout.activity_abstract);
+        setContentView(R.layout.activity_waypoint_list);
 
-        if (savedInstanceState == null) {
+        route = new Route();
+
+        if (savedInstanceState != null) {
             // do stuff
         }
 
@@ -46,9 +50,7 @@ public class WaypointList extends AbstractActivity {
          * Also useful:
          * http://www.vogella.com/tutorials/AndroidListView/article.html
          */
-        setContentView(R.layout.activity_waypoint_list);
         listView = (ListView) findViewById(R.id.listView);
-
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, menuItems);
