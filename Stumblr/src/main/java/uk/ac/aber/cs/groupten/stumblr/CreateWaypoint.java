@@ -1,11 +1,8 @@
 package uk.ac.aber.cs.groupten.stumblr;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -14,14 +11,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
-import java.util.Date;
 
-import uk.ac.aber.cs.groupten.stumblr.data.Route;
 import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
 
-public class CreateWaypoint extends AbstractActivity implements LocationListener {
+public class CreateWaypoint extends AbstractActivity {
     private Waypoint waypoint;
-    private LocationManager lm;
+
 
     /**
      * Loads the activity on creation (using a bundle if one is present)
@@ -34,10 +29,6 @@ public class CreateWaypoint extends AbstractActivity implements LocationListener
         if (savedInstanceState == null) {
             // Do stuff
         }
-
-        // Set up location updates (this class implements a Listener)
-        lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30000, 10, this);
 
         // Initialise Waypoint Object.
         waypoint = new Waypoint();
@@ -60,27 +51,6 @@ public class CreateWaypoint extends AbstractActivity implements LocationListener
 
         finish();
     }
-
-    /*
-     * ****************************************************************
-     *                      Location interaction                      *
-     * ****************************************************************
-     */
-    /**
-     * Obtain coordinates from Android system and add to current Waypoint.
-     */
-    // Adapted from: https://sites.google.com/site/androidhowto/how-to-1/using-the-gps
-    @Override
-    public void onLocationChanged(Location loc) {
-        // TODO - add to waypoint object
-    }
-
-    @Override
-    public void onProviderDisabled(String s) {}
-    @Override
-    public void onProviderEnabled(String s) {}
-    @Override
-    public void onStatusChanged(String s, int i, Bundle b) {}
 
     /*
      * ****************************************************************

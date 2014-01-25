@@ -8,7 +8,8 @@
     android:longClickable="true"
     android:textAlignment="inherit"
     android:visibility="visible"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:weightSum="1">
 
 
     <TextView
@@ -23,10 +24,10 @@
     <EditText
         android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
         android:ems="10"
-        android:id="@+id/shortDescriptionBox"
-        android:layout_gravity="center_horizontal" />
+        android:id="@+id/routeDescriptionBox"
+        android:layout_gravity="center_horizontal"
+        android:inputType="textCapWords|textAutoCorrect" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -34,32 +35,30 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/short_desc"
         android:id="@+id/routeDescription"
-        android:layout_marginTop="80dip"
-        android:layout_marginLeft="10dip" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:id="@+id/shortDescriptionBox"
-        android:minWidth="320dip"
-        android:layout_marginLeft="10dip"
         android:layout_gravity="center_horizontal"
-        android:inputType="textMultiLine"
-        android:minLines="5"
-        android:maxLines="5" />
+        android:inputType="text" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/long_desc"
-        android:id="@+id/textView" />
+        android:id="@+id/textView"
+        android:layout_marginLeft="10dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginTop="20dp" />
 
     <EditText
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:id="@+id/longDescriptionBox"
         android:minWidth="320dip"
-        android:layout_marginLeft="10dip"
         android:layout_gravity="center_horizontal"
         android:inputType="textMultiLine"
         android:minLines="5"

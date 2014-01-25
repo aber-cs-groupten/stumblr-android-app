@@ -125,6 +125,14 @@ public class Route extends StumblrData implements Parcelable {
     }
 
     /**
+     * Adds an item to the list of coordinates.
+     * @param location The Location object to add.
+     */
+    public void addCoordinate(Location location) {
+        this.coordinates.addLast(location);
+    }
+
+    /**
      * Returns the long description of the Route.
      * @return The long description of the Route.
      */
@@ -175,11 +183,11 @@ public class Route extends StumblrData implements Parcelable {
         inParcel.readList(this.coordinates, null); // TODO test this method
     }
 
-    /*
+    /**
+     * Private class that helps create a Parcelable.
      * From: http://stackoverflow.com/a/18167140
      */
-    public static final Parcelable.Creator<Route> CREATOR
-            = new Parcelable.Creator<Route>() {
+    public static final Parcelable.Creator<Route> CREATOR = new Parcelable.Creator<Route>() {
         public Route createFromParcel(Parcel in) {
             return new Route(in);
         }
