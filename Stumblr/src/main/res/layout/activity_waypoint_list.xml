@@ -10,13 +10,39 @@
         android:id="@+id/listView"
         android:layout_gravity="center_horizontal" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/finish_route"
-        android:id="@+id/finish_route"
-        android:layout_gravity="center_horizontal"
-        android:longClickable="false"
-        android:onClick="finishRoute" />
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </TableLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/finish_route"
+            android:id="@+id/button2"
+            android:layout_gravity="right"
+            android:maxWidth="150dp"
+            android:longClickable="true"
+            android:minWidth="150dp"
+            android:layout_marginRight="30dp"
+            android:onClick="finishRoute" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_waypoint"
+            android:id="@+id/add_waypoint_button"
+            android:layout_gravity="left"
+            android:layout_marginLeft="30dp"
+            android:singleLine="false"
+            android:maxWidth="150dp"
+            android:minWidth="150dp"
+            android:onClick="startCreateWaypointIntent" />
+    </FrameLayout>
 
 </LinearLayout>
