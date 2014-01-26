@@ -8,6 +8,8 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
@@ -32,6 +34,8 @@ public class CreateWaypoint extends AbstractActivity {
 
         // Initialise Waypoint Object.
         waypoint = new Waypoint();
+        // See: http://stackoverflow.com/a/2059394
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     /**
@@ -66,7 +70,6 @@ public class CreateWaypoint extends AbstractActivity {
             startActivityForResult(cameraIntent, CAMERA_REQ_CODE);
         }
 
-        // TODO - test return value with ImageView in R.layout.activity_create_waypoint
         // TODO - add Bitmap to waypoint object
     }
 
@@ -79,10 +82,14 @@ public class CreateWaypoint extends AbstractActivity {
             Bitmap b = (Bitmap) extras.get("data"); // This may be null - so test for null below
 
             if (b != null) {
+                findViewById(R.id.imageView).setBackgroundResource(0);
+                ((ImageView) findViewById(R.id.imageView)).setImageBitmap(b);
+
                 // Log message containing dimensions of image
                 String imgDimensions = "Image captured. Height: " +
                         String.valueOf(b.getHeight()) +
                         " Width: " + String.valueOf(b.getWidth());
+
                 Log.v(TAG, imgDimensions);
             }
         }

@@ -1,24 +1,29 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:windowSoftInputMode="stateAlwaysHidden|adjustResize|adjustPan"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent"
+    android:windowSoftInputMode="stateAlwaysHidden|adjustResize|adjustPan" >
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:windowSoftInputMode="stateAlwaysHidden|adjustResize|adjustPan"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <Button
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/take_photo"
-            android:id="@+id/takePhoto"
+            android:id="@+id/imageView"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="40dip"
-            android:onClick="startCamera" />
+            android:minWidth="240dp"
+            android:minHeight="240dp"
+            android:onClick="startCamera"
+            android:background="@drawable/image_placeholder"
+            android:layout_marginTop="20dp"
+            android:contentDescription="@string/location_image"
+            android:clickable="true"
+            android:focusable="true" />
 
         <TextView
             android:layout_width="fill_parent"
