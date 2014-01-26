@@ -29,6 +29,7 @@ public class WaypointList extends AbstractActivity {
         // Called by super().onCreate
         setContentView(R.layout.activity_waypoint_list);
 
+        //TODO it should be getting the route from the previous screen
         route = new Route(); // Initialise Route object
 
         /*

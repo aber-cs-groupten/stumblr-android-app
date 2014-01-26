@@ -55,6 +55,7 @@ public class FinishRoute extends AbstractActivity {
                 return response;
             } catch (Exception e) {
                 Log.e(TAG, e.toString());
+                Toast.makeText(getBaseContext(), "(Didn't) Upload file!", Toast.LENGTH_LONG).show();
                 return null;
             }
         }
@@ -64,8 +65,7 @@ public class FinishRoute extends AbstractActivity {
      * Posts the data to the server
      */
     public void postData(View view) {
-        Toast.makeText(getBaseContext(), "(Didn't) Upload file!", Toast.LENGTH_LONG).show();
-        //new NetworkTask().execute();
+        new NetworkTask().execute();
     }
 
     private JSONObject getData() {
@@ -82,10 +82,10 @@ public class FinishRoute extends AbstractActivity {
             //walk.put("walkDistance", testRoute.getDistance());
             JSONArray coordinates = new JSONArray(testRoute.getCoordinateList());
             walk.put("walkCoordinates", coordinates);
-            JSONArray locations = new JSONArray();
+            JSONArray JSONWaypoints = new JSONArray();
             //Add data for each waypoint into the JSON package
             LinkedList<Waypoint> waypoints = testRoute.getWaypointList();
-            for(int i = 0; i < waypoints.size(); i++){
+            for(int i = 0; i < waypoints.size(); i++){ //TODO refactor this into a ForEach loop
                 Waypoint currentWaypoint = waypoints.get(i);
                 JSONObject currentJSONWaypoint = new JSONObject();
                 currentJSONWaypoint.put("title", currentWaypoint.getTitle());
@@ -95,9 +95,9 @@ public class FinishRoute extends AbstractActivity {
                 currentJSONWaypoint.put("image", currentWaypoint.getImage());
 
 
-                locations.put(i,currentJSONWaypoint);
+                JSONWaypoints.put(i, currentJSONWaypoint);
             }
-            walk.put("locations", locations);
+            walk.put("locations", JSONWaypoints);
             data.put("walk", walk);
         } catch (JSONException e) {
             e.printStackTrace();
