@@ -14,15 +14,12 @@ import java.util.LinkedList;
 import uk.ac.aber.cs.groupten.stumblr.data.Route;
 import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
 
-/**
- * http://developer.android.com/guide/topics/ui/layout/listview.html
- * For more information on creating a ListView
- */
 public class WaypointList extends AbstractActivity {
-    private ArrayAdapter<String> adapter; // TODO
+    private ArrayAdapter<String> adapter;
     private LinkedList<String> menuItems;
     private ListView listView;
     private Route route;
+    private String listEmptyString = "List is empty! Add a waypoint below...";
 
     /**
      * Loads the activity on creation (using a bundle if one is present)
@@ -32,20 +29,15 @@ public class WaypointList extends AbstractActivity {
         // Called by super().onCreate
         setContentView(R.layout.activity_waypoint_list);
 
-        route = new Route();
-
-        if (savedInstanceState != null) {
-            // do stuff
-        }
+        route = new Route(); // Initialise Route object
 
         /*
-         * See:
-         * http://androidexample.com/Create_A_Simple_Listview_-_Android_Example/index.php?view=article_discription&aid=65&aaid=90
-         *
-         * Also useful:
-         * http://www.vogella.com/tutorials/AndroidListView/article.html
+         * See: http://androidexample.com/Create_A_Simple_Listview_-_Android_Example/index.php?view=article_discription&aid=65&aaid=90
+         * and: http://developer.android.com/guide/topics/ui/layout/listview.html
+         * Also useful: http://www.vogella.com/tutorials/AndroidListView/article.html
          */
         menuItems = new LinkedList<String>();
+        menuItems.add(listEmptyString);
 
         listView = (ListView) findViewById(R.id.listView);
         adapter = new ArrayAdapter<String>(this,
@@ -63,9 +55,11 @@ public class WaypointList extends AbstractActivity {
 
                 // Show Alert
                 Toast.makeText(getApplicationContext(),
-                    "Position : " + position + "  ListItem : " + itemValue, Toast.LENGTH_LONG).show();
+                    "Position : " + position + "  ListItem : " + itemValue, Toast.LENGTH_SHORT).show();
             }
         });
+
+        drawWaypointList();
     }
 
     /**
@@ -92,6 +86,9 @@ public class WaypointList extends AbstractActivity {
                 Log.v(TAG, ("RESULT RETURNED: " + newWaypoint.getTitle()));
 
                 // Redraw the list of Waypoints
+                if (menuItems.getFirst() == listEmptyString) {
+                    menuItems.remove(listEmptyString);
+                }
                 drawWaypointList();
             }
         }
@@ -101,6 +98,8 @@ public class WaypointList extends AbstractActivity {
      * Renders Waypoint list on screen.
      */
     public void drawWaypointList() {
+        // Add each Waypoint to the list
+        // TODO perhaps tweak this method... its complexity is greater than necessary
         for(Waypoint currentWaypoint : route.getWaypointList()){
             String currentTitle = currentWaypoint.getTitle();
             if(! menuItems.contains(currentTitle)){
@@ -112,8 +111,8 @@ public class WaypointList extends AbstractActivity {
             Log.v(TAG, ("Number of Waypoints: " + menuItems.size()));
         }
 
-        adapter.notifyDataSetChanged();
-        listView.refreshDrawableState();
+        adapter.notifyDataSetChanged(); // Make sure that the adapter knows there is new data
+        listView.refreshDrawableState(); // Redraw the list on-screen
     }
 
     /**

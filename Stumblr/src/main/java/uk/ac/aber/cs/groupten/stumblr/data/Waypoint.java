@@ -5,13 +5,26 @@ import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.LinkedList;
-
 public class Waypoint extends StumblrData {
-    /* title and shortDesc are declared in StumblrData and are accessed through get/set methods */
 
+    // CONSTRUCTORS
+    /**
+     * Default constructor for Waypoint.
+     */
+    public Waypoint() {
+        initWaypoint();
+    }
+
+    /**
+     * Constructor for a Waypoint object from a Parcel.
+     */
+    public Waypoint(Parcel in) {
+        this.readFromParcel(in);
+    }
+
+    // INSTANCE VARIABLES
+
+    /* title and shortDesc are declared in StumblrData and are accessed through get/set methods */
     /**
      * Arrival timestamp for Waypoint.
      */
@@ -23,29 +36,9 @@ public class Waypoint extends StumblrData {
     private Bitmap image;
 
     /**
-     * Default constructor for Waypoint.
+     * Location for Waypoint
      */
-    public Waypoint() {
-        initWaypoint();
-    }
-
-    /**
-     * Constructor for a Waypoint object.
-     * @param title Title of the waypoint.
-     * @param shortDesc A short description.
-     */
-    public Waypoint(String title, String shortDesc) {
-        /* Calls superclass constructor */
-        super(title, shortDesc);
-        initWaypoint();
-    }
-
-    /**
-     * Constructor for a Waypoint object from a Parcel.
-     */
-    public Waypoint(Parcel in) {
-        this.readFromParcel(in);
-    }
+    private Location location;
 
     /**
      * Helper method for initialising Waypoint objects.
@@ -58,16 +51,9 @@ public class Waypoint extends StumblrData {
      * To be implemented.
      * @return Validity of data (true = valid)
      */
+    // TODO
     public boolean isValidData() {
         return false;
-    }
-
-    /**
-     * Sets the current image.
-     * @param image The image to add to the Waypoint.
-     */
-    public void setImage(Bitmap image) {
-        this.image = image;
     }
 
     /**

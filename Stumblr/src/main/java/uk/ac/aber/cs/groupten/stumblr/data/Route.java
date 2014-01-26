@@ -101,27 +101,11 @@ public class Route extends StumblrData implements Parcelable {
     }
 
     /**
-     * Sets the LinkedList of Waypoint objects.
-     * @param wl The list of waypoint objects.
-     */
-    public void setWaypointList(LinkedList<Waypoint> wl) {
-        this.route = wl;
-    }
-
-    /**
      * Returns list of coordinates.
      * @return The list of coordinates.
      */
     public LinkedList<Location> getCoordinateList() {
         return this.coordinates;
-    }
-
-    /**
-     * Sets the list of coordinates.
-     * @param list The list of coordinates.
-     */
-    public void setCoordinateList(LinkedList<Location> list) {
-        this.coordinates = list;
     }
 
     /**

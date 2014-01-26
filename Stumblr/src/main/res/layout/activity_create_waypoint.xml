@@ -1,61 +1,70 @@
-<LinearLayout
-    android:orientation="vertical"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:windowSoftInputMode="stateAlwaysHidden|adjustResize|adjustPan"
+    android:layout_height="fill_parent" >
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/take_photo"
-        android:id="@+id/takePhoto"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dip"
-        android:onClick="startCamera" />
-
-    <TextView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/wp_title"
-        android:id="@+id/wpTitle"
-        android:layout_marginTop="30dp"
-        android:textIsSelectable="false"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_marginLeft="10dp" />
+        android:layout_height="fill_parent"
+        android:windowSoftInputMode="stateAlwaysHidden|adjustResize|adjustPan"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <EditText
-        android:layout_width="320dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/wptitle_box"
-        android:inputType="textCapWords"
-        android:layout_gravity="center_horizontal"
-        android:maxLength="50" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/take_photo"
+            android:id="@+id/takePhoto"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dip"
+            android:onClick="startCamera" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/wpDescription"
-        android:text="@string/wp_shortdesc"
-        android:layout_marginTop="30dp"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_marginLeft="10dp" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/wp_title"
+            android:id="@+id/wpTitle"
+            android:layout_marginTop="30dp"
+            android:textIsSelectable="false"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_marginLeft="10dp" />
 
-    <EditText
-        android:layout_width="320dp"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine|textCapSentences"
-        android:ems="10"
-        android:id="@+id/wpshortdesc_box"
-        android:layout_gravity="center_horizontal"
-        android:maxLength="400" />
+        <EditText
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/wptitle_box"
+            android:inputType="textCapWords"
+            android:layout_gravity="center_horizontal"
+            android:maxLength="50" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/create"
-        android:id="@+id/create_button"
-        android:layout_gravity="center_horizontal"
-        android:onClick="finishWaypoint"
-        android:layout_marginTop="30dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/wpDescription"
+            android:text="@string/wp_shortdesc"
+            android:layout_marginTop="30dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_marginLeft="10dp" />
 
-</LinearLayout>
+        <EditText
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine|textCapSentences"
+            android:ems="10"
+            android:id="@+id/wpshortdesc_box"
+            android:layout_gravity="center_horizontal"
+            android:maxLength="400" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/create"
+            android:id="@+id/create_button"
+            android:layout_gravity="center_horizontal"
+            android:onClick="finishWaypoint"
+            android:layout_marginTop="30dp" />
+
+    </LinearLayout>
+
+</ScrollView>
