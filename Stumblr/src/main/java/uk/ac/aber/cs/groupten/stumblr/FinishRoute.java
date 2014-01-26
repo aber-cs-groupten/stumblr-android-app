@@ -64,7 +64,7 @@ public class FinishRoute extends AbstractActivity {
      * Posts the data to the server
      */
     public void postData(View view) {
-        Toast.makeText(getBaseContext(), "(Didn't) Upload file!", 5);
+        Toast.makeText(getBaseContext(), "(Didn't) Upload file!", Toast.LENGTH_LONG);
         //new NetworkTask().execute();
     }
 

@@ -2,7 +2,6 @@ package uk.ac.aber.cs.groupten.stumblr;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,6 +19,7 @@ import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
  * For more information on creating a ListView
  */
 public class WaypointList extends AbstractActivity {
+    private ArrayAdapter<String> adapter; // TODO
     private LinkedList<String> menuItems;
     private ListView listView;
     private Route route;
@@ -48,37 +48,23 @@ public class WaypointList extends AbstractActivity {
         menuItems = new LinkedList<String>();
 
         listView = (ListView) findViewById(R.id.listView);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, menuItems);
 
         // Assign adapter to ListView
         listView.setAdapter(adapter);
 
-
         // ListView Item Click Listener
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-
-                // ListView Clicked item index
-                int itemPosition = position;
-
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // ListView Clicked item value
-                String  itemValue    = (String) listView.getItemAtPosition(position);
-                //If the "Add Waypoint" button is pushed, start the Create Waypoint screen
-                if(itemValue.equals("Add Waypoint")){
-                    startActivityForResult(new Intent(getApplicationContext(), CreateWaypoint.class), 3141);
-                }
-                else{
-                    // Show Alert
-                    Toast.makeText(getApplicationContext(),
-                            "Position : " + itemPosition + "  ListItem : " + itemValue,Toast.LENGTH_LONG)
-                            .show();
-                }
-            }
+                String itemValue = (String) listView.getItemAtPosition(position);
 
+                // Show Alert
+                Toast.makeText(getApplicationContext(),
+                    "Position : " + position + "  ListItem : " + itemValue, Toast.LENGTH_LONG).show();
+            }
         });
     }
 
@@ -104,57 +90,37 @@ public class WaypointList extends AbstractActivity {
                 route.addWaypoint(newWaypoint);
                 // Log message containing the name of the route
                 Log.v(TAG, ("RESULT RETURNED: " + newWaypoint.getTitle()));
+
+                // Redraw the list of Waypoints
+                drawWaypointList();
             }
         }
     }
 
     /**
      * Renders Waypoint list on screen.
-     * @param r The Route object containing Waypoints to render.
      */
-    public void drawWaypointList(Route r) {
-        // Do nothing currently
-    }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        //When the screen is viewed, update the list and add the "Add Waypoint" button to the end
-        if(hasFocus){
-
-            //THIS IS TEST DATA
-            /*Waypoint testWaypoint1 = new Waypoint("Test1", "Test1Desc");
-            Waypoint testWaypoint2 = new Waypoint("Test2", "Test2Desc");
-            route.addWaypoint(testWaypoint1);
-            route.addWaypoint(testWaypoint2);
-            route.addWaypoint(testWaypoint2);*/
-            //ENDS TEST DATA
-
-            LinkedList<Waypoint> waypoints = route.getWaypointList();
-
-            for(Waypoint currentWaypoint: waypoints){
-                String currentTitle = currentWaypoint.getTitle();
-                if(!menuItems.contains(currentTitle)){
-                    menuItems.add(currentTitle);
-                }
+    public void drawWaypointList() {
+        for(Waypoint currentWaypoint : route.getWaypointList()){
+            String currentTitle = currentWaypoint.getTitle();
+            if(! menuItems.contains(currentTitle)){
+                menuItems.add(currentTitle);
             }
-
-            if(!menuItems.isEmpty()){
-                Log.v(TAG, ("Last menuItems Value " + menuItems.getLast()));
-            }
-
-            menuItems.add("Add Waypoint");
         }
-        //When the screen is un-viewed remove the "Add Waypoint" button
-        else{
-            menuItems.removeLast();
+
+        if(! menuItems.isEmpty()){
+            Log.v(TAG, ("Number of Waypoints: " + menuItems.size()));
         }
+
+        adapter.notifyDataSetChanged();
+        listView.refreshDrawableState();
     }
 
     /**
-     *
-     * @param v
+     * Starts the CreateWaypoint Intent, so that it returns a result.
+     * @param v The View object.
      */
-    /*public void startCreateWaypointIntent(View v) {
-        startActivity(new Intent(getApplicationContext(), CreateWaypoint.class));
-    }*/
+    public void startCreateWaypointIntent(View v) {
+        startActivityForResult(new Intent(getApplicationContext(), CreateWaypoint.class), 3141);
+    }
 }
