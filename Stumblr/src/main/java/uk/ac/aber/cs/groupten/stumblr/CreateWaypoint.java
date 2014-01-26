@@ -82,6 +82,9 @@ public class CreateWaypoint extends AbstractActivity {
             Bitmap b = (Bitmap) extras.get("data"); // This may be null - so test for null below
 
             if (b != null) {
+                // Set the Waypoint image.
+                waypoint.setImage(b);
+
                 findViewById(R.id.imageView).setBackgroundResource(0);
                 ((ImageView) findViewById(R.id.imageView)).setImageBitmap(b);
 

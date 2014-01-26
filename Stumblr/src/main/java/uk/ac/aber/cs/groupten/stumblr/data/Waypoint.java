@@ -57,11 +57,19 @@ public class Waypoint extends StumblrData {
     }
 
     /**
-     * Returns current image.
-     * @return The current image that the Waypoint has,
+     * Returns current Bitmap.
+     * @return The current Bitmap that the Waypoint has,
      */
     public Bitmap getImage() {
         return this.image;
+    }
+
+    /**
+     * Sets the current Bitmap.
+     * @param b The current Bitmap.
+     */
+    public void setImage(Bitmap b) {
+        this.image = b;
     }
 
     // TODO
