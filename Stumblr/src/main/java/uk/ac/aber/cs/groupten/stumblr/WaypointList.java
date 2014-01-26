@@ -32,6 +32,8 @@ public class WaypointList extends AbstractActivity {
         //TODO it should be getting the route from the previous screen
         route = new Route(); // Initialise Route object
 
+        
+
         /*
          * See: http://androidexample.com/Create_A_Simple_Listview_-_Android_Example/index.php?view=article_discription&aid=65&aaid=90
          * and: http://developer.android.com/guide/topics/ui/layout/listview.html

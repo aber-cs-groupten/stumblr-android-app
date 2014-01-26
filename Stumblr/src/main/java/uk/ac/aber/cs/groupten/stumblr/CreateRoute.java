@@ -13,7 +13,7 @@ import android.widget.TextView;
 import uk.ac.aber.cs.groupten.stumblr.data.Route;
 
 public class CreateRoute extends DataEntryActivity implements LocationListener {
-    private LocationManager lm;
+    private LocationManager lm; // TODO this could be a local variable
     private Route r;
 
     /**

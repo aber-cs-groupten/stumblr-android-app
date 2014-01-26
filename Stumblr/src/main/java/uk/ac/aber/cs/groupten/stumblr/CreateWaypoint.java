@@ -34,6 +34,8 @@ public class CreateWaypoint extends AbstractActivity {
 
         // Initialise Waypoint Object.
         waypoint = new Waypoint();
+
+        // Forces keyboard to close
         // See: http://stackoverflow.com/a/2059394
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }

@@ -5,10 +5,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.LinkedList;
+import java.util.Stack;
 
 public class Route extends StumblrData implements Parcelable {
-    private LinkedList<Location> coordinates;
-
     /**
      * Timestamp for start of walk.
      */
@@ -24,6 +23,11 @@ public class Route extends StumblrData implements Parcelable {
      * they create a Route.
      */
     private String longDesc;
+
+    /**
+     * The list of Location objects that reflect the coordinates of the walk.
+     */
+    private Stack<Location> coordinates;
 
     /**
      * A LinkedList of Waypoint objects that the Route comprises of.
@@ -42,7 +46,7 @@ public class Route extends StumblrData implements Parcelable {
      */
     private void initRoute() {
         // Initialise LinkedLists
-        this.coordinates = new LinkedList<Location>();
+        this.coordinates = new Stack<Location>();
         this.route = new LinkedList<Waypoint>();
 
         // Timestamp
@@ -85,14 +89,6 @@ public class Route extends StumblrData implements Parcelable {
     }
 
     /**
-     * Returns the last Waypoint in the Route.
-     * @return The last Waypoint in the Route.
-     */
-    public Waypoint getWaypoint() {
-        return this.route.getLast();
-    }
-
-    /**
      * Returns the LinkedList of Waypoint objects.
      * @return The LinkedList of Waypoint objects.
      */
@@ -104,7 +100,7 @@ public class Route extends StumblrData implements Parcelable {
      * Returns list of coordinates.
      * @return The list of coordinates.
      */
-    public LinkedList<Location> getCoordinateList() {
+    public Stack<Location> getCoordinateList() {
         return this.coordinates;
     }
 
@@ -113,7 +109,7 @@ public class Route extends StumblrData implements Parcelable {
      * @param location The Location object to add.
      */
     public void addCoordinate(Location location) {
-        this.coordinates.addLast(location);
+        this.coordinates.push(location);
     }
 
     /**
@@ -126,7 +122,7 @@ public class Route extends StumblrData implements Parcelable {
 
     /**
      * Sets the long description.
-     * @param longDesc
+     * @param longDesc A longer description of the Route.
      */
     public void setLongDesc(String longDesc) {
         this.longDesc = longDesc;
@@ -157,7 +153,7 @@ public class Route extends StumblrData implements Parcelable {
 
     /**
      * Reads Route data from a parcel.
-     * @param inParcel
+     * @param inParcel The parcel to read the Route from.
      */
     public void readFromParcel(Parcel inParcel) {
         this.setTitle(inParcel.readString());
