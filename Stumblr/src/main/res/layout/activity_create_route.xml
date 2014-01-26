@@ -67,7 +67,6 @@
             android:minWidth="320dip"
             android:layout_gravity="center_horizontal"
             android:inputType="textMultiLine|textCapSentences|textAutoCorrect"
-            android:minLines="5"
             android:maxLines="5"
             android:gravity="left|top"
             android:textAlignment="gravity" />

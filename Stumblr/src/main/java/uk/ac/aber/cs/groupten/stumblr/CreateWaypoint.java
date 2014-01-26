@@ -63,14 +63,13 @@ public class CreateWaypoint extends AbstractActivity {
      */
     /**
      * Obtain a photo from user and add it to current Waypoint.
+     * @param v The View object.
      */
     public void startCamera(View v) {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (cameraIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(cameraIntent, CAMERA_REQ_CODE);
         }
-
-        // TODO - add Bitmap to waypoint object
     }
 
     @Override
@@ -85,6 +84,7 @@ public class CreateWaypoint extends AbstractActivity {
                 // Set the Waypoint image.
                 waypoint.setImage(b);
 
+                // Update the ImageView in the UI
                 findViewById(R.id.imageView).setBackgroundResource(0);
                 ((ImageView) findViewById(R.id.imageView)).setImageBitmap(b);
 
