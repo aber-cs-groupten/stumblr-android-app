@@ -97,13 +97,13 @@ public class WaypointList extends AbstractActivity implements LocationListener {
         startService(i);
 
         IntentFilter filter = new IntentFilter();
-        filter.addAction(GPSService.intent_string);
+        filter.addAction(GPSService.INTENT_STRING);
 
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 Bundle b = intent.getExtras();
-                Location loc = (Location) b.get(GPSService.location_bundle_string);
+                Location loc = (Location) b.get(GPSService.LOC_BUNDLE_STRING);
 
                 if (loc != null) {
                     route.addCoordinate(loc);
