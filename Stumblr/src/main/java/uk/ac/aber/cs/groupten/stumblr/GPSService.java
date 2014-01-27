@@ -1,6 +1,7 @@
 package uk.ac.aber.cs.groupten.stumblr;
 
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -53,9 +54,9 @@ public class GPSService extends Service implements LocationListener {
 
         // Run as foreground task
         // See: http://stackoverflow.com/a/6636893
+        // TODO resume existing activity (come back to this after savedInstanceState)
         Notification notice = new NotificationCompat.Builder(getApplicationContext())
                 .setContentTitle("Stumblr is running...")
-                .setContentText("Stumblr is running...")
                 .setSmallIcon(R.drawable.ic_launcher)
                 .build();
 
