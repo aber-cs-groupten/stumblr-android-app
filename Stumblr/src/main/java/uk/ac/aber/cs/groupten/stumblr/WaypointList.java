@@ -2,6 +2,7 @@ package uk.ac.aber.cs.groupten.stumblr;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -20,10 +21,18 @@ import uk.ac.aber.cs.groupten.stumblr.data.Route;
 import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
 
 public class WaypointList extends AbstractActivity implements LocationListener {
-    private int WAYPOINT_INTENT = 3141;
+    // Constants
+    private final int WAYPOINT_INTENT = 3141;
+
+    // Location objects
+    private LocationManager lm;
+
+    // ListView objects
     private ArrayAdapter<String> adapter;
     private LinkedList<String> menuItems;
     private ListView listView;
+
+    // Data objects
     private Route route;
     private String listEmptyString = "List is empty! Add a waypoint below...";
 
@@ -39,22 +48,13 @@ public class WaypointList extends AbstractActivity implements LocationListener {
         route = (Route) extras.get("route");
 
         // Set up location updates (this class implements a Listener)
-        LocationManager lm;
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30000, 10, this);
 
+        lm.removeUpdates(this);
+
         initialiseListView(); // Sets up all of the variables necessary for the ListView
         drawWaypointList();
-    }
-
-    /**
-     * Passes the current Route object to FinishRoute and starts the activity.
-     * @param v The View object passed in by the Android OS.
-     */
-    public void finishRoute(View v) {
-        Intent i = new Intent(getApplicationContext(), FinishRoute.class);
-        i.putExtra("route", this.route);
-        startActivity(i);
     }
 
     /**
@@ -170,4 +170,16 @@ public class WaypointList extends AbstractActivity implements LocationListener {
     public void onProviderEnabled(String s) {}
     @Override
     public void onStatusChanged(String s, int i, Bundle b) {}
+
+    // Finishes the screen
+    /**
+     * Passes the current Route object to FinishRoute and starts the activity.
+     * @param v The View object passed in by the Android OS.
+     */
+    public void finishRoute(View v) {
+        lm.removeUpdates(this); // Stop receiving location updates - route is finished!x
+        Intent i = new Intent(getApplicationContext(), FinishRoute.class);
+        i.putExtra("route", this.route);
+        startActivity(i);
+    }
 }
