@@ -145,6 +145,7 @@ public class WaypointList extends AbstractActivity implements LocationListener {
         menuItems = new LinkedList<String>();
         menuItems.add(listEmptyString);
 
+        // Set ArrayAdapter and ListView up
         listView = (ListView) findViewById(R.id.listView);
         adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, menuItems);
@@ -173,10 +174,12 @@ public class WaypointList extends AbstractActivity implements LocationListener {
     public void drawWaypointList() {
         // Add each Waypoint to the list
         // TODO tweak this method... its complexity is greater than necessary
+
+        int i = 1;
         for(Waypoint currentWaypoint : route.getWaypointList()){
             String currentTitle = currentWaypoint.getTitle();
             if(! menuItems.contains(currentTitle)){
-                menuItems.add(currentTitle);
+                menuItems.add(i + ": " + currentTitle);
             }
         }
 
@@ -189,7 +192,13 @@ public class WaypointList extends AbstractActivity implements LocationListener {
      * @param v The View object.
      */
     public void startCreateWaypointIntent(View v) {
-        startActivityForResult(new Intent(getApplicationContext(), CreateWaypoint.class), WAYPOINT_INTENT);
+        Intent cwi = new Intent(getApplicationContext(), CreateWaypoint.class);
+
+        // Pop latest coordinate from stack and apply to Waypoint
+        cwi.putExtra("loc", route.getCoordinateList().pop());
+
+        // Begin activity
+        startActivityForResult(cwi, WAYPOINT_INTENT);
     }
 
     // Location interaction
@@ -204,7 +213,7 @@ public class WaypointList extends AbstractActivity implements LocationListener {
 
     /**
      * Prompt for GPS, and error handling
-     * REFERENCE: http://hedgehogjim.wordpress.com/2013/03/20/programmatically-enable-android-location-services/
+     * See: http://hedgehogjim.wordpress.com/2013/03/20/programmatically-enable-android-location-services/
      */
     @Override
     public void onProviderDisabled(String s) {
@@ -239,7 +248,7 @@ public class WaypointList extends AbstractActivity implements LocationListener {
      */
     public void confirmFinishRoute(View v) {
         new AlertDialog.Builder(this)
-                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setIcon(android.R.drawable.ic_dialog_info)
                 .setTitle("Finish Route")
                 .setMessage("Are you sure you want to finish recording the route?")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -258,13 +267,14 @@ public class WaypointList extends AbstractActivity implements LocationListener {
      * @param v The View object passed in by the Android OS.
      */
     public void finishRoute() {
+        // Calculate timestamp
         long s = route.getStartTime();
         long e = route.getCurrentTime();
         long l = e - s;
 
-        // Timestamp
+        // Apply timestamp
         route.setLengthTime(l);
-        Log.e(TAG, ("" + l));
+        Log.e(TAG, (String.valueOf(l)));
 
         // Start new intent, packaging current Route with it
         Intent i = new Intent(getApplicationContext(), FinishRoute.class);

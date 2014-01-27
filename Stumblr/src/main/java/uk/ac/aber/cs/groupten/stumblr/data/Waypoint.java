@@ -47,12 +47,27 @@ public class Waypoint extends StumblrData {
     }
 
     /**
-     * To be implemented.
-     * @return Validity of data (true = valid)
+     * Sets timestamp.
+     * @param l The timestamp.
      */
-    // TODO
-    public boolean isValidData() {
-        return false;
+    public void setTimestamp(long l) {
+        this.timestamp = l;
+    }
+
+    /**
+     * Returns timestamp.
+     * @return The timestamp.
+     */
+    public long getTimestamp() {
+        return this.timestamp;
+    }
+
+    /**
+     * Sets the current location.
+     * @param l The current location to set.
+     */
+    public void setLocation(Location l) {
+        this.location = l;
     }
 
     /**
@@ -69,12 +84,6 @@ public class Waypoint extends StumblrData {
      */
     public void setImage(Bitmap b) {
         this.image = b;
-    }
-
-    // TODO
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     /**
@@ -116,11 +125,8 @@ public class Waypoint extends StumblrData {
         }
     };
 
-    public void setTimestamp(long l) {
-        this.timestamp = l;
-    }
-
-    public long getTimestamp() {
-        return this.timestamp;
+    @Override // Unused
+    public int describeContents() {
+        return 0;
     }
 }

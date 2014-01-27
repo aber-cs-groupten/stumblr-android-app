@@ -2,6 +2,7 @@ package uk.ac.aber.cs.groupten.stumblr;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
+import uk.ac.aber.cs.groupten.stumblr.data.StumblrData;
 import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
 
 public class CreateWaypoint extends AbstractActivity {
@@ -26,12 +28,18 @@ public class CreateWaypoint extends AbstractActivity {
         // Called by super().onCreate
         setContentView(R.layout.activity_create_waypoint);
 
-        if (savedInstanceState == null) {
-            // Do stuff
-        }
-
         // Initialise Waypoint Object.
         waypoint = new Waypoint();
+
+        // Unbundle Location from WaypointList
+        Bundle b = getIntent().getExtras();
+
+        Location tempLocation = (Location) b.get("loc");
+        if (tempLocation != null) {
+            waypoint.setLocation(tempLocation);
+        } else {
+            Log.e(TAG, "Location passed into CreateWaypoint is null!");
+        }
 
         // Forces keyboard to close
         // See: http://stackoverflow.com/a/2059394
@@ -47,7 +55,7 @@ public class CreateWaypoint extends AbstractActivity {
         String wpShortDesc = ((TextView)findViewById(R.id.wpshortdesc_box)).getText().toString();
 
         // checking the length of the text fields
-        if (wpTitle.length() > 3) {
+        if (StumblrData.isValidData(wpTitle) && StumblrData.isValidData(wpShortDesc)) {
             waypoint.setTitle(wpTitle);
             waypoint.setShortDesc(wpShortDesc);
 
