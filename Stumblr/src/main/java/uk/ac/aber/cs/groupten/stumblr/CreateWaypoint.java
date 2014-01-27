@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
 
@@ -43,14 +44,21 @@ public class CreateWaypoint extends AbstractActivity {
         String wpTitle = ((TextView)findViewById(R.id.wptitle_box)).getText().toString();
         String wpShortDesc = ((TextView)findViewById(R.id.wpshortdesc_box)).getText().toString();
 
-        waypoint.setTitle(wpTitle);
-        waypoint.setShortDesc(wpShortDesc);
+        // checking the length of the text fields
+        if (wpTitle.length() > 3) {
+            waypoint.setTitle(wpTitle);
+            waypoint.setShortDesc(wpShortDesc);
 
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra("data", waypoint);
-        setResult(RESULT_OK, returnIntent);
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("data", waypoint);
+            setResult(RESULT_OK, returnIntent);
 
-        finish();
+            finish();
+        }
+        else {
+            // insufficient title length
+            Toast.makeText(getBaseContext(), "The waypoint title is to short.", Toast.LENGTH_LONG).show();
+        }
     }
 
     /*
