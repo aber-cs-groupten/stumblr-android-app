@@ -1,8 +1,10 @@
 package uk.ac.aber.cs.groupten.stumblr;
 
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.Service;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
@@ -41,8 +43,6 @@ public class GPSService extends Service implements LocationListener {
      */
     @Override
     public int onStartCommand(Intent intent, int flags, int startID) {
-        // TODO run as AsyncTask?
-
         // Set up location updates (this class implements a Listener)
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30000, 10, this);
@@ -61,19 +61,6 @@ public class GPSService extends Service implements LocationListener {
         return 0;
     }
 
-    /**
-     *
-     * @param intent
-     * @return
-     */
-    public IBinder onBind(Intent intent) {
-        // TODO
-        return null;
-    }
-
-    /**
-     *
-     */
     @Override
     public void onDestroy() {
         lm.removeUpdates(this); // Remove locationManager updates
@@ -98,4 +85,8 @@ public class GPSService extends Service implements LocationListener {
     public void onProviderEnabled(String s) {}
     @Override
     public void onStatusChanged(String s, int i, Bundle b) {}
+
+    public IBinder onBind(Intent intent) { // Unused
+        return null;
+    }
 }
