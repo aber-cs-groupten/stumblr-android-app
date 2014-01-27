@@ -35,7 +35,6 @@ public class WaypointList extends AbstractActivity implements LocationListener {
         // Called by super().onCreate
         setContentView(R.layout.activity_waypoint_list);
 
-        //TODO it should be getting the route from the previous screen
         Bundle extras = getIntent().getExtras();
         route = (Route) extras.get("route");
 
