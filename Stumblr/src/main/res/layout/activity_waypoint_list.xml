@@ -1,48 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:windowSoftInputMode="stateAlwaysHidden|adjustResize|adjustPan" >
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="450dp"
-        android:id="@+id/listView"
-        android:layout_gravity="center_horizontal" />
-
-    <TableLayout
-        android:layout_width="match_parent"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    </TableLayout>
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/listView"
+            android:layout_gravity="center_horizontal" />
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/finish_route"
-            android:id="@+id/button2"
-            android:layout_gravity="right"
-            android:maxWidth="150dp"
-            android:longClickable="true"
-            android:minWidth="150dp"
-            android:layout_marginRight="30dp"
-            android:onClick="finishRoute" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_waypoint"
+                android:id="@+id/add_waypoint_button"
+                android:layout_gravity="bottom|left"
+                android:layout_marginLeft="0dp"
+                android:singleLine="false"
+                android:maxWidth="150dp"
+                android:minWidth="150dp"
+                android:onClick="startCreateWaypointIntent"
+                android:layout_alignParentStart="true" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/add_waypoint"
-            android:id="@+id/add_waypoint_button"
-            android:layout_gravity="left"
-            android:layout_marginLeft="30dp"
-            android:singleLine="false"
-            android:maxWidth="150dp"
-            android:minWidth="150dp"
-            android:onClick="startCreateWaypointIntent" />
-    </FrameLayout>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/finish_route"
+                android:id="@+id/finish_route_button"
+                android:layout_gravity="right"
+                android:maxWidth="150dp"
+                android:longClickable="true"
+                android:minWidth="150dp"
+                android:onClick="finishRoute" />
+        </TableLayout>
 
-</LinearLayout>
+    </LinearLayout>
+
+</ScrollView>
