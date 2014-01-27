@@ -3,6 +3,7 @@ package uk.ac.aber.cs.groupten.stumblr.data;
 import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.util.LinkedList;
 import java.util.Stack;
@@ -17,6 +18,7 @@ public class Route extends StumblrData implements Parcelable {
      * Timestamp for end of walk.
      */
     private long endTime;
+    private long lengthTime;
 
     /**
      * A slightly longer description of the contents of the route. Set by the user when
@@ -45,9 +47,7 @@ public class Route extends StumblrData implements Parcelable {
      * Helper method for constructor
      */
     private void initRoute() {
-        initLists(); // Initialise List and Stack
-        // Timestamp
-        startTime = getCurrentTime();
+       initLists(); // Initialise List and Stack
     }
 
     private void initLists() {
@@ -181,4 +181,28 @@ public class Route extends StumblrData implements Parcelable {
             return new Route[size];
         }
     };
+
+    public long getStartTime() {
+        return startTime;
+    }
+    public void setStartTime() {
+        this.startTime = getCurrentTime();
+    }
+
+    public long getEndTime() {
+        return endTime;
+    }
+    public void setEndTime(long l) {
+        this.endTime = l;
+    }
+
+    public long getLengthTime() {
+        return lengthTime;
+    }
+    public void setLengthTime(long l) {
+        this.lengthTime = l;
+    }
+    public long getLengthTimeHours() {
+        return (lengthTime / 3600000);
+    }
 }
