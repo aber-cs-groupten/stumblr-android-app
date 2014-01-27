@@ -39,6 +39,10 @@ public class FinishRoute extends AbstractActivity {
         // Receive Route object
         Bundle extras = getIntent().getExtras();
         route = (Route) extras.get("route");
+
+        // Log a few messages just to make sure
+        Log.v(TAG, route.getTitle());
+        Log.v(TAG, "Route list size...:" + String.valueOf(route.getWaypointList().size()));
     }
 
     /*
