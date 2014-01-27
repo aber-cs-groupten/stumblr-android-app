@@ -1,63 +1,89 @@
-<LinearLayout
-    android:orientation="vertical"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:clickable="false"
-    android:longClickable="true"
-    android:textAlignment="inherit"
-    android:visibility="visible">
+    android:windowSoftInputMode="stateAlwaysHidden|adjustResize|adjustPan" >
 
-
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/route_title"
-        android:id="@+id/routeTitle"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="10dp" />
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:clickable="false"
+        android:longClickable="true"
+        android:textAlignment="inherit"
+        android:visibility="visible"
+        android:orientation="vertical"
+        android:weightSum="1">
 
-    <EditText
-        android:layout_width="320dp"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:ems="10"
-        android:id="@+id/routeDescriptionBox"
-        android:layout_gravity="center_horizontal" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/route_title"
+            android:id="@+id/routeTitle"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="10dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/route_desc"
-        android:id="@+id/routeDescription"
-        android:layout_marginTop="80dip"
-        android:layout_marginLeft="10dip" />
+        <EditText
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/routeTitleBox"
+            android:layout_gravity="center_horizontal"
+            android:inputType="textCapWords|textAutoCorrect" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/routeDescriptionBox"
-        android:minWidth="320dip"
-        android:layout_marginLeft="10dip"
-        android:layout_gravity="center_horizontal"
-        android:inputType="textMultiLine"
-        android:minLines="5"
-        android:maxLines="5" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/short_desc"
+            android:id="@+id/routeDescription"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="30dp" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/next"
-        android:id="@+id/nextButton"
-        android:enabled="true"
-        android:clickable="true"
-        android:focusableInTouchMode="false"
-        android:focusable="false"
-        android:layout_marginTop="30dip"
-        android:layout_gravity="center_horizontal" />
+        <EditText
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/shortDescriptionBox"
+            android:layout_gravity="center_horizontal"
+            android:inputType="textCapSentences|textAutoCorrect"
+            android:maxLength="100" />
 
-</LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/long_desc"
+            android:id="@+id/textView"
+            android:layout_marginLeft="10dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_marginTop="20dp" />
+
+        <EditText
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/longDescriptionBox"
+            android:minWidth="320dip"
+            android:layout_gravity="center_horizontal"
+            android:inputType="textMultiLine|textCapSentences|textAutoCorrect"
+            android:maxLines="5"
+            android:gravity="left|top"
+            android:textAlignment="gravity"
+            android:maxLength="1000" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/next"
+            android:id="@+id/nextButton"
+            android:enabled="true"
+            android:clickable="true"
+            android:focusableInTouchMode="false"
+            android:focusable="false"
+            android:layout_marginTop="30dip"
+            android:layout_gravity="center_horizontal"
+            android:onClick="startWaypointListIntent" />
+
+    </LinearLayout>
+
+</ScrollView>

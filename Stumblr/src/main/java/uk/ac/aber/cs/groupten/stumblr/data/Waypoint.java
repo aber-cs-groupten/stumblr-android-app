@@ -2,15 +2,32 @@ package uk.ac.aber.cs.groupten.stumblr.data;
 
 import android.graphics.Bitmap;
 import android.location.Location;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-import java.util.Date;
-import java.util.LinkedList;
-
-/**
- * Created by charles on 29/11/13.
- */
 public class Waypoint extends StumblrData {
+    // CONSTRUCTORS
+    /**
+     * Default constructor for Waypoint.
+     */
+    public Waypoint() {
+        initWaypoint();
+    }
+
+    /**
+     * Constructor for a Waypoint object from a Parcel.
+     */
+    public Waypoint(Parcel in) {
+        this.readFromParcel(in);
+    }
+
+    // INSTANCE VARIABLES
+
     /* title and shortDesc are declared in StumblrData and are accessed through get/set methods */
+    /**
+     * Arrival timestamp for Waypoint.
+     */
+    private long timestamp;
 
     /**
      * Image contained within Waypoint.
@@ -18,83 +35,84 @@ public class Waypoint extends StumblrData {
     private Bitmap image;
 
     /**
-     * Time at which Waypoint was created.
+     * Location for Waypoint
      */
-    private Date timestamp;
+    private Location location;
 
     /**
-     * List of coordinates (from the last location to the current location)
+     * Helper method for initialising Waypoint objects.
      */
-    private LinkedList<Location> coordList;
-
-    private int index;
-
-    /**
-     * Constructor for a Waypoint object.
-     * @param title Title of the waypoint.
-     * @param shortDesc A short description.
-     */
-    public Waypoint(String title, String shortDesc, int index) {
-        /* Calls superclass constructor */
-        super(title, shortDesc);
-
-        /* Sets index variable (used for locating position in array */
-        this.index = index;
-
-        /* Uses Android system to get time. */
-        this.timestamp = new Date();
-        /* Initialise LinkedList */
-        this.coordList = new LinkedList<Location>();
+    private void initWaypoint() {
+        timestamp = getCurrentTime();
     }
 
     /**
      * To be implemented.
      * @return Validity of data (true = valid)
      */
+    // TODO
     public boolean isValidData() {
         return false;
     }
 
     /**
-     * Add a coordinate to the list.
-     * @param c The location to be added to the tail of the LinkedList.
-     */
-    public void addCoordinate(Location c) {
-        this.coordList.addLast(c);
-    }
-
-    /**
-     * Returns coordinate instance at specified index.
-     * @param index Specified index of coordinate.
-     * @return The specified coordinate.
-     */
-    public Location getCoordinate(int index) {
-        return this.coordList.get(index);
-    }
-
-    /**
-     * Sets the current image.
-     * @param image The image to add to the Waypoint.
-     */
-    public void setImage(Bitmap image) {
-        this.image = image;
-    }
-
-    /**
-     * Returns current image.
-     * @return The current image that the Waypoint has,
+     * Returns current Bitmap.
+     * @return The current Bitmap that the Waypoint has,
      */
     public Bitmap getImage() {
         return this.image;
     }
 
     /**
-     * Returns current timestamp.
-     * @return The current timestamp.
+     * Sets the current Bitmap.
+     * @param b The current Bitmap.
      */
-    public Date getTimestamp() {
-        return this.timestamp;
+    public void setImage(Bitmap b) {
+        this.image = b;
     }
 
+    // TODO
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
+    /**
+     * Writes the Waypoint into a Parcel for moving between Activities.
+     * @param parcel The parcel to be written to.
+     * @param i Flags.
+     */
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeLong(this.timestamp);
+        parcel.writeString(this.getTitle());
+        parcel.writeString(this.getShortDesc());
+        parcel.writeValue(this.image);
+    }
+
+    /**
+     * Reads Route data from a parcel.
+     * @param inParcel
+     */
+    public void readFromParcel(Parcel inParcel) {
+        this.timestamp = inParcel.readLong();
+        this.setTitle(inParcel.readString());
+        this.setShortDesc(inParcel.readString());
+        this.image = (Bitmap) inParcel.readValue(null); // TODO test this. Not sure.
+
+    }
+
+    /*
+     * From: http://stackoverflow.com/a/18167140
+     */
+    public static final Parcelable.Creator<Waypoint> CREATOR
+            = new Parcelable.Creator<Waypoint>() {
+        public Waypoint createFromParcel(Parcel in) {
+            return new Waypoint(in);
+        }
+
+        public Waypoint[] newArray(int size) {
+            return new Waypoint[size];
+        }
+    };
 }

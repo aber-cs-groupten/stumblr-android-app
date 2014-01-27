@@ -1,9 +1,15 @@
 package uk.ac.aber.cs.groupten.stumblr.data;
 
+import android.os.Parcelable;
+
+import java.util.Calendar;
+
 /**
  * Abstract class containing basic common structure for all Stumblr data formats.
  */
-public abstract class StumblrData {
+public abstract class StumblrData implements Parcelable {
+    public static final String TAG = "STUMBLR";
+
     /**
      * The title of the given piece of data. This can be extended to Waypoints, Routes
      * and any other piece of relevant data inside the structure of Stumblr.
@@ -15,6 +21,13 @@ public abstract class StumblrData {
      * extended to other component classes of StumblrData
      */
     private String shortDesc;
+
+    /**
+     * Default constructor
+     */
+    public StumblrData() {
+        // do nothing
+    }
 
     /**
      * @param title The title to set.
@@ -34,6 +47,15 @@ public abstract class StumblrData {
     public abstract boolean isValidData();
 
     /**
+     * Returns current time.
+     * @return The current time.
+     */
+    public long getCurrentTime() {
+        Calendar c = Calendar.getInstance();
+        return c.getTimeInMillis();
+    }
+
+    /**
      * Returns the title.
      * @return this.title
      */
@@ -50,18 +72,29 @@ public abstract class StumblrData {
     }
 
     /**
-     * Returns the short description
-     * @return this.shortDesc
+     * Returns the short description.
+     * @return shortDesc
      */
     public String getShortDesc() {
         return this.shortDesc;
     }
 
     /**
-     * Sets the current short description.
-     * @param shortDesc The short description to set.
+     * Sets the short description.
+     * @param shortDesc
      */
-    public void getShortDesc(String shortDesc) {
+    public void setShortDesc(String shortDesc) {
         this.shortDesc = shortDesc;
+    }
+
+    /**
+     * Sanitises given text by removing prohibited characters.
+     * @param input The text to sanitise.
+     * @return The sanitised string.
+     */
+    public String sanitiseStringInput(String input) {
+        // Replaces ALL characters not defined in the regular expression below
+        String sanitised = input.replaceAll("[^a-zA-Z0-9,.!?:;-]*", "");
+        return sanitised;
     }
 }

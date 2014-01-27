@@ -1,52 +1,75 @@
-<LinearLayout
-    android:orientation="vertical"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:windowSoftInputMode="stateAlwaysHidden|adjustResize|adjustPan" >
 
-    <Button
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/take_photo"
-        android:id="@+id/takePhoto"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dip"
-        android:onClick="getImage" />
+        android:windowSoftInputMode="stateAlwaysHidden|adjustResize|adjustPan"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:minHeight="50dp"
-        android:minWidth="50dp"
-        android:maxHeight="320dp"
-        android:maxWidth="320dp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:layout_gravity="center_horizontal"
+            android:minWidth="240dp"
+            android:minHeight="240dp"
+            android:onClick="startCamera"
+            android:background="@drawable/image_placeholder"
+            android:layout_marginTop="20dp"
+            android:contentDescription="@string/location_image"
+            android:clickable="true"
+            android:focusable="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="GPS Update Count"
-        android:id="@+id/gpsUpdates"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/wp_title"
+            android:id="@+id/wpTitle"
+            android:layout_marginTop="30dp"
+            android:textIsSelectable="false"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_marginLeft="10dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Lat"
-        android:id="@+id/latitude"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp" />
+        <EditText
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/wptitle_box"
+            android:inputType="textCapWords"
+            android:layout_gravity="center_horizontal"
+            android:maxLength="50" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Lon"
-        android:id="@+id/longitude"
-        android:layout_gravity="center_horizontal" />
-</LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/wpDescription"
+            android:text="@string/wp_shortdesc"
+            android:layout_marginTop="30dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_marginLeft="10dp" />
+
+        <EditText
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine|textCapSentences"
+            android:ems="10"
+            android:id="@+id/wpshortdesc_box"
+            android:layout_gravity="center_horizontal"
+            android:maxLength="100" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/create"
+            android:id="@+id/create_button"
+            android:layout_gravity="center_horizontal"
+            android:onClick="finishWaypoint"
+            android:layout_marginTop="30dp" />
+
+    </LinearLayout>
+
+</ScrollView>

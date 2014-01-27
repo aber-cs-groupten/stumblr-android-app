@@ -1,9 +1,15 @@
 package uk.ac.aber.cs.groupten.stumblr;
 
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
+
+import java.io.ByteArrayOutputStream;
+import java.util.LinkedList;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -15,21 +21,29 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import uk.ac.aber.cs.groupten.stumblr.data.Route;
+import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
 
-public abstract class FinishRoute extends AbstractActivity {
+public class FinishRoute extends AbstractActivity {
+    private Route route;
+
     /**
      * Loads the activity on creation (using a bundle if one is present)
      * @param savedInstanceState The bundle containing the saved instance state.
      */
     public void stumblrOnCreate(Bundle savedInstanceState) {
         // Called by super().onCreate
-        setContentView(R.layout.activity_abstract);
+        setContentView(R.layout.activity_finish_route);
 
-        if (savedInstanceState == null) {
-            // Do stuff
-        }
+        // TODO stuff with savedInstanceState
+
+        // Receive Route object
+        Bundle extras = getIntent().getExtras();
+        route = (Route) extras.get("route");
+
+        // Log a few messages just to make sure
+        Log.v(TAG, route.getTitle());
+        Log.v(TAG, "Route list size...:" + String.valueOf(route.getWaypointList().size()));
     }
-
 
     /*
      * ****************************************************************
@@ -51,12 +65,12 @@ public abstract class FinishRoute extends AbstractActivity {
                 HttpResponse response = httpclient.execute(httppost);
                 return response;
             } catch (Exception e) {
-                Log.e("ERROR", e.toString());
+                Log.e(TAG, "IM NOT WORKING " + e.toString());
+                Toast.makeText(getBaseContext(), "(Didn't) Upload file!", Toast.LENGTH_LONG).show();
                 return null;
             }
         }
     }
-
 
     /**
      * Posts the data to the server
@@ -70,17 +84,34 @@ public abstract class FinishRoute extends AbstractActivity {
         JSONObject data = new JSONObject();
         try {
             JSONObject walk = new JSONObject();
-            walk.put("walkTitle", "Road Runner");
-            walk.put("shortDescription", "meep meep!");
-            walk.put("longDescription", "meep meep meep meep!");
-            walk.put("walkHours", 42.0);
-            walk.put("walkDistance", 42.0);
-            JSONArray locations = new JSONArray();
-            locations.put(1);
-            locations.put(2);
-            locations.put(3);
-            locations.put(4);
-            walk.put("locations", locations);
+            //Get data out of the Route object and add to the JSON package
+            walk.put("walkTitle", route.getTitle());
+            walk.put("shortDescription", route.getShortDesc());
+            walk.put("longDescription", route.getLongDesc());
+            //walk.put("walkHours", testRoute.getTime());
+            //walk.put("walkDistance", testRoute.getDistance());
+            JSONArray coordinates = new JSONArray(route.getCoordinateList());
+            walk.put("walkCoordinates", coordinates);
+            JSONArray JSONWaypoints = new JSONArray();
+            //Add data for each waypoint into the JSON package
+            LinkedList<Waypoint> waypoints = route.getWaypointList();
+            for(int i = 0; i < waypoints.size(); i++){ //TODO refactor this into a ForEach loop
+                Waypoint currentWaypoint = waypoints.get(i);
+                JSONObject currentJSONWaypoint = new JSONObject();
+                currentJSONWaypoint.put("title", currentWaypoint.getTitle());
+                currentJSONWaypoint.put("description", currentWaypoint.getShortDesc());
+                //currentJSONWaypoint.put("coordinates", currentWaypoint.getCoordinates());
+                //Get Image and Convert to base64
+                Bitmap image = currentWaypoint.getImage();
+                if (image != null) {
+                    String base64Image = encodeTobase64(image);
+                    currentJSONWaypoint.put("image", base64Image);
+                }
+
+
+                JSONWaypoints.put(i, currentJSONWaypoint);
+            }
+            walk.put("waypoints", JSONWaypoints);
             data.put("walk", walk);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -90,8 +121,26 @@ public abstract class FinishRoute extends AbstractActivity {
     // End HTTP POST
 
 
-    /**
-     * Will package and upload the current Route object.
+    /*
+     * ****************************************************************
+     *                         Base64 Encoding                        *
+     * ****************************************************************
      */
-    public abstract void uploadRoute(Route r);
+
+    // TODO @Martin - find source for this information and reference properly
+    public void startBase64Intent(View v) {
+        //  startActivity(new Intent())
+    }
+
+    public String encodeTobase64(Bitmap image)
+    {
+        Bitmap imagex = image;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        imagex.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
+
+        Log.v(TAG, imageEncoded);
+        return imageEncoded;
+    }
 }

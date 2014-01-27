@@ -1,24 +1,20 @@
 package uk.ac.aber.cs.groupten.stumblr;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.util.Date;
+import android.widget.Toast;
 
 import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
 
-public class CreateWaypoint extends AbstractActivity implements LocationListener {
-    private LocationManager lm;
-    private int gpsUpdateCount;
+public class CreateWaypoint extends AbstractActivity {
+    private Waypoint waypoint;
 
     /**
      * Loads the activity on creation (using a bundle if one is present)
@@ -32,48 +28,38 @@ public class CreateWaypoint extends AbstractActivity implements LocationListener
             // Do stuff
         }
 
-        // Set up location updates (this class implements a Listener)
-        lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        // TODO - use Daniel's code to determine best location based upon freshness, etc
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30000, 10, this);
+        // Initialise Waypoint Object.
+        waypoint = new Waypoint();
 
-        gpsUpdateCount = 0;
+        // Forces keyboard to close
+        // See: http://stackoverflow.com/a/2059394
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
-
-    /*
-     * ****************************************************************
-     *                      Location interaction                      *
-     * ****************************************************************
-     */
     /**
-     * Obtain coordinates from Android system and add to current Waypoint.
+     * Called when "Create" button in the UI is clicked.
+     * Adds data to the current Waypoint object with text specified in UI.
      */
-    /* Adapted from:
-     * https://sites.google.com/site/androidhowto/how-to-1/using-the-gps */
-    @Override
-    public void onLocationChanged(Location loc) {
-        String latString = "Lat: " + String.valueOf(loc.getLatitude());
-        String lonString = "Lon: " + String.valueOf(loc.getLongitude());
-        Log.v(TAG, latString + " " + lonString);
+    public void finishWaypoint(View v){
+        String wpTitle = ((TextView)findViewById(R.id.wptitle_box)).getText().toString();
+        String wpShortDesc = ((TextView)findViewById(R.id.wpshortdesc_box)).getText().toString();
 
-        ((TextView) findViewById(R.id.latitude)).setText(latString);
-        ((TextView) findViewById(R.id.longitude)).setText(lonString);
+        // checking the length of the text fields
+        if (wpTitle.length() > 3) {
+            waypoint.setTitle(wpTitle);
+            waypoint.setShortDesc(wpShortDesc);
 
-        gpsUpdateCount++;
-        ((TextView) findViewById(R.id.gpsUpdates)).setText(
-                "GPS Updates: " + String.valueOf(gpsUpdateCount));
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("data", waypoint);
+            setResult(RESULT_OK, returnIntent);
 
-        // TODO - add to waypoint object
+            finish();
+        }
+        else {
+            // insufficient title length
+            Toast.makeText(getBaseContext(), "The waypoint title is to short.", Toast.LENGTH_LONG).show();
+        }
     }
-
-    @Override
-    public void onProviderDisabled(String s) {}
-    @Override
-    public void onProviderEnabled(String s) {}
-    @Override
-    public void onStatusChanged(String s, int i, Bundle b) {}
-
 
     /*
      * ****************************************************************
@@ -82,46 +68,38 @@ public class CreateWaypoint extends AbstractActivity implements LocationListener
      */
     /**
      * Obtain a photo from user and add it to current Waypoint.
+     * @param v The View object.
      */
     public void startCamera(View v) {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (cameraIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(cameraIntent, CAMERA_REQ_CODE);
         }
-
-        // TODO - test return value with ImageView in R.layout.activity_create_waypoint
-        // TODO - add Bitmap to waypoint object
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CAMERA_REQ_CODE && resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK && requestCode == CAMERA_REQ_CODE) {
             Bundle extras = data.getExtras();
             Bitmap b = (Bitmap) extras.get("data"); // This may be null - so test for null below
 
             if (b != null) {
+                // Set the Waypoint image.
+                waypoint.setImage(b);
+
+                // Update the ImageView in the UI
+                findViewById(R.id.imageView).setBackgroundResource(0);
+                ((ImageView) findViewById(R.id.imageView)).setImageBitmap(b);
+
                 // Log message containing dimensions of image
                 String imgDimensions = "Image captured. Height: " +
                         String.valueOf(b.getHeight()) +
                         " Width: " + String.valueOf(b.getWidth());
+
                 Log.v(TAG, imgDimensions);
             }
         }
-    }
-
-
-    /*
-     * ****************************************************************
-     *                               Other                            *
-     * ****************************************************************
-     */
-    /**
-     * Set a timestamp on the current Waypoint.
-     */
-    public void getTimestamp() {
-        Date date = new Date();
-        Log.v(TAG, date.toString());
     }
 }

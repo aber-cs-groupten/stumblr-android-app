@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public abstract class DataEntryActivity extends ActionBarActivity {
+    public static final String TAG = "STUMBLR";
+
     /**
      * Load the activity on creation (using a bundle if one is present)
      * @param savedInstanceState The bundle containing the saved instance state.
