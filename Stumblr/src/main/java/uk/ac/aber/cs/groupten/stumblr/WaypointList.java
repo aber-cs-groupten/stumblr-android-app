@@ -166,10 +166,6 @@ public class WaypointList extends AbstractActivity implements LocationListener {
      **/
     @Override
     public void onProviderDisabled(String s) {
-        Intent gpsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-        startActivity(gpsIntent);
-        setContentView(R.layout.activity_create_route);
-
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Location Services Not Active");

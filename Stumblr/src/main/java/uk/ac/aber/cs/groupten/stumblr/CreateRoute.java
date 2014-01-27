@@ -23,7 +23,7 @@ public class CreateRoute extends DataEntryActivity {
     public void stumblrOnCreate(Bundle savedInstanceState) {
         // TODO stuff with savedinstancestate
         // Called by super().onCreate
-
+        setContentView(R.layout.activity_create_route);
         // Create new blank Route object
         route = new Route();
     }
