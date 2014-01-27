@@ -115,4 +115,12 @@ public class Waypoint extends StumblrData {
             return new Waypoint[size];
         }
     };
+
+    public void setTimestamp(long l) {
+        this.timestamp = l;
+    }
+
+    public long getTimestamp() {
+        return this.timestamp;
+    }
 }

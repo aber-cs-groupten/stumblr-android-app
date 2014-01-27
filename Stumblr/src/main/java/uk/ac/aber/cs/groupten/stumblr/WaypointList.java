@@ -54,6 +54,8 @@ public class WaypointList extends AbstractActivity implements LocationListener {
         // Receive Route object
         Bundle extras = getIntent().getExtras();
         route = (Route) extras.get("route");
+        // Timestamp
+        route.setStartTime();
 
         if (route != null) {
             initialiseListView(); // Sets up all of the variables necessary for the ListView
@@ -257,7 +259,12 @@ public class WaypointList extends AbstractActivity implements LocationListener {
      * Passes the current Route object to FinishRoute and starts the activity.
      * @param v The View object passed in by the Android OS.
      */
-    public void finishRoute() {
+    public void finishRoute(View v) {
+        long s = route.getStartTime();
+        long e = route.getCurrentTime();
+        long l = e - s;
+        route.setLengthTime(l);
+        Log.e(TAG, ("" + l));
         // Start new intent, packaging current Route with it
         Intent i = new Intent(getApplicationContext(), FinishRoute.class);
         i.putExtra("route", this.route);
