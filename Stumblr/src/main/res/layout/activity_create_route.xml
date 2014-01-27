@@ -17,7 +17,6 @@
         android:orientation="vertical"
         android:weightSum="1">
 
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,8 +29,7 @@
         <EditText
             android:layout_width="320dp"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:id="@+id/routeDescriptionBox"
+            android:id="@+id/routeTitleBox"
             android:layout_gravity="center_horizontal"
             android:inputType="textCapWords|textAutoCorrect" />
 

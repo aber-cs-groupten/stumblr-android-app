@@ -2,6 +2,7 @@ package uk.ac.aber.cs.groupten.stumblr;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,6 +16,7 @@ import uk.ac.aber.cs.groupten.stumblr.data.Route;
 import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
 
 public class WaypointList extends AbstractActivity {
+    private int WAYPOINT_INTENT = 3141;
     private ArrayAdapter<String> adapter;
     private LinkedList<String> menuItems;
     private ListView listView;
@@ -30,9 +32,16 @@ public class WaypointList extends AbstractActivity {
         setContentView(R.layout.activity_waypoint_list);
 
         //TODO it should be getting the route from the previous screen
-        route = new Route(); // Initialise Route object
+        Bundle extras = getIntent().getExtras();
+        route = (Route) extras.get("route");
 
-        
+        if (route == null) {
+            Log.e(TAG, "Route object was null...");
+            route = new Route();
+            // TODO
+        } else {
+            Log.v(TAG, "Route title passed into WaypointList: " + route.getTitle());
+        }
 
         /*
          * See: http://androidexample.com/Create_A_Simple_Listview_-_Android_Example/index.php?view=article_discription&aid=65&aaid=90
@@ -78,7 +87,7 @@ public class WaypointList extends AbstractActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 3141 && resultCode == RESULT_OK) {
+        if (requestCode == WAYPOINT_INTENT && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Waypoint newWaypoint = (Waypoint) extras.get("data"); // This may be null - so test for null below
 
@@ -103,6 +112,9 @@ public class WaypointList extends AbstractActivity {
     public void drawWaypointList() {
         // Add each Waypoint to the list
         // TODO perhaps tweak this method... its complexity is greater than necessary
+        if (route.getWaypointList() == null) {
+            Log.e(TAG, "route.WaypointList returns null?!");
+        }
         for(Waypoint currentWaypoint : route.getWaypointList()){
             String currentTitle = currentWaypoint.getTitle();
             if(! menuItems.contains(currentTitle)){
@@ -123,6 +135,6 @@ public class WaypointList extends AbstractActivity {
      * @param v The View object.
      */
     public void startCreateWaypointIntent(View v) {
-        startActivityForResult(new Intent(getApplicationContext(), CreateWaypoint.class), 3141);
+        startActivityForResult(new Intent(getApplicationContext(), CreateWaypoint.class), WAYPOINT_INTENT);
     }
 }

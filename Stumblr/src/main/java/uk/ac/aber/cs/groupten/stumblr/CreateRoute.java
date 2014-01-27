@@ -39,9 +39,14 @@ public class CreateRoute extends DataEntryActivity implements LocationListener {
      */
     public void startWaypointListIntent(View v) {
         // Get text from fields in UI
-        String title = ((TextView) findViewById(R.id.routeTitle)).getText().toString();
+        String title = ((TextView) findViewById(R.id.routeTitleBox)).getText().toString();
+        Log.v(TAG, title);
+
         String shortDesc = ((TextView) findViewById(R.id.shortDescriptionBox)).getText().toString();
+        Log.v(TAG, shortDesc);
+
         String longDesc = ((TextView) findViewById(R.id.longDescriptionBox)).getText().toString();
+        Log.v(TAG, longDesc);
 
         // Set parameters of current Route object
         r.setTitle(title);

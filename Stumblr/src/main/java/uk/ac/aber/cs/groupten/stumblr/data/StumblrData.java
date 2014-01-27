@@ -28,7 +28,7 @@ public abstract class StumblrData implements Parcelable {
      * Default constructor
      */
     public StumblrData() {
-        Log.v(TAG, "New StumblrData object created");
+        // do nothing
     }
 
     /**
