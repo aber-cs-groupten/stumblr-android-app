@@ -65,7 +65,7 @@ public class FinishRoute extends AbstractActivity {
                 HttpResponse response = httpclient.execute(httppost);
                 return response;
             } catch (Exception e) {
-                Log.e(TAG, e.toString());
+                Log.e(TAG, "IM NOT WORKING " + e.toString());
                 Toast.makeText(getBaseContext(), "(Didn't) Upload file!", Toast.LENGTH_LONG).show();
                 return null;
             }
@@ -102,8 +102,11 @@ public class FinishRoute extends AbstractActivity {
                 currentJSONWaypoint.put("description", currentWaypoint.getShortDesc());
                 //currentJSONWaypoint.put("coordinates", currentWaypoint.getCoordinates());
                 //Get Image and Convert to base64
-                String base64Image = encodeTobase64(currentWaypoint.getImage());
-                currentJSONWaypoint.put("image", base64Image);
+                Bitmap image = currentWaypoint.getImage();
+                if (image != null) {
+                    String base64Image = encodeTobase64(image);
+                    currentJSONWaypoint.put("image", base64Image);
+                }
 
 
                 JSONWaypoints.put(i, currentJSONWaypoint);
