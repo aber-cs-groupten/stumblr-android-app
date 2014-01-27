@@ -24,6 +24,8 @@ import uk.ac.aber.cs.groupten.stumblr.data.Route;
 import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
 
 public class FinishRoute extends AbstractActivity {
+    private Route route;
+
     /**
      * Loads the activity on creation (using a bundle if one is present)
      * @param savedInstanceState The bundle containing the saved instance state.
@@ -32,9 +34,11 @@ public class FinishRoute extends AbstractActivity {
         // Called by super().onCreate
         setContentView(R.layout.activity_finish_route);
 
-        if (savedInstanceState == null) {
-            // Do stuff
-        }
+        // TODO stuff with savedInstanceState
+
+        // Receive Route object
+        Bundle extras = getIntent().getExtras();
+        route = (Route) extras.get("route");
     }
 
     /*

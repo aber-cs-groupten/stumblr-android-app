@@ -44,14 +44,13 @@ public class WaypointList extends AbstractActivity implements LocationListener {
         // Called by super().onCreate
         setContentView(R.layout.activity_waypoint_list);
 
+        // Receive Route object
         Bundle extras = getIntent().getExtras();
         route = (Route) extras.get("route");
 
         // Set up location updates (this class implements a Listener)
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30000, 10, this);
-
-        lm.removeUpdates(this);
 
         initialiseListView(); // Sets up all of the variables necessary for the ListView
         drawWaypointList();
@@ -125,18 +124,11 @@ public class WaypointList extends AbstractActivity implements LocationListener {
     public void drawWaypointList() {
         // Add each Waypoint to the list
         // TODO tweak this method... its complexity is greater than necessary
-        if (route.getWaypointList() == null) {
-            Log.e(TAG, "route.WaypointList returns null?!");
-        }
         for(Waypoint currentWaypoint : route.getWaypointList()){
             String currentTitle = currentWaypoint.getTitle();
             if(! menuItems.contains(currentTitle)){
                 menuItems.add(currentTitle);
             }
-        }
-
-        if(! menuItems.isEmpty()){
-            Log.v(TAG, ("Number of Waypoints: " + menuItems.size()));
         }
 
         adapter.notifyDataSetChanged(); // Make sure that the adapter knows there is new data
@@ -158,7 +150,6 @@ public class WaypointList extends AbstractActivity implements LocationListener {
      */
     @Override
     public void onLocationChanged(Location loc) {
-        Log.v(TAG, "Location updated.");
         route.addCoordinate(loc);
     }
 
@@ -177,7 +168,9 @@ public class WaypointList extends AbstractActivity implements LocationListener {
      * @param v The View object passed in by the Android OS.
      */
     public void finishRoute(View v) {
-        lm.removeUpdates(this); // Stop receiving location updates - route is finished!x
+        lm.removeUpdates(this); // Stop receiving location updates - route is finished!
+
+        // Start new intent, packaging current Route with it
         Intent i = new Intent(getApplicationContext(), FinishRoute.class);
         i.putExtra("route", this.route);
         startActivity(i);
