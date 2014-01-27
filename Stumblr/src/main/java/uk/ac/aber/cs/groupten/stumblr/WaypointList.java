@@ -1,10 +1,12 @@
 package uk.ac.aber.cs.groupten.stumblr;
 
+import android.content.BroadcastReceiver;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationListener;
@@ -27,6 +29,9 @@ import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
 public class WaypointList extends AbstractActivity implements LocationListener {
     // Constants
     private final int WAYPOINT_INTENT = 3141;
+
+    // GPS Broadcast receiver
+    private BroadcastReceiver receiver;
 
     // Location objects
     private LocationManager lm;
@@ -52,12 +57,10 @@ public class WaypointList extends AbstractActivity implements LocationListener {
         Bundle extras = getIntent().getExtras();
         route = (Route) extras.get("route");
 
-        // Set up location updates (this class implements a Listener)
-        lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30000, 10, this);
-
         initialiseListView(); // Sets up all of the variables necessary for the ListView
         drawWaypointList();
+
+        startGPSService();
     }
 
     /**
@@ -87,6 +90,31 @@ public class WaypointList extends AbstractActivity implements LocationListener {
                 drawWaypointList();
             }
         }
+    }
+
+    // GPS Service interaction
+    private void startGPSService() {
+        /*
+         * TODO test GPS service code
+         */
+        Intent i = new Intent(this, GPSService.class);
+        startService(i);
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(GPSService.INTENT_STRING);
+
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Bundle b = intent.getExtras();
+                Location loc = (Location) b.get(GPSService.LOC_BUNDLE_STRING);
+
+                if (loc != null) {
+                    route.addCoordinate(loc);
+                }
+            }
+        };
+        registerReceiver(receiver, filter);
     }
 
     // ListView interaction
@@ -190,11 +218,18 @@ public class WaypointList extends AbstractActivity implements LocationListener {
      * @param v The View object passed in by the Android OS.
      */
     public void finishRoute(View v) {
-        lm.removeUpdates(this); // Stop receiving location updates - route is finished!
-
         // Start new intent, packaging current Route with it
         Intent i = new Intent(getApplicationContext(), FinishRoute.class);
         i.putExtra("route", this.route);
         startActivity(i);
+    }
+
+    /**
+     *
+     */
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
     }
 }
