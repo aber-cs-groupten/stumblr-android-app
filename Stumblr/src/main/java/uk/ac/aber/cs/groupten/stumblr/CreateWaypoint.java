@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Calendar;
+
 import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
 
 public class CreateWaypoint extends AbstractActivity {
@@ -48,6 +50,10 @@ public class CreateWaypoint extends AbstractActivity {
         if (wpTitle.length() > 3) {
             waypoint.setTitle(wpTitle);
             waypoint.setShortDesc(wpShortDesc);
+
+            //set time stamp
+            Calendar c = Calendar.getInstance();
+            waypoint.setTimestamp(c.getTimeInMillis());
 
             Intent returnIntent = new Intent();
             returnIntent.putExtra("data", waypoint);
