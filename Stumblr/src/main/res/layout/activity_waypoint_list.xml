@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/finish_route"
                 android:id="@+id/finish_route_button"
-                android:onClick="finishRoute"
+                android:onClick="confirmFinishRoute"
                 android:layout_alignParentStart="true" />
 
     </LinearLayout>

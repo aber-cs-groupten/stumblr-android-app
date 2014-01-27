@@ -29,6 +29,8 @@ public class WaypointList extends AbstractActivity implements LocationListener {
 
     // GPS broadcast receiver
     private BroadcastReceiver receiver;
+    private Intent gpsServiceIntent;
+    private boolean serviceRunning = false;
 
     // ListView objects
     private ArrayAdapter<String> adapter;
@@ -39,8 +41,7 @@ public class WaypointList extends AbstractActivity implements LocationListener {
     private Route route;
     private final String listEmptyString = "List is empty! Add a waypoint below...";
 
-    // Intent for service
-    private Intent gpsServiceIntent;
+
 
     /**
      * Loads the activity on creation (using a bundle if one is present)
@@ -118,14 +119,18 @@ public class WaypointList extends AbstractActivity implements LocationListener {
             }
         };
         registerReceiver(receiver, filter);
+        serviceRunning = true;
     }
 
     /**
      * Halts the GPS service.
      */
     private void stopGPSService() {
-        stopService(gpsServiceIntent);
-        unregisterReceiver(receiver);
+        if (serviceRunning == true) {
+            stopService(gpsServiceIntent);
+            unregisterReceiver(receiver);
+        }
+        serviceRunning = false;
     }
 
     // ListView interaction
@@ -189,8 +194,6 @@ public class WaypointList extends AbstractActivity implements LocationListener {
         startActivityForResult(new Intent(getApplicationContext(), CreateWaypoint.class), WAYPOINT_INTENT);
     }
 
-
-
     // Location interaction
     /**
      * Obtain coordinates from Android system and add to current Waypoint.
@@ -233,6 +236,25 @@ public class WaypointList extends AbstractActivity implements LocationListener {
     public void onStatusChanged(String s, int i, Bundle b) {}
 
     // Finishes the screen
+    /**
+     * See: http://stackoverflow.com/a/2258147
+     */
+    public void confirmFinishRoute(View v) {
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Finish Route")
+                .setMessage("Are you sure you want to finish recording the route?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        WaypointList.this.finishRoute();
+                        WaypointList.this.finish();
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
+    }
+
     /**
      * Passes the current Route object to FinishRoute and starts the activity.
      * @param v The View object passed in by the Android OS.
