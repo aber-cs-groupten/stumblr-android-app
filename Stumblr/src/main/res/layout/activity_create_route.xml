@@ -47,7 +47,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/shortDescriptionBox"
             android:layout_gravity="center_horizontal"
-            android:inputType="textCapSentences|textAutoCorrect" />
+            android:inputType="textCapSentences|textAutoCorrect"
+            android:maxLength="100" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -67,7 +68,8 @@
             android:inputType="textMultiLine|textCapSentences|textAutoCorrect"
             android:maxLines="5"
             android:gravity="left|top"
-            android:textAlignment="gravity" />
+            android:textAlignment="gravity"
+            android:maxLength="1000" />
 
         <Button
             android:layout_width="wrap_content"

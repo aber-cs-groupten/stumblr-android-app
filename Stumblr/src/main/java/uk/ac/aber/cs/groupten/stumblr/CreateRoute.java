@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import uk.ac.aber.cs.groupten.stumblr.data.Route;
 
@@ -38,14 +39,29 @@ public class CreateRoute extends DataEntryActivity {
         String shortDesc = ((TextView) findViewById(R.id.shortDescriptionBox)).getText().toString();
         String longDesc = ((TextView) findViewById(R.id.longDescriptionBox)).getText().toString();
 
-        // Set parameters of current Route object
-        route.setTitle(title);
-        route.setShortDesc(shortDesc);
-        route.setLongDesc(longDesc);
+        // checking the length of the text fields
+        if (title.length() > 3) {
+            if (shortDesc.length() > 3) {
+                // Set parameters of current Route object
+                route.setTitle(title);
+                route.setShortDesc(shortDesc);
+                route.setLongDesc(longDesc);
 
-        // Start the new Activity
-        Intent i = new Intent(getApplicationContext(), WaypointList.class);
-        i.putExtra("route", route);
-        startActivity(i);
+                // Start the new Activity
+                Intent i = new Intent(getApplicationContext(), WaypointList.class);
+                i.putExtra("route", route);
+                startActivity(i);
+            }
+            else {
+                // insufficient shortDesc length
+                Toast.makeText(getBaseContext(), "The short description is to short.", Toast.LENGTH_LONG).show();
+            }
+        }
+        else {
+            // insufficient title length
+            Toast.makeText(getBaseContext(), "The title is to short.", Toast.LENGTH_LONG).show();
+        }
+
+
     }
 }
