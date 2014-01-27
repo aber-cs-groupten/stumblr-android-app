@@ -7,12 +7,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
@@ -30,11 +27,8 @@ public class WaypointList extends AbstractActivity implements LocationListener {
     // Constants
     private final int WAYPOINT_INTENT = 3141;
 
-    // GPS Broadcast receiver
+    // GPS broadcast receiver
     private BroadcastReceiver receiver;
-
-    // Location objects
-    private LocationManager lm;
 
     // ListView objects
     private ArrayAdapter<String> adapter;
@@ -43,7 +37,10 @@ public class WaypointList extends AbstractActivity implements LocationListener {
 
     // Data objects
     private Route route;
-    private String listEmptyString = "List is empty! Add a waypoint below...";
+    private final String listEmptyString = "List is empty! Add a waypoint below...";
+
+    // Intent for service
+    private Intent gpsServiceIntent;
 
     /**
      * Loads the activity on creation (using a bundle if one is present)
@@ -57,10 +54,13 @@ public class WaypointList extends AbstractActivity implements LocationListener {
         Bundle extras = getIntent().getExtras();
         route = (Route) extras.get("route");
 
-        initialiseListView(); // Sets up all of the variables necessary for the ListView
-        drawWaypointList();
-
-        startGPSService();
+        if (route != null) {
+            initialiseListView(); // Sets up all of the variables necessary for the ListView
+            drawWaypointList(); // Renders Waypoint list
+            startGPSService(); // Starts GPS service and sets up notification
+        } else {
+            Log.e(TAG, "Route object was null!");
+        }
     }
 
     /**
@@ -75,16 +75,17 @@ public class WaypointList extends AbstractActivity implements LocationListener {
 
         if (requestCode == WAYPOINT_INTENT && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
-            Waypoint newWaypoint = (Waypoint) extras.get("data"); // This may be null - so test for null below
+            Waypoint newWaypoint = (Waypoint) extras.get("data"); // This may be null
 
-            if (newWaypoint != null) {
+            if (newWaypoint != null) { // Test for null
                 // Update the route with the latest Waypoint
                 route.addWaypoint(newWaypoint);
+
                 // Log message containing the name of the route
                 Log.v(TAG, ("RESULT RETURNED: " + newWaypoint.getTitle()));
 
                 // Redraw the list of Waypoints
-                if (menuItems.getFirst() == listEmptyString) {
+                if (menuItems.getFirst().equals(listEmptyString)) {
                     menuItems.remove(listEmptyString);
                 }
                 drawWaypointList();
@@ -93,14 +94,14 @@ public class WaypointList extends AbstractActivity implements LocationListener {
     }
 
     // GPS Service interaction
+    /**
+     * Starts the GPS service.
+     */
     private void startGPSService() {
-        /*
-         * TODO test GPS service code
-         */
-        Intent i = new Intent(this, GPSService.class);
-        startService(i);
+        gpsServiceIntent = new Intent(this, GPSService.class);
+        startService(gpsServiceIntent);
 
-        IntentFilter filter = new IntentFilter();
+        IntentFilter filter = new IntentFilter(); // Filter for the correct intent
         filter.addAction(GPSService.INTENT_STRING);
 
         receiver = new BroadcastReceiver() {
@@ -109,12 +110,20 @@ public class WaypointList extends AbstractActivity implements LocationListener {
                 Bundle b = intent.getExtras();
                 Location loc = (Location) b.get(GPSService.LOC_BUNDLE_STRING);
 
-                if (loc != null) {
+                if (loc != null) { // Test for null
                     route.addCoordinate(loc);
                 }
             }
         };
         registerReceiver(receiver, filter);
+    }
+
+    /**
+     * Halts the GPS service.
+     */
+    private void stopGPSService() {
+        stopService(gpsServiceIntent);
+        unregisterReceiver(receiver);
     }
 
     // ListView interaction
@@ -150,6 +159,9 @@ public class WaypointList extends AbstractActivity implements LocationListener {
         });
     }
 
+
+
+    // Waypoint stuff
     /**
      * Renders Waypoint list on screen.
      */
@@ -175,6 +187,8 @@ public class WaypointList extends AbstractActivity implements LocationListener {
         startActivityForResult(new Intent(getApplicationContext(), CreateWaypoint.class), WAYPOINT_INTENT);
     }
 
+
+
     // Location interaction
     /**
      * Obtain coordinates from Android system and add to current Waypoint.
@@ -185,16 +199,18 @@ public class WaypointList extends AbstractActivity implements LocationListener {
         route.addCoordinate(loc);
     }
 
-    // These methods aren't used yet
-    // TODO @Martin may find these useful
-    /** ENABLE GPS PROMPT AND ERROR HANDLING
-      * REFERENCE: http://hedgehogjim.wordpress.com/2013/03/20/programmatically-enable-android-location-services/
-     **/
+    /**
+     * Prompt for GPS, and error handling
+     * REFERENCE: http://hedgehogjim.wordpress.com/2013/03/20/programmatically-enable-android-location-services/
+     */
     @Override
     public void onProviderDisabled(String s) {
+        // Build alert dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Location Services Not Active");
-        builder.setMessage("Please enable Location Services and GPS");
+        builder.setMessage("Please enable Location Services...");
+
+        // Set actions
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogInterface, int i) {
                 // Show location settings when the user acknowledges the alert dialog
@@ -202,6 +218,8 @@ public class WaypointList extends AbstractActivity implements LocationListener {
                 startActivity(intent);
             }
         });
+
+        // Create alert
         Dialog alertDialog = builder.create();
         alertDialog.setCanceledOnTouchOutside(false);
         alertDialog.show();
@@ -221,15 +239,8 @@ public class WaypointList extends AbstractActivity implements LocationListener {
         // Start new intent, packaging current Route with it
         Intent i = new Intent(getApplicationContext(), FinishRoute.class);
         i.putExtra("route", this.route);
-        startActivity(i);
-    }
 
-    /**
-     *
-     */
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unregisterReceiver(receiver);
+        stopGPSService();
+        startActivity(i);
     }
 }
