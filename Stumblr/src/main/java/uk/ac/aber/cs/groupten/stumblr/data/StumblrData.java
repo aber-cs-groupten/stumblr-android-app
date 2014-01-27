@@ -1,8 +1,6 @@
 package uk.ac.aber.cs.groupten.stumblr.data;
 
-import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import java.util.Calendar;
 
@@ -10,7 +8,7 @@ import java.util.Calendar;
  * Abstract class containing basic common structure for all Stumblr data formats.
  */
 public abstract class StumblrData implements Parcelable {
-    public final String TAG = "STUMBLR";
+    public static final String TAG = "STUMBLR";
 
     /**
      * The title of the given piece of data. This can be extended to Waypoints, Routes
