@@ -1,11 +1,14 @@
 package uk.ac.aber.cs.groupten.stumblr;
 
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.util.LinkedList;
 
 import org.apache.http.HttpResponse;
@@ -105,4 +108,28 @@ public class FinishRoute extends AbstractActivity {
         return data;
     }
     // End HTTP POST
+
+
+    /*
+     * ****************************************************************
+     *                         Base64 Encoding                        *
+     * ****************************************************************
+     */
+
+    // TODO @Martin - find source for this information and reference properly
+    public void startBase64Intent(View v) {
+        //  startActivity(new Intent())
+    }
+
+    public String encodeTobase64(Bitmap image)
+    {
+        Bitmap imagex = image;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        imagex.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
+
+        Log.v(TAG, imageEncoded);
+        return imageEncoded;
+    }
 }
