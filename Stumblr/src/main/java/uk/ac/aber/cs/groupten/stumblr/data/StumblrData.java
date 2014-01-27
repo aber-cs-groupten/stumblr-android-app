@@ -1,8 +1,12 @@
 package uk.ac.aber.cs.groupten.stumblr.data;
 
+import android.content.Intent;
 import android.os.Parcelable;
+import android.widget.Toast;
 
 import java.util.Calendar;
+
+import uk.ac.aber.cs.groupten.stumblr.WaypointList;
 
 /**
  * Abstract class containing basic common structure for all Stumblr data formats.
@@ -44,7 +48,14 @@ public abstract class StumblrData implements Parcelable {
      *
      * MUST be implemented in any subclasses.
      */
-    public abstract boolean isValidData();
+    public static boolean isValidData(String s) {
+        // Check the length of text fields
+        if (s.length() < 3) {
+            return false;
+        }
+
+        return true;
+    }
 
     /**
      * Returns current time.

@@ -1,17 +1,13 @@
 package uk.ac.aber.cs.groupten.stumblr;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import uk.ac.aber.cs.groupten.stumblr.data.Route;
+import uk.ac.aber.cs.groupten.stumblr.data.StumblrData;
 
 public class CreateRoute extends DataEntryActivity {
     private Route route;
@@ -39,9 +35,9 @@ public class CreateRoute extends DataEntryActivity {
         String shortDesc = ((TextView) findViewById(R.id.shortDescriptionBox)).getText().toString();
         String longDesc = ((TextView) findViewById(R.id.longDescriptionBox)).getText().toString();
 
-        // checking the length of the text fields
-        if (title.length() > 3) {
-            if (shortDesc.length() > 3) {
+        // Check the length of text fields
+        if (StumblrData.isValidData(title)) {
+            if (StumblrData.isValidData(shortDesc)) {
                 // Set parameters of current Route object
                 route.setTitle(title);
                 route.setShortDesc(shortDesc);
@@ -51,17 +47,13 @@ public class CreateRoute extends DataEntryActivity {
                 Intent i = new Intent(getApplicationContext(), WaypointList.class);
                 i.putExtra("route", route);
                 startActivity(i);
-            }
-            else {
+            } else {
                 // insufficient shortDesc length
-                Toast.makeText(getBaseContext(), "The short description is to short.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "The short description is too short.", Toast.LENGTH_LONG).show();
             }
-        }
-        else {
+        } else {
             // insufficient title length
-            Toast.makeText(getBaseContext(), "The title is to short.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "The title is too short.", Toast.LENGTH_LONG).show();
         }
-
-
     }
 }

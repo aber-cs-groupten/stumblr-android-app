@@ -41,8 +41,6 @@ public class WaypointList extends AbstractActivity implements LocationListener {
     private Route route;
     private final String listEmptyString = "List is empty! Add a waypoint below...";
 
-
-
     /**
      * Loads the activity on creation (using a bundle if one is present)
      * @param savedInstanceState The bundle containing the saved instance state.
@@ -54,9 +52,11 @@ public class WaypointList extends AbstractActivity implements LocationListener {
         // Receive Route object
         Bundle extras = getIntent().getExtras();
         route = (Route) extras.get("route");
+
         // Timestamp
         route.setStartTime();
 
+        // Check for null
         if (route != null) {
             initialiseListView(); // Sets up all of the variables necessary for the ListView
             drawWaypointList(); // Renders Waypoint list
@@ -166,8 +166,6 @@ public class WaypointList extends AbstractActivity implements LocationListener {
         });
     }
 
-
-
     // Waypoint stuff
     /**
      * Renders Waypoint list on screen.
@@ -259,16 +257,20 @@ public class WaypointList extends AbstractActivity implements LocationListener {
      * Passes the current Route object to FinishRoute and starts the activity.
      * @param v The View object passed in by the Android OS.
      */
-    public void finishRoute(View v) {
+    public void finishRoute() {
         long s = route.getStartTime();
         long e = route.getCurrentTime();
         long l = e - s;
+
+        // Timestamp
         route.setLengthTime(l);
         Log.e(TAG, ("" + l));
+
         // Start new intent, packaging current Route with it
         Intent i = new Intent(getApplicationContext(), FinishRoute.class);
         i.putExtra("route", this.route);
 
+        // Clean up
         stopGPSService();
         startActivity(i);
     }
