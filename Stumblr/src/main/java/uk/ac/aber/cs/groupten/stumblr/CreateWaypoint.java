@@ -99,27 +99,4 @@ public class CreateWaypoint extends AbstractActivity {
             }
         }
     }
-
-    /*
-     * ****************************************************************
-     *                         Base64 Encoding                        *
-     * ****************************************************************
-     */
-
-    // TODO @Martin - find source for this information and reference properly
-    public void startBase64Intent(View v) {
-        //  startActivity(new Intent())
-    }
-
-    public String encodeTobase64(Bitmap image)
-    {
-        Bitmap imagex = image;
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        imagex.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] b = baos.toByteArray();
-        String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
-
-        Log.v(TAG, imageEncoded);
-        return imageEncoded;
-    }
 }
