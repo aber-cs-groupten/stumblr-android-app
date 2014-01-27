@@ -1,9 +1,6 @@
 package uk.ac.aber.cs.groupten.stumblr;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -11,7 +8,6 @@ import android.widget.TextView;
 import uk.ac.aber.cs.groupten.stumblr.data.Route;
 
 public class CreateRoute extends DataEntryActivity {
-    private BroadcastReceiver receiver;
     private Route route;
 
     /**
@@ -26,23 +22,6 @@ public class CreateRoute extends DataEntryActivity {
 
         // Create new blank Route object
         route = new Route();
-
-        /*
-         * TODO test GPS service code
-         */
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("Stumblr is recording...");
-
-        receiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Bundle b = intent.getExtras();
-                b.get("lat");
-                b.get("lng");
-                // todo get coordinates from bundle, add to "route"
-            }
-        };
-        registerReceiver(receiver, filter);
     }
 
     /**
@@ -64,11 +43,5 @@ public class CreateRoute extends DataEntryActivity {
         Intent i = new Intent(getApplicationContext(), WaypointList.class);
         i.putExtra("route", route);
         startActivity(i);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unregisterReceiver(receiver);
     }
 }
