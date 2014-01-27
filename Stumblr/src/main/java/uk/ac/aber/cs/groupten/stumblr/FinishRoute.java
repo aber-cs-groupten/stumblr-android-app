@@ -1,14 +1,25 @@
 package uk.ac.aber.cs.groupten.stumblr;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.LinkedList;
 
 import org.apache.http.HttpResponse;
@@ -73,10 +84,27 @@ public class FinishRoute extends AbstractActivity {
     }
 
     /**
-     * Posts the data to the server
+     * Posts the data to the server. Check if internet is available first.
      */
     public void postData(View view) {
+        if (checkInternetEnabled() == true || checkWifiEnabled() == true){
         new NetworkTask().execute();
+        }
+        else{
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Unable to Access Internet");
+            builder.setMessage("Please enable Internet Services or Wifi");
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    // Show location settings when the user acknowledges the alert dialog
+                    Intent intent = new Intent(Settings.ACTION_SETTINGS);
+                    startActivity(intent);
+                }
+            });
+            Dialog alertDialog = builder.create();
+            alertDialog.setCanceledOnTouchOutside(false);
+            alertDialog.show();
+        }
     }
 
     private JSONObject getData() {
@@ -120,6 +148,50 @@ public class FinishRoute extends AbstractActivity {
     }
     // End HTTP POST
 
+    /** Ensuring Network Provider is Enabled before submitting route
+     *  REFERENCE - http://stackoverflow.com/questions/12806709/android-how-to-tell-if-mobile-network-data-is-enabled-or-disabled-even-when
+     **/
+    public boolean checkInternetEnabled() {
+
+        boolean mobileDataEnabled = false; // Assume disabled
+        Context context;
+        context = getApplicationContext();
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        Log.d("Connectivity Service", "Getting System Context");
+        try {
+            Class cmClass = Class.forName(cm.getClass().getName());
+            Method method = cmClass.getDeclaredMethod("getMobileDataEnabled");
+            method.setAccessible(true); // Make the method callable
+            // get the setting for "mobile data"
+            mobileDataEnabled = (Boolean)method.invoke(cm);
+
+            Log.d("No exceptions thrown", "Network available");
+            return mobileDataEnabled;
+
+        }
+        catch (Exception e){
+       // if(e instanceof ClassNotFoundException || e instanceof NoSuchMethodException ||
+         //       e instanceof IllegalAccessException || e instanceof InvocationTargetException )  {
+            //Connectivity Issue Handling
+   return mobileDataEnabled;
+        }
+       }
+
+    public boolean checkWifiEnabled(){
+        boolean wifiEnabled = false; //assume Wifi is disabled
+        ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        if (mWifi.isConnected()) {
+           wifiEnabled = true;
+            return wifiEnabled;
+        }
+        else{
+            return wifiEnabled;
+        }
+    }
+
+
+
 
     /*
      * ****************************************************************
@@ -127,7 +199,7 @@ public class FinishRoute extends AbstractActivity {
      * ****************************************************************
      */
 
-    // TODO @Martin - find source for this information and reference properly
+    // REFERENCE - http://stackoverflow.com/questions/20656649/how-to-convert-bitmap-to-png-and-then-to-base64-in-android
     public void startBase64Intent(View v) {
         //  startActivity(new Intent())
     }
