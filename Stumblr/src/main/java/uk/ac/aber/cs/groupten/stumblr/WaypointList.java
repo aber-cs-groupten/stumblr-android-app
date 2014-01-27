@@ -160,13 +160,10 @@ public class WaypointList extends AbstractActivity implements LocationListener {
     // These methods aren't used yet
     // TODO @Martin may find these useful
     /** ENABLE GPS PROMPT AND ERROR HANDLING
-        REFERENCE: http://hedgehogjim.wordpress.com/2013/03/20/programmatically-enable-android-location-services/
-        Get Location Manager and check for GPS & Network location services
-        Build the alert dialog
+      * REFERENCE: http://hedgehogjim.wordpress.com/2013/03/20/programmatically-enable-android-location-services/
      **/
     @Override
     public void onProviderDisabled(String s) {
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Location Services Not Active");
         builder.setMessage("Please enable Location Services and GPS");
