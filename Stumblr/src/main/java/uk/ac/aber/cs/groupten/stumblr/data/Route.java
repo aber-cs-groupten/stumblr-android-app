@@ -45,12 +45,15 @@ public class Route extends StumblrData implements Parcelable {
      * Helper method for constructor
      */
     private void initRoute() {
-        // Initialise LinkedLists
-        this.coordinates = new Stack<Location>();
-        this.route = new LinkedList<Waypoint>();
-
+        initLists(); // Initialise List and Stack
         // Timestamp
         startTime = getCurrentTime();
+    }
+
+    private void initLists() {
+        // Initialise Lists
+        this.coordinates = new Stack<Location>();
+        this.route = new LinkedList<Waypoint>();
     }
 
     /**
@@ -159,6 +162,8 @@ public class Route extends StumblrData implements Parcelable {
         this.setTitle(inParcel.readString());
         this.setShortDesc(inParcel.readString());
         this.setLongDesc(inParcel.readString());
+
+        initLists();
         inParcel.readList(this.route, null); // Not sure about these two lines yet
         inParcel.readList(this.coordinates, null); // TODO test this method
     }
