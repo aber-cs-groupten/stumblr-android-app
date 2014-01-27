@@ -1,6 +1,10 @@
 package uk.ac.aber.cs.groupten.stumblr;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.util.Log;
@@ -15,7 +19,7 @@ import java.util.LinkedList;
 import uk.ac.aber.cs.groupten.stumblr.data.Route;
 import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
 
-public class WaypointList extends AbstractActivity {
+public class WaypointList extends AbstractActivity implements LocationListener {
     private int WAYPOINT_INTENT = 3141;
     private ArrayAdapter<String> adapter;
     private LinkedList<String> menuItems;
@@ -35,19 +39,63 @@ public class WaypointList extends AbstractActivity {
         Bundle extras = getIntent().getExtras();
         route = (Route) extras.get("route");
 
-        if (route == null) {
-            Log.e(TAG, "Route object was null...");
-            route = new Route();
-            // TODO
-        } else {
-            Log.v(TAG, "Route title passed into WaypointList: " + route.getTitle());
-        }
+        // Set up location updates (this class implements a Listener)
+        LocationManager lm;
+        lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30000, 10, this);
 
-        /*
-         * See: http://androidexample.com/Create_A_Simple_Listview_-_Android_Example/index.php?view=article_discription&aid=65&aaid=90
-         * and: http://developer.android.com/guide/topics/ui/layout/listview.html
-         * Also useful: http://www.vogella.com/tutorials/AndroidListView/article.html
-         */
+        initialiseListView(); // Sets up all of the variables necessary for the ListView
+        drawWaypointList();
+    }
+
+    /**
+     * Passes the current Route object to FinishRoute and starts the activity.
+     * @param v The View object passed in by the Android OS.
+     */
+    public void finishRoute(View v) {
+        Intent i = new Intent(getApplicationContext(), FinishRoute.class);
+        i.putExtra("route", this.route);
+        startActivity(i);
+    }
+
+    /**
+     * Called when an Activity is dispatched for a result
+     * @param requestCode Integer relating the intent to a request
+     * @param resultCode Used to check if a request was successful
+     * @param data The Intent used
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == WAYPOINT_INTENT && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Waypoint newWaypoint = (Waypoint) extras.get("data"); // This may be null - so test for null below
+
+            if (newWaypoint != null) {
+                // Update the route with the latest Waypoint
+                route.addWaypoint(newWaypoint);
+                // Log message containing the name of the route
+                Log.v(TAG, ("RESULT RETURNED: " + newWaypoint.getTitle()));
+
+                // Redraw the list of Waypoints
+                if (menuItems.getFirst() == listEmptyString) {
+                    menuItems.remove(listEmptyString);
+                }
+                drawWaypointList();
+            }
+        }
+    }
+
+    // ListView interaction
+    /**
+     * Initialises the ListView and Adapter objects.
+     * See: http://androidexample.com/Create_A_Simple_Listview_-_Android_Example/index.php?view=article_discription&aid=65&aaid=90
+     * and: http://developer.android.com/guide/topics/ui/layout/listview.html
+     * Also useful: http://www.vogella.com/tutorials/AndroidListView/article.html
+     */
+    private void initialiseListView() {
+        // Initialise list of Strings to display in
         menuItems = new LinkedList<String>();
         menuItems.add(listEmptyString);
 
@@ -67,43 +115,9 @@ public class WaypointList extends AbstractActivity {
 
                 // Show Alert
                 Toast.makeText(getApplicationContext(),
-                    "Position : " + position + "  ListItem : " + itemValue, Toast.LENGTH_SHORT).show();
+                        "Position : " + position + "  ListItem : " + itemValue, Toast.LENGTH_SHORT).show();
             }
         });
-
-        drawWaypointList();
-    }
-
-    /**
-     * Passes the current Route object to FinishRoute and starts the activity.
-     */
-    public void finishRoute(View v) {
-        Intent i = new Intent(getApplicationContext(), FinishRoute.class);
-        i.putExtra("route", this.route);
-        startActivity(i);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == WAYPOINT_INTENT && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Waypoint newWaypoint = (Waypoint) extras.get("data"); // This may be null - so test for null below
-
-            if (newWaypoint != null) {
-                // Update the route with the latest waypoint
-                route.addWaypoint(newWaypoint);
-                // Log message containing the name of the route
-                Log.v(TAG, ("RESULT RETURNED: " + newWaypoint.getTitle()));
-
-                // Redraw the list of Waypoints
-                if (menuItems.getFirst() == listEmptyString) {
-                    menuItems.remove(listEmptyString);
-                }
-                drawWaypointList();
-            }
-        }
     }
 
     /**
@@ -111,7 +125,7 @@ public class WaypointList extends AbstractActivity {
      */
     public void drawWaypointList() {
         // Add each Waypoint to the list
-        // TODO perhaps tweak this method... its complexity is greater than necessary
+        // TODO tweak this method... its complexity is greater than necessary
         if (route.getWaypointList() == null) {
             Log.e(TAG, "route.WaypointList returns null?!");
         }
@@ -137,4 +151,24 @@ public class WaypointList extends AbstractActivity {
     public void startCreateWaypointIntent(View v) {
         startActivityForResult(new Intent(getApplicationContext(), CreateWaypoint.class), WAYPOINT_INTENT);
     }
+
+    // Location interaction
+    /**
+     * Obtain coordinates from Android system and add to current Waypoint.
+     * Adapted from: https://sites.google.com/site/androidhowto/how-to-1/using-the-gps
+     */
+    @Override
+    public void onLocationChanged(Location loc) {
+        Log.v(TAG, "Location updated.");
+        route.addCoordinate(loc);
+    }
+
+    // These methods aren't used yet
+    // TODO @Martin may find these useful
+    @Override
+    public void onProviderDisabled(String s) {}
+    @Override
+    public void onProviderEnabled(String s) {}
+    @Override
+    public void onStatusChanged(String s, int i, Bundle b) {}
 }

@@ -2,23 +2,18 @@ package uk.ac.aber.cs.groupten.stumblr;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.location.Location;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.ByteArrayOutputStream;
-
 import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
 
 public class CreateWaypoint extends AbstractActivity {
     private Waypoint waypoint;
-
 
     /**
      * Loads the activity on creation (using a bundle if one is present)
