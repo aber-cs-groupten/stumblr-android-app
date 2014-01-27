@@ -81,21 +81,20 @@ public class FinishRoute extends AbstractActivity {
 
     private JSONObject getData() {
         //Data to be sent:
-        Route testRoute = new Route("Test Title", "Test Short Description", "Test Long Description");
         JSONObject data = new JSONObject();
         try {
             JSONObject walk = new JSONObject();
             //Get data out of the Route object and add to the JSON package
-            walk.put("walkTitle", testRoute.getTitle());
-            walk.put("shortDescription", testRoute.getShortDesc());
-            walk.put("longDescription", testRoute.getLongDesc());
+            walk.put("walkTitle", route.getTitle());
+            walk.put("shortDescription", route.getShortDesc());
+            walk.put("longDescription", route.getLongDesc());
             //walk.put("walkHours", testRoute.getTime());
             //walk.put("walkDistance", testRoute.getDistance());
-            JSONArray coordinates = new JSONArray(testRoute.getCoordinateList());
+            JSONArray coordinates = new JSONArray(route.getCoordinateList());
             walk.put("walkCoordinates", coordinates);
             JSONArray JSONWaypoints = new JSONArray();
             //Add data for each waypoint into the JSON package
-            LinkedList<Waypoint> waypoints = testRoute.getWaypointList();
+            LinkedList<Waypoint> waypoints = route.getWaypointList();
             for(int i = 0; i < waypoints.size(); i++){ //TODO refactor this into a ForEach loop
                 Waypoint currentWaypoint = waypoints.get(i);
                 JSONObject currentJSONWaypoint = new JSONObject();
