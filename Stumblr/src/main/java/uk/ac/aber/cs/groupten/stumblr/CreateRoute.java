@@ -1,7 +1,12 @@
 package uk.ac.aber.cs.groupten.stumblr;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,7 +23,6 @@ public class CreateRoute extends DataEntryActivity {
     public void stumblrOnCreate(Bundle savedInstanceState) {
         // TODO stuff with savedinstancestate
         // Called by super().onCreate
-        setContentView(R.layout.activity_create_route);
 
         // Create new blank Route object
         route = new Route();

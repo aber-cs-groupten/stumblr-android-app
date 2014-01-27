@@ -1,6 +1,9 @@
 package uk.ac.aber.cs.groupten.stumblr;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.GpsStatus;
 import android.location.Location;
@@ -8,6 +11,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Parcel;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -155,8 +159,33 @@ public class WaypointList extends AbstractActivity implements LocationListener {
 
     // These methods aren't used yet
     // TODO @Martin may find these useful
+    /** ENABLE GPS PROMPT AND ERROR HANDLING
+        REFERENCE: http://hedgehogjim.wordpress.com/2013/03/20/programmatically-enable-android-location-services/
+        Get Location Manager and check for GPS & Network location services
+        Build the alert dialog
+     **/
     @Override
-    public void onProviderDisabled(String s) {}
+    public void onProviderDisabled(String s) {
+        Intent gpsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        startActivity(gpsIntent);
+        setContentView(R.layout.activity_create_route);
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Location Services Not Active");
+        builder.setMessage("Please enable Location Services and GPS");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // Show location settings when the user acknowledges the alert dialog
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
+            }
+        });
+        Dialog alertDialog = builder.create();
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.show();
+    }
+
     @Override
     public void onProviderEnabled(String s) {}
     @Override
