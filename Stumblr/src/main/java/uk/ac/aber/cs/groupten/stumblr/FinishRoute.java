@@ -80,25 +80,15 @@ public class FinishRoute extends AbstractActivity {
 
                 // Execute HTTP Post Request
                 HttpResponse response = httpclient.execute(httppost);
-                if(response.getStatusLine().getStatusCode() == 200){
-                    showToast("File Uploaded Correctly!", Toast.LENGTH_LONG);
-                    Log.e(TAG, "File Uploaded Correctly!");
-                }
-                else{
-                    showToast("File Upload Failed!", Toast.LENGTH_LONG);
-                    Log.e(TAG, "File Upload Failed!");
-                }
                 return response;
             } catch (Exception e) {
                 Log.e(TAG, "IM NOT WORKING " + e.toString());
-                showToast("(Didn't) Upload file!", Toast.LENGTH_LONG);
                 return null;
             }
         }
-    }
-
-    private void showToast(String message, int length){
-        Toast.makeText(getBaseContext(), message, length).show();
+        protected void onPostExecute (HttpResponse result){
+            Toast.makeText(getBaseContext(), "TEST "+result.getStatusLine().getStatusCode(), Toast.LENGTH_LONG).show();
+        }
     }
 
     /**
@@ -107,24 +97,7 @@ public class FinishRoute extends AbstractActivity {
     public void postData(View view) {
         if (checkInternetEnabled() == true || checkWifiEnabled() == true){
             new NetworkTask().execute();
-            new AlertDialog.Builder(this)
-                    .setIcon(android.R.drawable.ic_dialog_info)
-                    .setTitle("Please Select")
-                    .setMessage("Would you like to record another route?")
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            System.exit(0);
-                        }
-                    })
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            finish();
-                        }
-                    })
-
-                    .show();
+            //finish();
         }
         else{
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
