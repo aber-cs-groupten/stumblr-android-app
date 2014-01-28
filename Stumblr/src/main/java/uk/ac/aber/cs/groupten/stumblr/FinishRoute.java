@@ -130,7 +130,7 @@ public class FinishRoute extends AbstractActivity {
             JSONArray JSONWaypoints = new JSONArray();
             //Add data for each waypoint into the JSON package
             LinkedList<Waypoint> waypoints = route.getWaypointList();
-            
+
             for(int i = 0; i < waypoints.size(); i++){ //TODO refactor this into a ForEach loop
                 Waypoint currentWaypoint = waypoints.get(i);
                 JSONObject currentJSONWaypoint = new JSONObject();
