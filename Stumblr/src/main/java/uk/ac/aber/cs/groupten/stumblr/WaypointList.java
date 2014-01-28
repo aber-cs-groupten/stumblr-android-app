@@ -267,13 +267,13 @@ public class WaypointList extends AbstractActivity implements LocationListener {
      */
     public void finishRoute() {
         // Calculate timestamp
-        long s = route.getStartTime();
-        long e = route.getCurrentTime();
-        long l = e - s;
+        long startTime = route.getStartTime();
+        long endTime = route.getCurrentTime();
+        long timeLength = endTime - startTime;
 
         // Apply timestamp
-        route.setLengthTime(l);
-        Log.e(TAG, (String.valueOf(l)));
+        route.setLengthTime(timeLength);
+        Log.e(TAG, (String.valueOf(timeLength)));
 
         // Start new intent, packaging current Route with it
         Intent i = new Intent(getApplicationContext(), FinishRoute.class);
