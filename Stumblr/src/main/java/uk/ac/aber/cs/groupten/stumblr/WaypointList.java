@@ -40,7 +40,7 @@ public class WaypointList extends AbstractActivity implements LocationListener {
 
     // Data objects
     private Route route;
-    private final String listEmptyString = "List is empty! Add a waypoint below...";
+    private final String listEmptyString = "List is empty! Add a Waypoint below...";
 
     /**
      * Loads the activity on creation (using a bundle if one is present)
