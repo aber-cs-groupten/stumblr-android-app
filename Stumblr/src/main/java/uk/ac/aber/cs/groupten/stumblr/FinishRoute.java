@@ -80,6 +80,7 @@ public class FinishRoute extends AbstractActivity {
 
                 // Execute HTTP Post Request
                 HttpResponse response = httpclient.execute(httppost);
+                Log.d(TAG, " " + response.getStatusLine().getStatusCode());
                 return response;
             } catch (Exception e) {
                 Log.e(TAG, "IM NOT WORKING " + e.toString());
