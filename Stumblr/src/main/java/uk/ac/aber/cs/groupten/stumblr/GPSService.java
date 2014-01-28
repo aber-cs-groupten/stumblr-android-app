@@ -12,7 +12,8 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 
 public class GPSService extends Service implements LocationListener {
-    public final static String INTENT_STRING = "STUMBLR_GPS_SERVICE";
+    public final static String GPS_INTENT = "STUMBLR_GPS";
+    public final static String GPS_DIALOG = "STUMBLR_GPS_DIALOG";
     public final static String LOC_BUNDLE_STRING = "loc";
 
     // Service ID
@@ -29,15 +30,14 @@ public class GPSService extends Service implements LocationListener {
     @Override
     public void onCreate() {
         super.onCreate();
-        intent = new Intent(INTENT_STRING);
+        intent = new Intent(GPS_INTENT);
     }
 
     /**
-     *
-     * @param intent
-     * @param flags
-     * @param startID
-     * @return
+     * @param intent The intent that the Service was started from
+     * @param flags Startup flags
+     * @param startID Service ID
+     * @return The service status (Sticky, non-sticky, etc)
      */
     @Override
     public int onStartCommand(Intent intent, int flags, int startID) {
@@ -56,7 +56,7 @@ public class GPSService extends Service implements LocationListener {
         notice.flags |= Notification.FLAG_NO_CLEAR;
         startForeground(FG_SERVICE_ID, notice);
 
-        return 0;
+        return Service.START_NOT_STICKY;
     }
 
     @Override
@@ -66,7 +66,6 @@ public class GPSService extends Service implements LocationListener {
         super.onDestroy();
     }
 
-    // Location interaction
     /**
      * Obtain coordinates from Android system and add to current Waypoint.
      * Adapted from: https://sites.google.com/site/androidhowto/how-to-1/using-the-gps
@@ -77,12 +76,24 @@ public class GPSService extends Service implements LocationListener {
         sendBroadcast(intent);
     }
 
+    /**
+     * Prompt for GPS, and error handling
+     * See: http://hedgehogjim.wordpress.com/2013/03/20/programmatically-enable-android-location-services/
+     */
     @Override
-    public void onProviderDisabled(String s) {}
+    public void onProviderDisabled(String s) {
+        // Tell WaypointList to show a dialog
+        Intent i = new Intent(GPS_DIALOG);
+        sendBroadcast(i);
+    }
+
     @Override
-    public void onProviderEnabled(String s) {}
+    public void onProviderEnabled(String s) {
+    }
+
     @Override
-    public void onStatusChanged(String s, int i, Bundle b) {}
+    public void onStatusChanged(String s, int i, Bundle b) {
+    }
 
     public IBinder onBind(Intent intent) { // Unused
         return null;
