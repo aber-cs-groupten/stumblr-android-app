@@ -1,18 +1,25 @@
 package uk.ac.aber.cs.groupten.stumblr;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Notification;
 import android.app.Service;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
+import android.view.WindowManager;
 
 public class GPSService extends Service implements LocationListener {
-    public final static String INTENT_STRING = "STUMBLR_GPS_SERVICE";
+    public final static String GPS_INTENT = "STUMBLR_GPS";
+    public final static String GPS_DIALOG = "STUMBLR_GPS_DIALOG";
     public final static String LOC_BUNDLE_STRING = "loc";
 
     // Service ID
@@ -29,7 +36,7 @@ public class GPSService extends Service implements LocationListener {
     @Override
     public void onCreate() {
         super.onCreate();
-        intent = new Intent(INTENT_STRING);
+        intent = new Intent(GPS_INTENT);
     }
 
     /**
@@ -43,6 +50,8 @@ public class GPSService extends Service implements LocationListener {
     public int onStartCommand(Intent intent, int flags, int startID) {
         // Set up location updates (this class implements a Listener)
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        //if (! lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 10, this);
 
         // Run as foreground task
@@ -56,7 +65,7 @@ public class GPSService extends Service implements LocationListener {
         notice.flags |= Notification.FLAG_NO_CLEAR;
         startForeground(FG_SERVICE_ID, notice);
 
-        return 0;
+        return Service.START_NOT_STICKY;
     }
 
     @Override
@@ -66,7 +75,6 @@ public class GPSService extends Service implements LocationListener {
         super.onDestroy();
     }
 
-    // Location interaction
     /**
      * Obtain coordinates from Android system and add to current Waypoint.
      * Adapted from: https://sites.google.com/site/androidhowto/how-to-1/using-the-gps
@@ -77,8 +85,17 @@ public class GPSService extends Service implements LocationListener {
         sendBroadcast(intent);
     }
 
+    /**
+     * Prompt for GPS, and error handling
+     * See: http://hedgehogjim.wordpress.com/2013/03/20/programmatically-enable-android-location-services/
+     */
     @Override
-    public void onProviderDisabled(String s) {}
+    public void onProviderDisabled(String s) {
+        // Tell WaypointList to show a dialog
+        Intent i = new Intent(GPS_DIALOG);
+        sendBroadcast(i);
+    }
+
     @Override
     public void onProviderEnabled(String s) {}
     @Override
