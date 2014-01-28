@@ -220,8 +220,6 @@ public class FinishRoute extends AbstractActivity {
     }
 
 
-
-
     /*
      * ****************************************************************
      *                         Base64 Encoding                        *
