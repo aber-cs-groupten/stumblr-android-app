@@ -82,18 +82,24 @@ public class FinishRoute extends AbstractActivity {
                 // Execute HTTP Post Request
                 HttpResponse response = httpclient.execute(httppost);
                 if(response.getStatusLine().getStatusCode() == 200){
-                    Toast.makeText(getBaseContext(), "File Uploaded Correctly!", Toast.LENGTH_LONG).show();
+                    showToast("File Uploaded Correctly!", Toast.LENGTH_LONG);
+                    Log.e(TAG, "File Uploaded Correctly!");
                 }
                 else{
-                    Toast.makeText(getBaseContext(), "File Upload Failed!", Toast.LENGTH_LONG).show();
+                    showToast("File Upload Failed!", Toast.LENGTH_LONG);
+                    Log.e(TAG, "File Upload Failed!");
                 }
                 return response;
             } catch (Exception e) {
                 Log.e(TAG, "IM NOT WORKING " + e.toString());
-                Toast.makeText(getBaseContext(), "(Didn't) Upload file!", Toast.LENGTH_LONG).show();
+                showToast("(Didn't) Upload file!", Toast.LENGTH_LONG);
                 return null;
             }
         }
+    }
+
+    private void showToast(String message, int length){
+        Toast.makeText(getBaseContext(), message, length).show();
     }
 
     /**
