@@ -129,7 +129,7 @@ public class FinishRoute extends AbstractActivity {
                 currentJSONWaypoint.put("title", currentWaypoint.getTitle());
                 currentJSONWaypoint.put("description", currentWaypoint.getShortDesc());
                 currentJSONWaypoint.put("timestamp", currentWaypoint.getTimestamp());
-                //currentJSONWaypoint.put("coordinates", currentWaypoint.getCoordinates());
+                currentJSONWaypoint.put("coordinates", currentWaypoint.getLocation());
                 //Get Image and Convert to base64
                 Bitmap image = currentWaypoint.getImage();
                 if (image != null) {

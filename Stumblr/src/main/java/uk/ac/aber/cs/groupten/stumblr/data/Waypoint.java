@@ -71,6 +71,14 @@ public class Waypoint extends StumblrData {
     }
 
     /**
+     * Sets the current location.
+     * @param l The current location to set.
+     */
+    public Location getLocation() {
+        return this.location;
+    }
+
+    /**
      * Returns current Bitmap.
      * @return The current Bitmap that the Waypoint has,
      */
