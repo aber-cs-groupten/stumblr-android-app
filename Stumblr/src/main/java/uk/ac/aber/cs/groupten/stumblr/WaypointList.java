@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.EmptyStackException;
@@ -37,6 +38,7 @@ public class WaypointList extends AbstractActivity {
     private ArrayAdapter<Waypoint> adapter;
     private LinkedList<Waypoint> menuItems;
     private ListView listView;
+    private int waypointListSize=0;
 
     // Data objects
     private Route route;
@@ -199,11 +201,12 @@ public class WaypointList extends AbstractActivity {
         try {
             // Pop latest coordinate from stack and apply to Waypoint
             cwi.putExtra("loc", route.getCoordinateList().peek());
+
             // Begin activity
             startActivityForResult(cwi, WAYPOINT_INTENT);
+
         } catch (EmptyStackException ese) {
             Log.i(TAG, "No Locations currently in Route. Probably no GPS fix yet.");
-
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Waiting for location...")
                     .setMessage("Hold on, we don't know where you are yet!")
@@ -244,6 +247,13 @@ public class WaypointList extends AbstractActivity {
         long timeLength = endTime - startTime;
         Log.e(TAG, (String.valueOf(timeLength)));
         route.setLengthTime(timeLength);
+
+        //TODO FIX TEXTVIEW BEING HIDDEN
+        //Checking waypoint list size and setting its textview.
+        waypointListSize = route.getWaypointList().size();
+        setContentView(R.layout.activity_finish_route);
+        TextView textView = (TextView) findViewById(R.id.numwpView);
+        textView.setText(String.valueOf(waypointListSize));
 
         // Start new intent, packaging current Route with it
         Intent i = new Intent(getApplicationContext(), FinishRoute.class);

@@ -59,6 +59,7 @@ public class FinishRoute extends AbstractActivity {
         for (Waypoint w : route.getWaypointList()) {
             Log.v(TAG, w.getLocation().toString());
         }
+
         Log.v(TAG, "Route list size: " + String.valueOf(route.getWaypointList().size()));
     }
 
@@ -129,18 +130,13 @@ public class FinishRoute extends AbstractActivity {
         JSONObject data = new JSONObject();
         try {
             JSONObject walk = new JSONObject();
+
             //Get data out of the Route object and add to the JSON package
             walk.put("walkTitle", route.getTitle());
-
             walk.put("shortDescription", route.getShortDesc());
-
             walk.put("longDescription", route.getLongDesc());
-
             walk.put("walkHours", route.getLengthTimeHours());
-
             walk.put("startTime", route.getStartTime());
-
-            //walk.put("walkDistance", testRoute.getDistance());
 
             // Put the walk track into the JSON package
             JSONArray JSONCoordinates = new JSONArray();
@@ -152,11 +148,14 @@ public class FinishRoute extends AbstractActivity {
                 currentJSONCoordinate.put("Longitude", currentCoordinate.getLongitude());
                 JSONCoordinates.put(i, currentJSONCoordinate);
             }
+
+            // Put coordinates
             walk.put("walkCoordinates", JSONCoordinates);
 
             //Add data for each waypoint into the JSON package
             JSONArray JSONWaypoints = new JSONArray();
             LinkedList<Waypoint> waypoints = route.getWaypointList();
+
             for(int i = 0; i < waypoints.size(); i++){ //TODO refactor this into a ForEach loop
                 Waypoint currentWaypoint = waypoints.get(i);
                 JSONObject currentJSONWaypoint = new JSONObject();
@@ -165,26 +164,25 @@ public class FinishRoute extends AbstractActivity {
                 currentJSONWaypoint.put("timestamp", currentWaypoint.getTimestamp());
                 currentJSONWaypoint.put("latitude", currentWaypoint.getLocation().getLatitude());
                 currentJSONWaypoint.put("longitude", currentWaypoint.getLocation().getLongitude());
+
                 //Get Image and Convert to base64
                 Bitmap image = currentWaypoint.getImage();
                 if (image != null) {
                     String base64Image = encodeTobase64(image);
                     currentJSONWaypoint.put("image", base64Image);
                 }
-
-
                 JSONWaypoints.put(i, currentJSONWaypoint);
             }
-            walk.put("waypoints", JSONWaypoints);
 
+            walk.put("waypoints", JSONWaypoints);
             data.put("walk", walk);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return data;
     }
-    // End HTTP POST
 
+    // End HTTP POST
     /** Ensuring Network Provider is Enabled before submitting route
      *  REFERENCE - http://stackoverflow.com/questions/12806709/android-how-to-tell-if-mobile-network-data-is-enabled-or-disabled-even-when
      **/
@@ -207,28 +205,25 @@ public class FinishRoute extends AbstractActivity {
 
         }
         catch (Exception e){
-       // if(e instanceof ClassNotFoundException || e instanceof NoSuchMethodException ||
-         //       e instanceof IllegalAccessException || e instanceof InvocationTargetException )  {
+            // if(e instanceof ClassNotFoundException || e instanceof NoSuchMethodException ||
+            //       e instanceof IllegalAccessException || e instanceof InvocationTargetException )  {
             //Connectivity Issue Handling
-   return mobileDataEnabled;
+            return mobileDataEnabled;
         }
-       }
+    }
 
     public boolean checkWifiEnabled(){
         boolean wifiEnabled = false; //assume Wifi is disabled
         ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         if (mWifi.isConnected()) {
-           wifiEnabled = true;
+            wifiEnabled = true;
             return wifiEnabled;
         }
         else{
             return wifiEnabled;
         }
     }
-
-
-
 
     /*
      * ****************************************************************
