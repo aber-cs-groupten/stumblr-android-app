@@ -155,11 +155,6 @@ public class Route extends StumblrData implements Parcelable {
                     nextLoc.getLongitude(),
                     results);
 
-            if (results == null) {
-            } else {
-                Log.v(TAG, "Total distance: " + String.valueOf(results[0]));
-                distance += results[0];
-            }
         }
 
         Log.v(TAG, "TOTAL DISTANCE: " + String.valueOf(distance));

@@ -130,7 +130,6 @@ public class FinishRoute extends AbstractActivity {
         //Data to be sent:
         JSONObject walk = new JSONObject();
         try {
-
             //Get data out of the Route object and add to the JSON package
             walk.put("walkTitle", route.getTitle());
             walk.put("shortDescription", route.getShortDesc());
@@ -176,6 +175,7 @@ public class FinishRoute extends AbstractActivity {
             }
 
             walk.put("waypoints", JSONWaypoints);
+            data.put("walk", walk);
         } catch (JSONException e) {
             e.printStackTrace();
         }
