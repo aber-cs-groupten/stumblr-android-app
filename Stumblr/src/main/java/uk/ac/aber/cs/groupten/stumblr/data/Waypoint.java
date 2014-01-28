@@ -115,6 +115,7 @@ public class Waypoint extends StumblrData {
         parcel.writeString(this.getTitle());
         parcel.writeString(this.getShortDesc());
         parcel.writeValue(this.image);
+        parcel.writeValue(this.location);
     }
 
     /**
@@ -125,7 +126,8 @@ public class Waypoint extends StumblrData {
         this.timestamp = inParcel.readLong();
         this.setTitle(inParcel.readString());
         this.setShortDesc(inParcel.readString());
-        this.image = (Bitmap) inParcel.readValue(null); // TODO test this. Not sure.
+        this.image = (Bitmap) inParcel.readValue(null); // Gets Image
+        this.location = (Location) inParcel.readValue(null); // Gets location
     }
 
     /*
