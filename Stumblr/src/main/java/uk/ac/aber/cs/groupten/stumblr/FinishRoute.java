@@ -86,17 +86,9 @@ public class FinishRoute extends AbstractActivity {
                 return null;
             }
         }
-    }
-
-    private void showToast(String message, int length){
-        //Toast.makeText(getBaseContext(), message, length).show();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(message);
-        builder.setMessage(message);
-        builder.setPositiveButton("OK", null);
-        Dialog alertDialog = builder.create();
-        alertDialog.setCanceledOnTouchOutside(false);
-        alertDialog.show();
+        protected void onPostExecute (HttpResponse result){
+            Toast.makeText(getBaseContext(), "TEST "+result.getStatusLine().getStatusCode(), Toast.LENGTH_LONG).show();
+        }
     }
 
     /**
