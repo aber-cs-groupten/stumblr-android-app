@@ -122,6 +122,8 @@ public class FinishRoute extends AbstractActivity {
             walk.put("shortDescription", route.getShortDesc());
             walk.put("longDescription", route.getLongDesc());
             walk.put("walkHours", route.getLengthTimeHours());
+            walk.put("startTime", route.getStartTime());
+            Log.d(TAG, "WALKHOURS: " + route.getLengthTimeHours());
             //walk.put("walkDistance", testRoute.getDistance());
             JSONArray coordinates = new JSONArray(route.getCoordinateList());
             walk.put("walkCoordinates", coordinates);

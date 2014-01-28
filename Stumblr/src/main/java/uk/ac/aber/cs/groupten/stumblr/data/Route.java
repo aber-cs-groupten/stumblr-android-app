@@ -15,9 +15,8 @@ public class Route extends StumblrData implements Parcelable {
     private long startTime;
 
     /**
-     * Timestamp for end of walk.
+     * Timestamp for length of walk.
      */
-    private long endTime;
     private long lengthTime;
 
     /**
@@ -150,6 +149,8 @@ public class Route extends StumblrData implements Parcelable {
         parcel.writeString(this.getTitle());
         parcel.writeString(this.getShortDesc());
         parcel.writeString(this.getLongDesc());
+        parcel.writeLong(this.getStartTime());
+        parcel.writeLong(this.getLengthTime());
         parcel.writeList(this.route);
         parcel.writeList(this.coordinates);
     }
@@ -162,6 +163,8 @@ public class Route extends StumblrData implements Parcelable {
         this.setTitle(inParcel.readString());
         this.setShortDesc(inParcel.readString());
         this.setLongDesc(inParcel.readString());
+        this.setStartTime(inParcel.readLong());
+        this.setLengthTime(inParcel.readLong());
 
         initLists();
         inParcel.readList(this.route, Waypoint.class.getClassLoader()); // Not sure about these two lines yet
@@ -190,12 +193,8 @@ public class Route extends StumblrData implements Parcelable {
         this.startTime = getCurrentTime();
     }
 
-    public long getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(long l) {
-        this.endTime = l;
+    public void setStartTime(long start) {
+        this.startTime = start;
     }
 
     public long getLengthTime() {
@@ -206,7 +205,7 @@ public class Route extends StumblrData implements Parcelable {
         this.lengthTime = l;
     }
 
-    public long getLengthTimeHours() {
-        return (lengthTime / 3600000);
+    public float getLengthTimeHours() {
+        return ((float)lengthTime / 3600000);
     }
 }
