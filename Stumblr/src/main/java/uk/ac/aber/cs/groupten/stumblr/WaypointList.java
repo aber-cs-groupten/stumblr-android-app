@@ -179,7 +179,9 @@ public class WaypointList extends AbstractActivity implements LocationListener {
         // FIXME
 
         for(Waypoint currentWaypoint : route.getWaypointList()){
-            menuItems.addLast(currentWaypoint);
+            if(!menuItems.contains(currentWaypoint)){
+                menuItems.addLast(currentWaypoint);
+            }
         }
 
         adapter.notifyDataSetChanged(); // Make sure that the adapter knows there is new data
