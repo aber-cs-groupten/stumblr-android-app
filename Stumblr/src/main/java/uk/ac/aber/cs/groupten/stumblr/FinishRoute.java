@@ -56,7 +56,6 @@ public class FinishRoute extends AbstractActivity {
         // Log a few messages just to make sure
         Log.v(TAG, route.getTitle());
 
-        // FIXME NULL POINTER ON LN59
         for (Waypoint w : route.getWaypointList()) {
             Log.v(TAG, w.getLocation().toString());
         }
@@ -81,19 +80,23 @@ public class FinishRoute extends AbstractActivity {
 
                 // Execute HTTP Post Request
                 HttpResponse response = httpclient.execute(httppost);
-                if(response.getStatusLine().getStatusCode() == 200){
-                    Toast.makeText(getBaseContext(), "File Uploaded Correctly!", Toast.LENGTH_LONG).show();
-                }
-                else{
-                    Toast.makeText(getBaseContext(), "File Upload Failed!", Toast.LENGTH_LONG).show();
-                }
                 return response;
             } catch (Exception e) {
                 Log.e(TAG, "IM NOT WORKING " + e.toString());
-                Toast.makeText(getBaseContext(), "(Didn't) Upload file!", Toast.LENGTH_LONG).show();
                 return null;
             }
         }
+    }
+
+    private void showToast(String message, int length){
+        //Toast.makeText(getBaseContext(), message, length).show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(message);
+        builder.setMessage(message);
+        builder.setPositiveButton("OK", null);
+        Dialog alertDialog = builder.create();
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.show();
     }
 
     /**
@@ -102,24 +105,7 @@ public class FinishRoute extends AbstractActivity {
     public void postData(View view) {
         if (checkInternetEnabled() == true || checkWifiEnabled() == true){
             new NetworkTask().execute();
-            new AlertDialog.Builder(this)
-                    .setIcon(android.R.drawable.ic_dialog_info)
-                    .setTitle("Please Select")
-                    .setMessage("Would you like to record another route?")
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            System.exit(0);
-                        }
-                    })
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            finish();
-                        }
-                    })
-
-                    .show();
+            //finish();
         }
         else{
             AlertDialog.Builder builder = new AlertDialog.Builder(this);

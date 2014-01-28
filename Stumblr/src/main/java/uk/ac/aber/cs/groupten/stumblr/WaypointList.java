@@ -179,8 +179,6 @@ public class WaypointList extends AbstractActivity {
      */
     public void drawWaypointList() {
         // Add each Waypoint to the list
-        // FIXME
-
         for(Waypoint currentWaypoint : route.getWaypointList()){
             if(!menuItems.contains(currentWaypoint)){
                 menuItems.addLast(currentWaypoint);
