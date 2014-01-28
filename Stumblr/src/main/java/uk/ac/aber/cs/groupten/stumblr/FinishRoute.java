@@ -56,7 +56,6 @@ public class FinishRoute extends AbstractActivity {
         // Log a few messages just to make sure
         Log.v(TAG, route.getTitle());
 
-        // FIXME NULL POINTER ON LN59
         for (Waypoint w : route.getWaypointList()) {
             Log.v(TAG, w.getLocation().toString());
         }
