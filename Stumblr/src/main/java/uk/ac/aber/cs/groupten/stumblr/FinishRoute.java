@@ -87,7 +87,15 @@ public class FinishRoute extends AbstractActivity {
             }
         }
         protected void onPostExecute (HttpResponse result){
-            Toast.makeText(getBaseContext(), "TEST "+result.getStatusLine().getStatusCode(), Toast.LENGTH_LONG).show();
+            if(result == null){
+                Toast.makeText(getBaseContext(), "Post Failed, Server Not Found", Toast.LENGTH_LONG).show();
+            }
+            else if(result.getStatusLine().getStatusCode() == 200){
+                Toast.makeText(getBaseContext(), "Post Completely Successfully!", Toast.LENGTH_LONG).show();
+            }
+            else{
+                Toast.makeText(getBaseContext(), "Post Failed, HTTP error code: " + result.getStatusLine().getStatusCode(), Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -97,7 +105,7 @@ public class FinishRoute extends AbstractActivity {
     public void postData(View view) {
         if (checkInternetEnabled() == true || checkWifiEnabled() == true){
             new NetworkTask().execute();
-            //finish();
+            finish();
         }
         else{
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
