@@ -133,11 +133,11 @@ public class Route extends StumblrData implements Parcelable {
         this.longDesc = longDesc;
     }
 
-    public float totalRouteDistance(){
+    public float getDistance(){
         // FIXME this needs testing
-        
+
         float distance = 0;
-        float[] results = {};
+        float[] results = new float[1];
         Location currentLoc;
         Location nextLoc;
 
@@ -145,20 +145,21 @@ public class Route extends StumblrData implements Parcelable {
             return 0.0f;
         }
 
-        for (int i = 0; i < coordinates.size(); i++) {
+        for (int i = 0; i < (coordinates.size() - 1); i++) {
             currentLoc = coordinates.get(i);
-            try {
-                nextLoc = coordinates.get(i + 1);
-            } catch (NoSuchElementException nsee) {
-                break;
-            }
+            nextLoc = coordinates.get(i + 1);
 
             Location.distanceBetween(currentLoc.getLatitude(),
                     currentLoc.getLongitude(),
                     nextLoc.getLatitude(),
-                    nextLoc.getLongitude(), results);
+                    nextLoc.getLongitude(),
+                    results);
 
-            distance += results[results.length - 1];
+            if (results == null) {
+            } else {
+                Log.v(TAG, "Total distance: " + String.valueOf(results[0]));
+                distance += results[0];
+            }
         }
 
         Log.v(TAG, "TOTAL DISTANCE: " + String.valueOf(distance));

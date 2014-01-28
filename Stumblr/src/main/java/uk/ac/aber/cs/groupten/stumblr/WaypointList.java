@@ -201,11 +201,12 @@ public class WaypointList extends AbstractActivity {
         try {
             // Pop latest coordinate from stack and apply to Waypoint
             cwi.putExtra("loc", route.getCoordinateList().peek());
+
             // Begin activity
             startActivityForResult(cwi, WAYPOINT_INTENT);
+
         } catch (EmptyStackException ese) {
             Log.i(TAG, "No Locations currently in Route. Probably no GPS fix yet.");
-
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Waiting for location...")
                     .setMessage("Hold on, we don't know where you are yet!")
