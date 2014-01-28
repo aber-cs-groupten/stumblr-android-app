@@ -144,6 +144,12 @@ public class FinishRoute extends AbstractActivity {
             // Put coordinates
             walk.put("walkCoordinates", JSONCoordinates);
 
+            // FIXME
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Distance....")
+                    .setMessage(String.valueOf(route.getDistance()))
+                    .setPositiveButton("OK", null);
+
             //Add data for each waypoint into the JSON package
             JSONArray JSONWaypoints = new JSONArray();
             LinkedList<Waypoint> waypoints = route.getWaypointList();
