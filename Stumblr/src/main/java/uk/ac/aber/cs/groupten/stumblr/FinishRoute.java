@@ -93,7 +93,25 @@ public class FinishRoute extends AbstractActivity {
      */
     public void postData(View view) {
         if (checkInternetEnabled() == true || checkWifiEnabled() == true){
-        new NetworkTask().execute();
+            new NetworkTask().execute();
+            new AlertDialog.Builder(this)
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .setTitle("Please Select")
+                    .setMessage("Would you like to record another route?")
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            System.exit(0);
+                        }
+                    })
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    })
+
+                    .show();
         }
         else{
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
