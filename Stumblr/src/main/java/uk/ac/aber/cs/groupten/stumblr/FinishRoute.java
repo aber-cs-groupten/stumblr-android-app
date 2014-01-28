@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -21,6 +22,7 @@ import java.io.ByteArrayOutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.LinkedList;
+import java.util.Stack;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -79,6 +81,12 @@ public class FinishRoute extends AbstractActivity {
 
                 // Execute HTTP Post Request
                 HttpResponse response = httpclient.execute(httppost);
+                if(response.getStatusLine().getStatusCode() == 200){
+                    Toast.makeText(getBaseContext(), "File Uploaded Correctly!", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(getBaseContext(), "File Upload Failed!", Toast.LENGTH_LONG).show();
+                }
                 return response;
             } catch (Exception e) {
                 Log.e(TAG, "IM NOT WORKING " + e.toString());
@@ -137,25 +145,39 @@ public class FinishRoute extends AbstractActivity {
             JSONObject walk = new JSONObject();
             //Get data out of the Route object and add to the JSON package
             walk.put("walkTitle", route.getTitle());
-            walk.put("shortDescription", route.getShortDesc());
-            walk.put("longDescription", route.getLongDesc());
-            walk.put("walkHours", route.getLengthTimeHours());
-            walk.put("startTime", route.getStartTime());
-            Log.d(TAG, "WALKHOURS: " + route.getLengthTimeHours());
-            //walk.put("walkDistance", testRoute.getDistance());
-            JSONArray coordinates = new JSONArray(route.getCoordinateList());
-            walk.put("walkCoordinates", coordinates);
-            JSONArray JSONWaypoints = new JSONArray();
-            //Add data for each waypoint into the JSON package
-            LinkedList<Waypoint> waypoints = route.getWaypointList();
 
+            walk.put("shortDescription", route.getShortDesc());
+
+            walk.put("longDescription", route.getLongDesc());
+
+            walk.put("walkHours", route.getLengthTimeHours());
+
+            walk.put("startTime", route.getStartTime());
+
+            //walk.put("walkDistance", testRoute.getDistance());
+
+            // Put the walk track into the JSON package
+            JSONArray JSONCoordinates = new JSONArray();
+            Stack<Location> coordinates =  route.getCoordinateList();
+            for(int i = 0; i < coordinates.size(); i++){
+                Location currentCoordinate = coordinates.get(i);
+                JSONObject currentJSONCoordinate = new JSONObject();
+                currentJSONCoordinate.put("Latitude", currentCoordinate.getLatitude());
+                currentJSONCoordinate.put("Longitude", currentCoordinate.getLongitude());
+                JSONCoordinates.put(i, currentJSONCoordinate);
+            }
+            walk.put("walkCoordinates", JSONCoordinates);
+
+            //Add data for each waypoint into the JSON package
+            JSONArray JSONWaypoints = new JSONArray();
+            LinkedList<Waypoint> waypoints = route.getWaypointList();
             for(int i = 0; i < waypoints.size(); i++){ //TODO refactor this into a ForEach loop
                 Waypoint currentWaypoint = waypoints.get(i);
                 JSONObject currentJSONWaypoint = new JSONObject();
                 currentJSONWaypoint.put("title", currentWaypoint.getTitle());
                 currentJSONWaypoint.put("description", currentWaypoint.getShortDesc());
                 currentJSONWaypoint.put("timestamp", currentWaypoint.getTimestamp());
-                currentJSONWaypoint.put("latitude", currentWaypoint.getLocation().getLatitude()); //TODO Separate into lat and long
+                currentJSONWaypoint.put("latitude", currentWaypoint.getLocation().getLatitude());
                 currentJSONWaypoint.put("longitude", currentWaypoint.getLocation().getLongitude());
                 //Get Image and Convert to base64
                 Bitmap image = currentWaypoint.getImage();
@@ -168,6 +190,7 @@ public class FinishRoute extends AbstractActivity {
                 JSONWaypoints.put(i, currentJSONWaypoint);
             }
             walk.put("waypoints", JSONWaypoints);
+
             data.put("walk", walk);
         } catch (JSONException e) {
             e.printStackTrace();
