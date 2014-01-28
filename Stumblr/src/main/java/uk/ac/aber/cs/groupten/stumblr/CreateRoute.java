@@ -47,6 +47,7 @@ public class CreateRoute extends DataEntryActivity {
                 Intent i = new Intent(getApplicationContext(), WaypointList.class);
                 i.putExtra("route", route);
                 startActivity(i);
+                finish();
             } else {
                 // insufficient shortDesc length
                 Toast.makeText(getBaseContext(), "The short description is too short.", Toast.LENGTH_LONG).show();
