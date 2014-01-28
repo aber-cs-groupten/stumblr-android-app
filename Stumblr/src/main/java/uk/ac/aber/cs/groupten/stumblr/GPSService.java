@@ -49,7 +49,7 @@ public class GPSService extends Service implements LocationListener {
         // See: http://stackoverflow.com/a/6636893
         // TODO resume existing activity (come back to this after savedInstanceState)
         notice = new NotificationCompat.Builder(getApplicationContext())
-                .setContentTitle("Stumblr is running...")
+                .setContentTitle("Stumblr is recording walk...")
                 .setSmallIcon(R.drawable.ic_launcher)
                 .build();
 

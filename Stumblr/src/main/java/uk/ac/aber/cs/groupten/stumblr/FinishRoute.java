@@ -53,7 +53,12 @@ public class FinishRoute extends AbstractActivity {
 
         // Log a few messages just to make sure
         Log.v(TAG, route.getTitle());
-        Log.v(TAG, "Route list size...:" + String.valueOf(route.getWaypointList().size()));
+
+        // FIXME NULL POINTER ON LN59
+        for (Waypoint w : route.getWaypointList()) {
+            Log.v(TAG, w.getLocation().toString());
+        }
+        Log.v(TAG, "Route list size: " + String.valueOf(route.getWaypointList().size()));
     }
 
     /*
