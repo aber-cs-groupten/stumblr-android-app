@@ -34,8 +34,8 @@ public class WaypointList extends AbstractActivity implements LocationListener {
     private boolean serviceRunning = false;
 
     // ListView objects
-    private ArrayAdapter<String> adapter;
-    private LinkedList<String> menuItems;
+    private ArrayAdapter<Waypoint> adapter;
+    private LinkedList<Waypoint> menuItems;
     private ListView listView;
 
     // Data objects
@@ -89,9 +89,9 @@ public class WaypointList extends AbstractActivity implements LocationListener {
                 Log.v(TAG, ("RESULT RETURNED: " + newWaypoint.getTitle()));
 
                 // Redraw the list of Waypoints
-                if (menuItems.getFirst().equals(listEmptyString)) {
-                    menuItems.remove(listEmptyString);
-                }
+                //if (menuItems.getFirst().equals(listEmptyString)) {
+                //    menuItems.remove(listEmptyString);
+                //}
                 drawWaypointList();
             }
         }
@@ -144,12 +144,12 @@ public class WaypointList extends AbstractActivity implements LocationListener {
      */
     private void initialiseListView() {
         // Initialise list of Strings to display in
-        menuItems = new LinkedList<String>();
-        menuItems.add(listEmptyString);
+        menuItems = new LinkedList<Waypoint>();
+        // menuItems.add(listEmptyString);
 
         // Set ArrayAdapter and ListView up
         listView = (ListView) findViewById(R.id.listView);
-        adapter = new ArrayAdapter<String>(this,
+        adapter = new ArrayAdapter<Waypoint>(this,
                 android.R.layout.simple_list_item_1,
                 android.R.id.text1, menuItems);
 
@@ -178,12 +178,8 @@ public class WaypointList extends AbstractActivity implements LocationListener {
         // Add each Waypoint to the list
         // FIXME
 
-        listView.clearChoices();
-        int i = 1;
         for(Waypoint currentWaypoint : route.getWaypointList()){
-            String currentTitle = currentWaypoint.getTitle();
-            menuItems.add(i + ": " + currentTitle);
-            i++;
+            menuItems.addLast(currentWaypoint);
         }
 
         adapter.notifyDataSetChanged(); // Make sure that the adapter knows there is new data

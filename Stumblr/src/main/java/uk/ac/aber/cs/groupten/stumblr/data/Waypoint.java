@@ -97,6 +97,14 @@ public class Waypoint extends StumblrData {
     }
 
     /**
+     * Returns a String with the title.
+     * @return The title string.
+     */
+    public String toString() {
+        return getTitle();
+    }
+
+    /**
      * Writes the Waypoint into a Parcel for moving between Activities.
      * @param parcel The parcel to be written to.
      * @param i Flags.
@@ -118,7 +126,6 @@ public class Waypoint extends StumblrData {
         this.setTitle(inParcel.readString());
         this.setShortDesc(inParcel.readString());
         this.image = (Bitmap) inParcel.readValue(null); // TODO test this. Not sure.
-
     }
 
     /*
