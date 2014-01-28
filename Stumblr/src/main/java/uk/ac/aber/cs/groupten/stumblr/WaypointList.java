@@ -197,12 +197,16 @@ public class WaypointList extends AbstractActivity implements LocationListener {
         try {
             // Pop latest coordinate from stack and apply to Waypoint
             cwi.putExtra("loc", route.getCoordinateList().peek());
+            // Begin activity
+            startActivityForResult(cwi, WAYPOINT_INTENT);
         } catch (EmptyStackException ese) {
             Log.e(TAG, "No Locations currently in Route.");
-        }
 
-        // Begin activity
-        startActivityForResult(cwi, WAYPOINT_INTENT);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Waiting for location...")
+                    .setMessage("Hold on, we don't know where you are yet!")
+                    .setPositiveButton("OK", null).show();
+        }
     }
 
     // Location interaction
@@ -221,6 +225,8 @@ public class WaypointList extends AbstractActivity implements LocationListener {
      */
     @Override
     public void onProviderDisabled(String s) {
+        // FIXME
+
         // Build alert dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Location Services Not Active");
