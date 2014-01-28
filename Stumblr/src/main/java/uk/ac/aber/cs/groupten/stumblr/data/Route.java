@@ -190,6 +190,10 @@ public class Route extends StumblrData implements Parcelable {
         this.startTime = getCurrentTime();
     }
 
+    public void setStartTime(long start) {
+        this.startTime = start;
+    }
+
     public long getEndTime() {
         return endTime;
     }
@@ -206,7 +210,7 @@ public class Route extends StumblrData implements Parcelable {
         this.lengthTime = l;
     }
 
-    public long getLengthTimeHours() {
-        return (lengthTime / 3600000);
+    public float getLengthTimeHours() {
+        return ((float)lengthTime / 3600000);
     }
 }
