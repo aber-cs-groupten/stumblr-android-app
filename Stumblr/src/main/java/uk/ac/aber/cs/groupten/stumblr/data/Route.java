@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import android.util.Log;
 
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 import java.util.Stack;
 
 import uk.ac.aber.cs.groupten.stumblr.WaypointList;
@@ -132,26 +133,36 @@ public class Route extends StumblrData implements Parcelable {
         this.longDesc = longDesc;
     }
 
-    public void totalRouteDistance(){
-
-        double totalDistance = 0;
+    public float totalRouteDistance(){
+        // FIXME this needs testing
+        
+        float distance = 0;
         float[] results = {};
         Location currentLoc;
-        Location prevLoc = new Location("Temp location");
-        prevLoc.setLatitude(0);
-        prevLoc.setLongitude(0);
+        Location nextLoc;
 
-        for (Location coord : coordinates){
-            currentLoc = coord;
-
-            if((currentLoc !=null) && (prevLoc !=null)){
-            Location.distanceBetween(currentLoc.getLatitude(),currentLoc.getLongitude(),
-            prevLoc.getLatitude(), prevLoc.getLongitude(), results);
-               totalDistance += results[results.length - 1];
-
-            }
-            prevLoc = currentLoc;
+        if (coordinates.size() <= 1) {
+            return 0.0f;
         }
+
+        for (int i = 0; i < coordinates.size(); i++) {
+            currentLoc = coordinates.get(i);
+            try {
+                nextLoc = coordinates.get(i + 1);
+            } catch (NoSuchElementException nsee) {
+                break;
+            }
+
+            Location.distanceBetween(currentLoc.getLatitude(),
+                    currentLoc.getLongitude(),
+                    nextLoc.getLatitude(),
+                    nextLoc.getLongitude(), results);
+
+            distance += results[results.length - 1];
+        }
+
+        Log.v(TAG, "TOTAL DISTANCE: " + String.valueOf(distance));
+        return distance;
     }
 
     /**
