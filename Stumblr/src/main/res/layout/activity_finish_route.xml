@@ -13,4 +13,38 @@
         android:id="@+id/button"
         android:layout_gravity="center"
         android:onClick="postData" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Number of Waypoints"
+        android:id="@+id/textViewNumWaypoints"
+        android:layout_gravity="right|top" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Distance Travelled"
+        android:id="@+id/textViewDistance"
+        android:layout_gravity="left|top" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Distance TODO"
+        android:id="@+id/textView"
+        android:layout_gravity="left|center_vertical" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/numwpView"
+        android:layout_gravity="right|center_vertical"
+        android:textColor="#FF0000"
+        android:visibility="visible" />
+
 </FrameLayout>

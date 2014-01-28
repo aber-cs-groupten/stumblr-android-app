@@ -6,7 +6,10 @@ import android.os.Parcelable;
 import android.util.Log;
 
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 import java.util.Stack;
+
+import uk.ac.aber.cs.groupten.stumblr.WaypointList;
 
 public class Route extends StumblrData implements Parcelable {
     /**
@@ -128,6 +131,39 @@ public class Route extends StumblrData implements Parcelable {
      */
     public void setLongDesc(String longDesc) {
         this.longDesc = longDesc;
+    }
+
+    public float getDistance(){
+        // FIXME this needs testing
+
+        float distance = 0;
+        float[] results = new float[1];
+        Location currentLoc;
+        Location nextLoc;
+
+        if (coordinates.size() <= 1) {
+            return 0.0f;
+        }
+
+        for (int i = 0; i < (coordinates.size() - 1); i++) {
+            currentLoc = coordinates.get(i);
+            nextLoc = coordinates.get(i + 1);
+
+            Location.distanceBetween(currentLoc.getLatitude(),
+                    currentLoc.getLongitude(),
+                    nextLoc.getLatitude(),
+                    nextLoc.getLongitude(),
+                    results);
+
+            if (results == null) {
+            } else {
+                Log.v(TAG, "Total distance: " + String.valueOf(results[0]));
+                distance += results[0];
+            }
+        }
+
+        Log.v(TAG, "TOTAL DISTANCE: " + String.valueOf(distance));
+        return distance;
     }
 
     /**
