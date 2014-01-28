@@ -8,6 +8,8 @@ import android.util.Log;
 import java.util.LinkedList;
 import java.util.Stack;
 
+import uk.ac.aber.cs.groupten.stumblr.WaypointList;
+
 public class Route extends StumblrData implements Parcelable {
     /**
      * Timestamp for start of walk.
@@ -128,6 +130,28 @@ public class Route extends StumblrData implements Parcelable {
      */
     public void setLongDesc(String longDesc) {
         this.longDesc = longDesc;
+    }
+
+    public void totalRouteDistance(){
+
+        double totalDistance = 0;
+        float[] results = {};
+        Location currentLoc;
+        Location prevLoc = new Location("Temp location");
+        prevLoc.setLatitude(0);
+        prevLoc.setLongitude(0);
+
+        for (Location coord : coordinates){
+            currentLoc = coord;
+
+            if((currentLoc !=null) && (prevLoc !=null)){
+            Location.distanceBetween(currentLoc.getLatitude(),currentLoc.getLongitude(),
+            prevLoc.getLatitude(), prevLoc.getLongitude(), results);
+               totalDistance += results[results.length - 1];
+
+            }
+            prevLoc = currentLoc;
+        }
     }
 
     /**
