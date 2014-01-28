@@ -81,7 +81,12 @@ public class FinishRoute extends AbstractActivity {
 
                 // Execute HTTP Post Request
                 HttpResponse response = httpclient.execute(httppost);
-                Log.d(TAG, " " + response.getStatusLine().getStatusCode());
+                if(response.getStatusLine().getStatusCode() == 200){
+                    Toast.makeText(getBaseContext(), "File Uploaded Correctly!", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(getBaseContext(), "File Upload Failed!", Toast.LENGTH_LONG).show();
+                }
                 return response;
             } catch (Exception e) {
                 Log.e(TAG, "IM NOT WORKING " + e.toString());
@@ -150,7 +155,7 @@ public class FinishRoute extends AbstractActivity {
             walk.put("startTime", route.getStartTime());
 
             //walk.put("walkDistance", testRoute.getDistance());
-            
+
             // Put the walk track into the JSON package
             JSONArray JSONCoordinates = new JSONArray();
             Stack<Location> coordinates =  route.getCoordinateList();
