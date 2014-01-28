@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -79,6 +80,7 @@ public class FinishRoute extends AbstractActivity {
 
                 // Execute HTTP Post Request
                 HttpResponse response = httpclient.execute(httppost);
+                Log.d(TAG, " " + response.getStatusLine().getStatusCode());
                 return response;
             } catch (Exception e) {
                 Log.e(TAG, "IM NOT WORKING " + e.toString());
@@ -143,7 +145,14 @@ public class FinishRoute extends AbstractActivity {
             walk.put("startTime", route.getStartTime());
             Log.d(TAG, "WALKHOURS: " + route.getLengthTimeHours());
             //walk.put("walkDistance", testRoute.getDistance());
-            JSONArray coordinates = new JSONArray(route.getCoordinateList());
+            JSONArray coordinates = new JSONArray();
+            for(Location currentCoordinate: route.getCoordinateList()){
+                JSONObject currentJSONCoordinate = new JSONObject();
+                currentJSONCoordinate.put("Latitude", currentCoordinate.getLatitude());
+                currentJSONCoordinate.put("Longitude", currentCoordinate.getLongitude());
+                coordinates.put(currentJSONCoordinate);
+            }
+
             walk.put("walkCoordinates", coordinates);
             JSONArray JSONWaypoints = new JSONArray();
             //Add data for each waypoint into the JSON package
