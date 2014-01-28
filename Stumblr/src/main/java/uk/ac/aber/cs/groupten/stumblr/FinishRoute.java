@@ -130,13 +130,15 @@ public class FinishRoute extends AbstractActivity {
             JSONArray JSONWaypoints = new JSONArray();
             //Add data for each waypoint into the JSON package
             LinkedList<Waypoint> waypoints = route.getWaypointList();
+            
             for(int i = 0; i < waypoints.size(); i++){ //TODO refactor this into a ForEach loop
                 Waypoint currentWaypoint = waypoints.get(i);
                 JSONObject currentJSONWaypoint = new JSONObject();
                 currentJSONWaypoint.put("title", currentWaypoint.getTitle());
                 currentJSONWaypoint.put("description", currentWaypoint.getShortDesc());
                 currentJSONWaypoint.put("timestamp", currentWaypoint.getTimestamp());
-                currentJSONWaypoint.put("coordinates", currentWaypoint.getLocation());
+                currentJSONWaypoint.put("lat", currentWaypoint.getLocation().getLatitude()); //TODO Separate into lat and long
+                currentJSONWaypoint.put("lng", currentWaypoint.getLocation().getLongitude());
                 //Get Image and Convert to base64
                 Bitmap image = currentWaypoint.getImage();
                 if (image != null) {

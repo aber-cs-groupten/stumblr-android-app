@@ -72,6 +72,7 @@ public class Waypoint extends StumblrData {
         Log.v(TAG, l.toString());
     }
 
+
     /**
      * Sets the current location.
      * @param l The current location to set.
