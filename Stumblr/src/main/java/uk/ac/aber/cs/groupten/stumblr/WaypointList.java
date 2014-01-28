@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.EmptyStackException;
 import java.util.LinkedList;
 
 import uk.ac.aber.cs.groupten.stumblr.data.Route;
@@ -118,6 +119,7 @@ public class WaypointList extends AbstractActivity implements LocationListener {
                 }
             }
         };
+
         registerReceiver(receiver, filter);
         serviceRunning = true;
     }
@@ -173,8 +175,7 @@ public class WaypointList extends AbstractActivity implements LocationListener {
      */
     public void drawWaypointList() {
         // Add each Waypoint to the list
-        // TODO tweak this method... its complexity is greater than necessary
-
+        // FIXME
         int i = 1;
         for(Waypoint currentWaypoint : route.getWaypointList()){
             String currentTitle = currentWaypoint.getTitle();
@@ -193,8 +194,12 @@ public class WaypointList extends AbstractActivity implements LocationListener {
     public void startCreateWaypointIntent(View v) {
         Intent cwi = new Intent(getApplicationContext(), CreateWaypoint.class);
 
-        // Pop latest coordinate from stack and apply to Waypoint
-        cwi.putExtra("loc", route.getCoordinateList().pop());
+        try {
+            // Pop latest coordinate from stack and apply to Waypoint
+            cwi.putExtra("loc", route.getCoordinateList().peek());
+        } catch (EmptyStackException ese) {
+            Log.e(TAG, "No Locations currently in Route.");
+        }
 
         // Begin activity
         startActivityForResult(cwi, WAYPOINT_INTENT);
@@ -219,7 +224,7 @@ public class WaypointList extends AbstractActivity implements LocationListener {
         // Build alert dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Location Services Not Active");
-        builder.setMessage("Please enable Location Services...");
+        builder.setMessage("Please enable Location Services!");
 
         // Set actions
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
