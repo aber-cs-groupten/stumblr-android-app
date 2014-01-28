@@ -150,7 +150,8 @@ public class WaypointList extends AbstractActivity implements LocationListener {
         // Set ArrayAdapter and ListView up
         listView = (ListView) findViewById(R.id.listView);
         adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, menuItems);
+                android.R.layout.simple_list_item_1,
+                android.R.id.text1, menuItems);
 
         // Assign adapter to ListView
         listView.setAdapter(adapter);
@@ -176,6 +177,8 @@ public class WaypointList extends AbstractActivity implements LocationListener {
     public void drawWaypointList() {
         // Add each Waypoint to the list
         // FIXME
+
+        listView.clearChoices();
         int i = 1;
         for(Waypoint currentWaypoint : route.getWaypointList()){
             String currentTitle = currentWaypoint.getTitle();
@@ -200,7 +203,7 @@ public class WaypointList extends AbstractActivity implements LocationListener {
             // Begin activity
             startActivityForResult(cwi, WAYPOINT_INTENT);
         } catch (EmptyStackException ese) {
-            Log.e(TAG, "No Locations currently in Route.");
+            Log.i(TAG, "No Locations currently in Route. Probably no GPS fix yet.");
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Waiting for location...")
@@ -225,8 +228,6 @@ public class WaypointList extends AbstractActivity implements LocationListener {
      */
     @Override
     public void onProviderDisabled(String s) {
-        // FIXME
-
         // Build alert dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Location Services Not Active");

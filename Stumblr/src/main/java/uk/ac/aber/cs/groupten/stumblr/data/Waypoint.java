@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 public class Waypoint extends StumblrData {
     // CONSTRUCTORS
@@ -68,6 +69,7 @@ public class Waypoint extends StumblrData {
      */
     public void setLocation(Location l) {
         this.location = l;
+        Log.v(TAG, l.toString());
     }
 
     /**
