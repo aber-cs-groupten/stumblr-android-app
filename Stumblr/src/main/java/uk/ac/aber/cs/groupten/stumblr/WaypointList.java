@@ -178,9 +178,8 @@ public class WaypointList extends AbstractActivity implements LocationListener {
         int i = 1;
         for(Waypoint currentWaypoint : route.getWaypointList()){
             String currentTitle = currentWaypoint.getTitle();
-            if(! menuItems.contains(currentTitle)){
-                menuItems.add(i + ": " + currentTitle);
-            }
+            menuItems.add(i + ": " + currentTitle);
+            i++;
         }
 
         adapter.notifyDataSetChanged(); // Make sure that the adapter knows there is new data

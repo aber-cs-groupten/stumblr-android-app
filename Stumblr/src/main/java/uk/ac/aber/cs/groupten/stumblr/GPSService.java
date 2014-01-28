@@ -1,10 +1,8 @@
 package uk.ac.aber.cs.groupten.stumblr;
 
-import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.Service;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
