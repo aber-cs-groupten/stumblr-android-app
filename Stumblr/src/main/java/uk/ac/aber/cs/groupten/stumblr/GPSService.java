@@ -45,7 +45,7 @@ public class GPSService extends Service implements LocationListener {
     public int onStartCommand(Intent intent, int flags, int startID) {
         // Set up location updates (this class implements a Listener)
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30000, 10, this);
+        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 10, this);
 
         // Run as foreground task
         // See: http://stackoverflow.com/a/6636893
