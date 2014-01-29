@@ -35,6 +35,11 @@ public class CreateRoute extends DataEntryActivity {
         String shortDesc = ((TextView) findViewById(R.id.shortDescriptionBox)).getText().toString();
         String longDesc = ((TextView) findViewById(R.id.longDescriptionBox)).getText().toString();
 
+        // Sanitise the Inputs
+        title = route.sanitiseStringInput(title);
+        shortDesc = route.sanitiseStringInput(shortDesc);
+        longDesc = route.sanitiseStringInput(longDesc);
+
         // Check the length of text fields
         if (StumblrData.isValidData(title)) {
             if (StumblrData.isValidData(shortDesc)) {

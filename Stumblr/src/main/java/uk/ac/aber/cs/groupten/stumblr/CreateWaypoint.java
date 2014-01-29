@@ -77,6 +77,10 @@ public class CreateWaypoint extends AbstractActivity {
         String wpTitle = ((TextView) findViewById(R.id.wptitle_box)).getText().toString();
         String wpShortDesc = ((TextView) findViewById(R.id.wpshortdesc_box)).getText().toString();
 
+        //Santise Inputs
+        wpTitle = waypoint.sanitiseStringInput(wpTitle);
+        wpShortDesc = waypoint.sanitiseStringInput(wpShortDesc);
+
         // checking the length of the text fields
         if (StumblrData.isValidData(wpTitle) && StumblrData.isValidData(wpShortDesc)) {
             waypoint.setTitle(wpTitle);
