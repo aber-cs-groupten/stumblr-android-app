@@ -135,7 +135,6 @@ public class FinishRoute extends AbstractActivity {
             walk.put("shortDescription", route.getShortDesc());
             walk.put("longDescription", route.getLongDesc());
             walk.put("walkHours", route.getLengthTimeHours());
-            walk.put("startTime", route.getStartTime());
             walk.put("totalDistance", route.getDistance());
 
             // Put the walk track into the JSON package
