@@ -62,11 +62,13 @@ public class CreateWaypoint extends AbstractActivity {
 
     public void loadWaypoint(Waypoint w) {
         // TODO
+        ImageView image = ((ImageView) findViewById(R.id.imageView));
         TextView title = ((TextView) findViewById(R.id.wptitle_box));
         TextView shortDesc = ((TextView) findViewById(R.id.wpshortdesc_box));
 
         title.setText(w.getTitle());
         shortDesc.setText(w.getShortDesc());
+        image.setImageBitmap(w.getImage());
     }
 
     /**
@@ -77,7 +79,7 @@ public class CreateWaypoint extends AbstractActivity {
         String wpTitle = ((TextView) findViewById(R.id.wptitle_box)).getText().toString();
         String wpShortDesc = ((TextView) findViewById(R.id.wpshortdesc_box)).getText().toString();
 
-        //Santise Inputs
+        // Sanitise Inputs
         wpTitle = waypoint.sanitiseStringInput(wpTitle);
         wpShortDesc = waypoint.sanitiseStringInput(wpShortDesc);
 
@@ -94,6 +96,7 @@ public class CreateWaypoint extends AbstractActivity {
             returnIntent.putExtra("data", waypoint);
             setResult(RESULT_OK, returnIntent);
 
+            // Graceful finish
             finish();
         }
         else {

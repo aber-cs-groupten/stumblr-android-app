@@ -113,7 +113,9 @@ public class FinishRoute extends AbstractActivity {
     public void postData(View v) {
         if (checkInternetEnabled() || checkWifiEnabled()){
             new NetworkTask().execute();
-            //finish();
+
+            // Exit gracefully
+            finish();
         }
         else{
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -222,11 +224,8 @@ public class FinishRoute extends AbstractActivity {
         NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         if (mWifi.isConnected()) {
             wifiEnabled = true;
-            return wifiEnabled;
         }
-        else{
-            return wifiEnabled;
-        }
+        return wifiEnabled;
     }
 
     /*
@@ -236,10 +235,6 @@ public class FinishRoute extends AbstractActivity {
      */
 
     // REFERENCE - http://stackoverflow.com/questions/20656649/how-to-convert-bitmap-to-png-and-then-to-base64-in-android
-    public void startBase64Intent(View v) {
-        //  startActivity(new Intent())
-    }
-
     public String encodeTobase64(Bitmap image)
     {
         Bitmap imagex = image;

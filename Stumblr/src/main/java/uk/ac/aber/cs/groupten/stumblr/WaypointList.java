@@ -168,7 +168,7 @@ public class WaypointList extends AbstractActivity {
                 // TODO ^
                 Intent i = new Intent(getBaseContext(), CreateWaypoint.class);
                 i.putExtra(CreateWaypoint.WAYPOINT_BUNDLE, w);
-                startActivity(i);
+                startActivityForResult(i, WAYPOINT_INTENT);
             }
         });
     }
@@ -240,7 +240,7 @@ public class WaypointList extends AbstractActivity {
     public void finishRoute() {
         calculateTimestamp();
 
-        //Checking waypoint list size and setting its textview.
+        // Checking waypoint list size and setting its textview.
         setContentView(R.layout.activity_finish_route);
         TextView num_waypoints = (TextView) findViewById(R.id.numwpView);
         num_waypoints.setText(String.valueOf(route.getWaypointList().size()));

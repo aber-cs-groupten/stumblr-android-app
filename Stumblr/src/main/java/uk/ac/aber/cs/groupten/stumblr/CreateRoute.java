@@ -52,6 +52,8 @@ public class CreateRoute extends DataEntryActivity {
                 Intent i = new Intent(getApplicationContext(), WaypointList.class);
                 i.putExtra("route", route);
                 startActivity(i);
+
+                // Clear this activity
                 finish();
             } else {
                 // insufficient shortDesc length
