@@ -6,7 +6,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-public class Waypoint extends StumblrData {
+public class Waypoint extends StumblrData implements Parcelable {
     // CONSTRUCTORS
     /**
      * Default constructor for Waypoint.
