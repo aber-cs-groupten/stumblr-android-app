@@ -12,9 +12,6 @@ public class Home extends AbstractActivity {
     public void stumblrOnCreate(Bundle savedInstanceState) {
         // Called by super().onCreate
         setContentView(R.layout.activity_home);
-        if (savedInstanceState == null) {
-            // do stuff
-        }
     }
 
     /**

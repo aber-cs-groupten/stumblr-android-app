@@ -50,11 +50,7 @@ public abstract class StumblrData implements Parcelable {
      */
     public static boolean isValidData(String s) {
         // Check the length of text fields
-        if (s.length() < 3) {
-            return false;
-        }
-
-        return true;
+        return (s.length() < 3);
     }
 
     /**

@@ -84,19 +84,19 @@ public class FinishRoute extends AbstractActivity {
                 HttpResponse response = httpclient.execute(httppost);
                 return response;
             } catch (Exception e) {
-                Log.e(TAG, "IM NOT WORKING " + e.toString());
+                Log.e(TAG, "IM NOT WORKING " + e.toString()); // FIXME proper log message
                 return null;
             }
         }
         protected void onPostExecute (HttpResponse result){
             if(result == null){
-                Toast.makeText(getBaseContext(), "Post Failed, Server Not Found", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "Upload failed, server not available :(", Toast.LENGTH_LONG).show();
             }
             else if(result.getStatusLine().getStatusCode() == 200){
-                Toast.makeText(getBaseContext(), "Post Completely Successfully!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "Upload Successful :)", Toast.LENGTH_LONG).show();
             }
             else{
-                Toast.makeText(getBaseContext(), "Post Failed, HTTP error code: " + result.getStatusLine().getStatusCode(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "Upload failed :(\nError: " + result.getStatusLine().getStatusCode(), Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -104,8 +104,8 @@ public class FinishRoute extends AbstractActivity {
     /**
      * Posts the data to the server. Check if internet is available first.
      */
-    public void postData(View view) {
-        if (checkInternetEnabled() == true || checkWifiEnabled() == true){
+    public void postData(View v) {
+        if (checkInternetEnabled() || checkWifiEnabled()){
             new NetworkTask().execute();
             //finish();
         }
