@@ -239,14 +239,7 @@ public class WaypointList extends AbstractActivity {
      * @param v The View object passed in by the Android OS.
      */
     public void finishRoute() {
-        // Calculate timestamp
-        long startTime = route.getStartTime();
-        Log.e(TAG, (String.valueOf(startTime)));
-        long endTime = route.getCurrentTime();
-        Log.e(TAG, (String.valueOf(endTime)));
-        long timeLength = endTime - startTime;
-        Log.e(TAG, (String.valueOf(timeLength)));
-        route.setLengthTime(timeLength);
+        calculateTimestamp();
 
         //TODO FIX TEXTVIEW BEING HIDDEN
         //Checking waypoint list size and setting its textview.
@@ -262,6 +255,17 @@ public class WaypointList extends AbstractActivity {
         // Clean up
         stopGPSService();
         startActivity(i);
+    }
+
+    private void calculateTimestamp(){
+        // Calculate timestamp
+        long startTime = route.getStartTime();
+        Log.e(TAG, (String.valueOf(startTime)));
+        long endTime = route.getCurrentTime();
+        Log.e(TAG, (String.valueOf(endTime)));
+        long timeLength = endTime - startTime;
+        Log.e(TAG, (String.valueOf(timeLength)));
+        route.setLengthTime(timeLength);
     }
 
     public void promptToEnableGPS() {
