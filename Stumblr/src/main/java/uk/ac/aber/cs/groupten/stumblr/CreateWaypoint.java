@@ -18,6 +18,7 @@ import uk.ac.aber.cs.groupten.stumblr.data.StumblrData;
 import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
 
 public class CreateWaypoint extends AbstractActivity {
+    public static final String WAYPOINT_BUNDLE = "waypoint";
     private Waypoint waypoint;
 
     /**

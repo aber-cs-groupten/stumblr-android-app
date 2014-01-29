@@ -162,12 +162,24 @@ public class WaypointList extends AbstractActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Waypoint w = (Waypoint) listView.getItemAtPosition(position);
+
+                Bundle b = new Bundle();
+                b.putParcelable(CreateWaypoint.WAYPOINT_BUNDLE, w);
+
+                // Using getBaseContext() not sure if this should work
+                // TODO ^
+                startActivity(new Intent(getBaseContext(), CreateWaypoint.class));
+
+                /* WIP
+
                 // ListView Clicked item value
                 String itemValue = listView.getItemAtPosition(position).toString();
 
                 // Show Alert
                 Toast.makeText(getApplicationContext(),
                         "Position : " + position + "  ListItem : " + itemValue, Toast.LENGTH_SHORT).show();
+                */
             }
         });
     }
@@ -177,9 +189,10 @@ public class WaypointList extends AbstractActivity {
      * Renders Waypoint list on screen.
      */
     public void drawWaypointList() {
+        // TODO this is inefficient (perhaps something with Stack)?
         // Add each Waypoint to the list
         for(Waypoint currentWaypoint : route.getWaypointList()){
-            if(!menuItems.contains(currentWaypoint)){
+            if(! menuItems.contains(currentWaypoint)){
                 menuItems.addLast(currentWaypoint);
             }
         }
