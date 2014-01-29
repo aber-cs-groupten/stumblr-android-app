@@ -107,7 +107,7 @@ public class FinishRoute extends AbstractActivity {
     public void postData(View view) {
         if (checkInternetEnabled() == true || checkWifiEnabled() == true){
             new NetworkTask().execute();
-            finish();
+            //finish();
         }
         else{
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -128,9 +128,8 @@ public class FinishRoute extends AbstractActivity {
 
     private JSONObject getData() {
         //Data to be sent:
-        JSONObject data = new JSONObject();
+        JSONObject walk = new JSONObject();
         try {
-            JSONObject walk = new JSONObject();
 
             //Get data out of the Route object and add to the JSON package
             walk.put("walkTitle", route.getTitle());
@@ -177,11 +176,10 @@ public class FinishRoute extends AbstractActivity {
             }
 
             walk.put("waypoints", JSONWaypoints);
-            data.put("walk", walk);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return data;
+        return walk;
     }
 
     // End HTTP POST
