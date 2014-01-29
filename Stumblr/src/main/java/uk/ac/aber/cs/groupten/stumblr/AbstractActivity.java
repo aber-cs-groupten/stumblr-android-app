@@ -9,9 +9,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-public abstract class AbstractActivity extends ActionBarActivity {
-    public static final String TAG = "STUMBLR";
-    public static final int CAMERA_REQ_CODE = 1337;
+abstract class AbstractActivity extends ActionBarActivity {
+    static final String TAG = "STUMBLR";
+    static final int CAMERA_REQ_CODE = 1337;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +19,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
         stumblrOnCreate(savedInstanceState);
     }
 
-    public abstract void stumblrOnCreate(Bundle savedInstanceState);
+    protected abstract void stumblrOnCreate(Bundle savedInstanceState);
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -35,21 +35,5 @@ public abstract class AbstractActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         return ((id == R.id.action_settings) || super.onOptionsItemSelected(item));
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_abstract, container, false);
-            return rootView;
-        }
     }
 }

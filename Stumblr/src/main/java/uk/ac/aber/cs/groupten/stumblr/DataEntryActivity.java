@@ -9,9 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-public abstract class DataEntryActivity extends ActionBarActivity {
-    public static final String TAG = "STUMBLR";
-
+abstract class DataEntryActivity extends ActionBarActivity {
     /**
      * Load the activity on creation (using a bundle if one is present)
      * @param savedInstanceState The bundle containing the saved instance state.
@@ -22,7 +20,7 @@ public abstract class DataEntryActivity extends ActionBarActivity {
         stumblrOnCreate(savedInstanceState);
     }
 
-    public abstract void stumblrOnCreate(Bundle savedInstanceState);
+    protected abstract void stumblrOnCreate(Bundle savedInstanceState);
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -38,21 +36,5 @@ public abstract class DataEntryActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         return (id == R.id.action_settings|| super.onOptionsItemSelected(item));
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_abstract, container, false);
-            return rootView;
-        }
     }
 }

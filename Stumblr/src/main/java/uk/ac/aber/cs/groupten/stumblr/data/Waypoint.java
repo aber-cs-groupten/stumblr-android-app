@@ -123,7 +123,7 @@ public class Waypoint extends StumblrData {
      * Reads Route data from a parcel.
      * @param inParcel
      */
-    public void readFromParcel(Parcel inParcel) {
+    void readFromParcel(Parcel inParcel) {
         this.timestamp = inParcel.readLong();
         this.setTitle(inParcel.readString());
         this.setShortDesc(inParcel.readString());

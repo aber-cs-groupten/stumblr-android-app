@@ -188,8 +188,7 @@ public class FinishRoute extends AbstractActivity {
     /** Ensuring Network Provider is Enabled before submitting route
      *  REFERENCE - http://stackoverflow.com/questions/12806709/android-how-to-tell-if-mobile-network-data-is-enabled-or-disabled-even-when
      **/
-    public boolean checkInternetEnabled() {
-
+    boolean checkInternetEnabled() {
         boolean mobileDataEnabled = false; // Assume disabled
         Context context;
         context = getApplicationContext();
@@ -214,7 +213,7 @@ public class FinishRoute extends AbstractActivity {
         }
     }
 
-    public boolean checkWifiEnabled(){
+    boolean checkWifiEnabled(){
         boolean wifiEnabled = false; //assume Wifi is disabled
         ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
@@ -234,12 +233,7 @@ public class FinishRoute extends AbstractActivity {
      */
 
     // REFERENCE - http://stackoverflow.com/questions/20656649/how-to-convert-bitmap-to-png-and-then-to-base64-in-android
-    public void startBase64Intent(View v) {
-        //  startActivity(new Intent())
-    }
-
-    public String encodeTobase64(Bitmap image)
-    {
+    String encodeTobase64(Bitmap image) {
         Bitmap imagex = image;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         imagex.compress(Bitmap.CompressFormat.JPEG, 100, baos);

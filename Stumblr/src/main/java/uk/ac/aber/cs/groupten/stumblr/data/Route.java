@@ -73,16 +73,8 @@ public class Route extends StumblrData implements Parcelable {
     /**
      * Initialise Route object from a Parcel.
      */
-    public Route(Parcel p) {
+    private Route(Parcel p) {
         readFromParcel(p);
-    }
-
-    /**
-     * Checks if the data in the Route is valid or not, and returns a boolean.
-     * @return If the data is valid or not. (true = valid)
-     */
-    public boolean isValidData() {
-        return false;
     }
 
     /**
@@ -195,7 +187,7 @@ public class Route extends StumblrData implements Parcelable {
      * Reads Route data from a parcel.
      * @param inParcel The parcel to read the Route from.
      */
-    public void readFromParcel(Parcel inParcel) {
+    void readFromParcel(Parcel inParcel) {
         this.setTitle(inParcel.readString());
         this.setShortDesc(inParcel.readString());
         this.setLongDesc(inParcel.readString());
@@ -229,11 +221,11 @@ public class Route extends StumblrData implements Parcelable {
         this.startTime = getCurrentTime();
     }
 
-    public void setStartTime(long start) {
+    void setStartTime(long start) {
         this.startTime = start;
     }
 
-    public long getLengthTime() {
+    long getLengthTime() {
         return lengthTime;
     }
 
