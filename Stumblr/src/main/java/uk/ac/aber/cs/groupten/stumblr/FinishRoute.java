@@ -145,8 +145,8 @@ public class FinishRoute extends AbstractActivity {
             for(int i = 0; i < coordinates.size(); i++){
                 Location currentCoordinate = coordinates.get(i);
                 JSONObject currentJSONCoordinate = new JSONObject();
-                currentJSONCoordinate.put("Latitude", currentCoordinate.getLatitude());
-                currentJSONCoordinate.put("Longitude", currentCoordinate.getLongitude());
+                currentJSONCoordinate.put("latitude", currentCoordinate.getLatitude());
+                currentJSONCoordinate.put("longitude", currentCoordinate.getLongitude());
                 JSONCoordinates.put(i, currentJSONCoordinate);
             }
 
