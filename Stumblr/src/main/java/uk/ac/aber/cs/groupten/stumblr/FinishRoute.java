@@ -73,7 +73,13 @@ public class FinishRoute extends AbstractActivity {
         @Override
         protected HttpResponse doInBackground(String... params) {
             HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost("http://www.parityb.it");
+            
+            // This server can be used for testing
+            //HttpPost httppost = new HttpPost("http://www.parityb.it");
+
+            // This is the real server
+            HttpPost httppost = new HttpPost("http://users.aber.ac.uk/mal60/group_project/JSON_decode.php");
+
             try {
                 JSONObject data = getData();
                 StringEntity stringData = new StringEntity(data.toString());
