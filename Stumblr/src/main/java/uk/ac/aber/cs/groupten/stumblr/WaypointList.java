@@ -132,7 +132,7 @@ public class WaypointList extends AbstractActivity {
      * Halts the GPS service.
      */
     private void stopGPSService() {
-        if (serviceRunning == true) {
+        if (serviceRunning) {
             stopService(gpsServiceIntent);
             unregisterReceiver(receiver);
         }
