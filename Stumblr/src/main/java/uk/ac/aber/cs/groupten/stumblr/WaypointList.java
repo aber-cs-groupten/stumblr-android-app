@@ -177,7 +177,7 @@ public class WaypointList extends AbstractActivity {
     /**
      * Renders Waypoint list on screen.
      */
-    public void drawWaypointList() {
+    void drawWaypointList() {
         // Add each Waypoint to the list
         for(Waypoint currentWaypoint : route.getWaypointList()){
             if(!menuItems.contains(currentWaypoint)){
@@ -236,7 +236,7 @@ public class WaypointList extends AbstractActivity {
      * Passes the current Route object to FinishRoute and starts the activity.
      * @param v The View object passed in by the Android OS.
      */
-    public void finishRoute() {
+    void finishRoute() {
         calculateTimestamp();
 
         //TODO FIX TEXTVIEW BEING HIDDEN
@@ -266,7 +266,7 @@ public class WaypointList extends AbstractActivity {
         route.setLengthTime(timeLength);
     }
 
-    public void promptToEnableGPS() {
+    void promptToEnableGPS() {
         // Build alert dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Location Services Not Active");

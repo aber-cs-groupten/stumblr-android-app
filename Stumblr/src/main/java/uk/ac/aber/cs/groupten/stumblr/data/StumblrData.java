@@ -12,7 +12,7 @@ import uk.ac.aber.cs.groupten.stumblr.WaypointList;
  * Abstract class containing basic common structure for all Stumblr data formats.
  */
 public abstract class StumblrData implements Parcelable {
-    public static final String TAG = "STUMBLR";
+    static final String TAG = "STUMBLR";
 
     /**
      * The title of the given piece of data. This can be extended to Waypoints, Routes
@@ -29,7 +29,7 @@ public abstract class StumblrData implements Parcelable {
     /**
      * Default constructor
      */
-    public StumblrData() {
+    StumblrData() {
         // do nothing
     }
 
@@ -37,7 +37,7 @@ public abstract class StumblrData implements Parcelable {
      * @param title The title to set.
      * @param shortDesc The short description to set.
      */
-    public StumblrData(String title, String shortDesc) {
+    StumblrData(String title, String shortDesc) {
         this.title = title;
         this.shortDesc = shortDesc;
     }
