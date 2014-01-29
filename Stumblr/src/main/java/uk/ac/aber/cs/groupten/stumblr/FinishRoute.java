@@ -61,6 +61,7 @@ public class FinishRoute extends AbstractActivity {
         }
 
         Log.v(TAG, "Route list size: " + String.valueOf(route.getWaypointList().size()));
+        Log.v(TAG, "Route disance: " + route.getDistance());
     }
 
     /*
@@ -137,6 +138,7 @@ public class FinishRoute extends AbstractActivity {
             walk.put("longDescription", route.getLongDesc());
             walk.put("walkHours", route.getLengthTimeHours());
             walk.put("startTime", route.getStartTime());
+            walk.put("totalDistance", route.getDistance());
 
             // Put the walk track into the JSON package
             JSONArray JSONCoordinates = new JSONArray();
@@ -151,12 +153,6 @@ public class FinishRoute extends AbstractActivity {
 
             // Put coordinates
             walk.put("walkCoordinates", JSONCoordinates);
-
-            // FIXME
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Distance....")
-                    .setMessage(String.valueOf(route.getDistance()))
-                    .setPositiveButton("OK", null);
 
             //Add data for each waypoint into the JSON package
             JSONArray JSONWaypoints = new JSONArray();
