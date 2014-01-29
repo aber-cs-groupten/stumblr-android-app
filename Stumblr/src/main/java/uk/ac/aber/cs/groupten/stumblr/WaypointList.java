@@ -42,7 +42,6 @@ public class WaypointList extends AbstractActivity {
 
     // Data objects
     private Route route;
-    private final String listEmptyString = "List is empty! Add a Waypoint below...";
 
     /**
      * Loads the activity on creation (using a bundle if one is present)
@@ -150,7 +149,6 @@ public class WaypointList extends AbstractActivity {
     private void initialiseListView() {
         // Initialise list of Strings to display in
         menuItems = new LinkedList<Waypoint>();
-        // menuItems.add(listEmptyString);
 
         // Set ArrayAdapter and ListView up
         listView = (ListView) findViewById(R.id.listView);
@@ -166,7 +164,7 @@ public class WaypointList extends AbstractActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // ListView Clicked item value
-                String itemValue = (String) listView.getItemAtPosition(position);
+                String itemValue = listView.getItemAtPosition(position).toString();
 
                 // Show Alert
                 Toast.makeText(getApplicationContext(),

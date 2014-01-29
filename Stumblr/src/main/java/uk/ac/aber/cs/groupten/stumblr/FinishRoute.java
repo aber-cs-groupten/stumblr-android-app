@@ -84,7 +84,7 @@ public class FinishRoute extends AbstractActivity {
                 HttpResponse response = httpclient.execute(httppost);
                 return response;
             } catch (Exception e) {
-                Log.e(TAG, "IM NOT WORKING " + e.toString());
+                Log.e(TAG, "IM NOT WORKING " + e.toString()); // FIXME proper log message
                 return null;
             }
         }
