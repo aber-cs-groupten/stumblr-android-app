@@ -175,7 +175,6 @@ public class FinishRoute extends AbstractActivity {
             }
 
             walk.put("waypoints", JSONWaypoints);
-            data.put("walk", walk);
         } catch (JSONException e) {
             e.printStackTrace();
         }
