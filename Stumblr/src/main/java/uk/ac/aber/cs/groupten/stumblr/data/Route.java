@@ -22,6 +22,9 @@ public class Route extends StumblrData implements Parcelable {
      */
     private long lengthTime;
 
+    private float totalDistance;
+    private int totalWaypoints;
+
     /**
      * A slightly longer description of the contents of the route. Set by the user when
      * they create a Route.
@@ -144,7 +147,6 @@ public class Route extends StumblrData implements Parcelable {
                     nextLoc.getLatitude(),
                     nextLoc.getLongitude(),
                     results);
-
         }
 
         Log.v(TAG, "TOTAL DISTANCE: " + String.valueOf(distance));
@@ -172,6 +174,8 @@ public class Route extends StumblrData implements Parcelable {
         parcel.writeString(this.getLongDesc());
         parcel.writeLong(this.getStartTime());
         parcel.writeLong(this.getLengthTime());
+        parcel.writeFloat(this.getDistance());
+        parcel.writeInt(this.getTotalWaypoints());
         parcel.writeList(this.route);
         parcel.writeList(this.coordinates);
     }
@@ -186,6 +190,8 @@ public class Route extends StumblrData implements Parcelable {
         this.setLongDesc(inParcel.readString());
         this.setStartTime(inParcel.readLong());
         this.setLengthTime(inParcel.readLong());
+        this.setTotalDistance(inParcel.readFloat());
+        this.setTotalWaypoints(inParcel.readInt());
 
         initLists();
         inParcel.readList(this.route, Waypoint.class.getClassLoader()); // Not sure about these two lines yet
@@ -212,6 +218,22 @@ public class Route extends StumblrData implements Parcelable {
 
     public void setStartTime() {
         this.startTime = getCurrentTime();
+    }
+
+    public void setTotalWaypoints(int wp){
+        this.totalWaypoints = wp;
+    }
+
+    public int getTotalWaypoints(){
+        return totalWaypoints;
+    }
+
+    public void setTotalDistance(float distance){
+        this.totalDistance = distance;
+    }
+
+    public float getTotalDistance(){
+        return totalDistance;
     }
 
     public void setStartTime(long start) {

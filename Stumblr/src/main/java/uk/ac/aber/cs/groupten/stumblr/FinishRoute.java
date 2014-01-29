@@ -16,6 +16,7 @@ import android.provider.Settings;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -55,6 +56,16 @@ public class FinishRoute extends AbstractActivity {
 
         // Log a few messages just to make sure
         Log.v(TAG, route.getTitle());
+        //Total Distance Textview
+        TextView textView1 = (TextView) findViewById(R.id.distanceVariable);
+        float temp = route.getTotalDistance();
+        temp = Math.round(temp);
+        textView1.setText(String.valueOf(temp));
+
+        //Total Waypoints Text View
+        int wpTemp = route.getTotalWaypoints();
+        TextView textView = (TextView) findViewById(R.id.numwpView);
+        textView.setText(String.valueOf(wpTemp));
 
         for (Waypoint w : route.getWaypointList()) {
             Log.v(TAG, w.getLocation().toString());
@@ -158,6 +169,12 @@ public class FinishRoute extends AbstractActivity {
 
             // Put coordinates
             walk.put("walkCoordinates", JSONCoordinates);
+
+            // FIXME
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Distance....")
+                    .setMessage(String.valueOf(route.getDistance()))
+                    .setPositiveButton("OK", null);
 
             //Add data for each waypoint into the JSON package
             JSONArray JSONWaypoints = new JSONArray();

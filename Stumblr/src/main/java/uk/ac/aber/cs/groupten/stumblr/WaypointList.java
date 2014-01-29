@@ -242,11 +242,10 @@ public class WaypointList extends AbstractActivity {
 
         // Checking waypoint list size and setting its textview.
         setContentView(R.layout.activity_finish_route);
-        TextView num_waypoints = (TextView) findViewById(R.id.numwpView);
-        num_waypoints.setText(String.valueOf(route.getWaypointList().size()));
-
         // Start new intent, packaging current Route with it
         Intent i = new Intent(getApplicationContext(), FinishRoute.class);
+        setWaypointNum();
+        setTotalDistance();
         i.putExtra("route", this.route);
 
         // Clean up
@@ -254,14 +253,24 @@ public class WaypointList extends AbstractActivity {
         startActivity(i);
     }
 
+    public void setWaypointNum(){
+        route.setTotalWaypoints(route.getWaypointList().size());
+    }
+
+    public void setTotalDistance(){
+        route.setTotalDistance(route.getDistance());
+    }
+
+
     private void calculateTimestamp(){
         // Calculate timestamp
         long startTime = route.getStartTime();
-        Log.e(TAG, ("Start time: " + String.valueOf(startTime)));
+        Log.e(TAG, (String.valueOf(startTime)));
         long endTime = route.getCurrentTime();
-        Log.e(TAG, ("End time: " + String.valueOf(endTime)));
+        Log.e(TAG, (String.valueOf(endTime)));
         long timeLength = endTime - startTime;
-        Log.e(TAG, ("Time taken: " + String.valueOf(timeLength)));
+        Log.e(TAG, (String.valueOf(timeLength)));
+
         route.setLengthTime(timeLength);
     }
 
