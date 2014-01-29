@@ -134,8 +134,6 @@ public class Route extends StumblrData implements Parcelable {
     }
 
     public float getDistance(){
-        // FIXME this needs testing
-
         float distance = 0;
         float[] results = new float[1];
         Location currentLoc;
