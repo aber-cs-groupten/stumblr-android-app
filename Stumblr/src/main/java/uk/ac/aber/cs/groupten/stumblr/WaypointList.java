@@ -38,7 +38,6 @@ public class WaypointList extends AbstractActivity {
     private ArrayAdapter<Waypoint> adapter;
     private LinkedList<Waypoint> menuItems;
     private ListView listView;
-    private int waypointListSize=0;
 
     // Data objects
     private Route route;
@@ -53,7 +52,7 @@ public class WaypointList extends AbstractActivity {
 
         // Receive Route object
         Bundle extras = getIntent().getExtras();
-        route = (Route) extras.get("route");
+        route = (Route) extras.get("route"); // May be null, check below
 
         // Timestamp
         route.setStartTime();
@@ -239,12 +238,10 @@ public class WaypointList extends AbstractActivity {
     public void finishRoute() {
         calculateTimestamp();
 
-        //TODO FIX TEXTVIEW BEING HIDDEN
         //Checking waypoint list size and setting its textview.
-        waypointListSize = route.getWaypointList().size();
         setContentView(R.layout.activity_finish_route);
-        TextView textView = (TextView) findViewById(R.id.numwpView);
-        textView.setText(String.valueOf(waypointListSize));
+        TextView num_waypoints = (TextView) findViewById(R.id.numwpView);
+        num_waypoints.setText(String.valueOf(route.getWaypointList().size()));
 
         // Start new intent, packaging current Route with it
         Intent i = new Intent(getApplicationContext(), FinishRoute.class);
@@ -258,11 +255,11 @@ public class WaypointList extends AbstractActivity {
     private void calculateTimestamp(){
         // Calculate timestamp
         long startTime = route.getStartTime();
-        Log.e(TAG, (String.valueOf(startTime)));
+        Log.e(TAG, ("Start time: " + String.valueOf(startTime)));
         long endTime = route.getCurrentTime();
-        Log.e(TAG, (String.valueOf(endTime)));
+        Log.e(TAG, ("End time: " + String.valueOf(endTime)));
         long timeLength = endTime - startTime;
-        Log.e(TAG, (String.valueOf(timeLength)));
+        Log.e(TAG, ("Time taken: " + String.valueOf(timeLength)));
         route.setLengthTime(timeLength);
     }
 
