@@ -78,14 +78,6 @@ public class Route extends StumblrData implements Parcelable {
     }
 
     /**
-     * Checks if the data in the Route is valid or not, and returns a boolean.
-     * @return If the data is valid or not. (true = valid)
-     */
-    public boolean isValidData() {
-        return false;
-    }
-
-    /**
      * Adds a Waypoint to the tail of the Route
      * @param w The waypoint to add
      */
