@@ -20,6 +20,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.LinkedList;
@@ -72,7 +76,7 @@ public class FinishRoute extends AbstractActivity {
         }
 
         Log.v(TAG, "Route list size: " + String.valueOf(route.getWaypointList().size()));
-        Log.v(TAG, "Route disance: " + route.getDistance());
+        Log.v(TAG, "Route distance: " + route.getDistance());
     }
 
     /*
@@ -202,6 +206,8 @@ public class FinishRoute extends AbstractActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        writeFile(walk.toString());
         return walk;
     }
 
@@ -252,8 +258,7 @@ public class FinishRoute extends AbstractActivity {
      */
 
     // REFERENCE - http://stackoverflow.com/questions/20656649/how-to-convert-bitmap-to-png-and-then-to-base64-in-android
-    public String encodeTobase64(Bitmap image)
-    {
+    public String encodeTobase64(Bitmap image) {
         Bitmap imagex = image;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         imagex.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -262,5 +267,22 @@ public class FinishRoute extends AbstractActivity {
 
         Log.v(TAG, imageEncoded);
         return imageEncoded;
+    }
+
+    // File writing
+    public void writeFile(String s) {
+        try {
+            Context c = this;
+            FileOutputStream fos = c.openFileOutput("JSON.txt", Context.MODE_PRIVATE);
+            OutputStreamWriter oos = new OutputStreamWriter(fos);
+
+            // Write and close
+            oos.write(s);
+            oos.close();
+        } catch (FileNotFoundException fnfe) {
+            Log.e(TAG, fnfe.getMessage());
+        } catch (IOException ioe) {
+            Log.e(TAG, ioe.getMessage());
+        }
     }
 }

@@ -29,6 +29,9 @@ public class WaypointList extends AbstractActivity {
     // Constants
     private final int WAYPOINT_INTENT = 3141;
 
+    // Index to insert new Waypoint
+    private int insert_index;
+
     // GPS broadcast receiver
     private BroadcastReceiver receiver;
     private Intent gpsServiceIntent;
@@ -68,6 +71,32 @@ public class WaypointList extends AbstractActivity {
     }
 
     /**
+     * Starts the CreateWaypoint Intent, so that it returns a result.
+     * @param v The View object.
+     */
+    public void startCreateWaypointIntent(View v) {
+        Intent cwi = new Intent(getApplicationContext(), CreateWaypoint.class);
+
+        try {
+            // Pop latest coordinate from stack and apply to Waypoint
+            cwi.putExtra(CreateWaypoint.LOCATION_BUNDLE, route.getCoordinateList().peek());
+
+            // Begin activity
+            startActivityForResult(cwi, WAYPOINT_INTENT);
+
+            // Set index to the end of the list
+            insert_index = route.getWaypointList().size();
+
+        } catch (EmptyStackException ese) {
+            Log.i(TAG, "No Locations currently in Route. Probably no GPS fix yet.");
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Waiting for location...")
+                    .setMessage("Hold on, we don't know where you are yet!")
+                    .setPositiveButton("OK", null).show();
+        }
+    }
+
+    /**
      * Called when an Activity is dispatched for a result
      * @param requestCode Integer relating the intent to a request
      * @param resultCode Used to check if a request was successful
@@ -79,11 +108,18 @@ public class WaypointList extends AbstractActivity {
 
         if (requestCode == WAYPOINT_INTENT && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
-            Waypoint newWaypoint = (Waypoint) extras.get("data"); // This may be null
+            Waypoint newWaypoint = (Waypoint) extras.get(CreateWaypoint.RETURN_BUNDLE); // This may be null
 
             if (newWaypoint != null) { // Test for null
                 // Update the route with the latest Waypoint
-                route.addWaypoint(newWaypoint);
+                Log.e(TAG, "Size: " + String.valueOf(route.getWaypointList().size()) + " Index: " + String.valueOf(insert_index));
+                LinkedList<Waypoint> wps = route.getWaypointList();
+
+                if (insert_index < wps.size()) { // Replace if already exists
+                    wps.remove(insert_index);
+                }
+
+                wps.add(insert_index, newWaypoint);
 
                 // Log message containing the name of the route
                 Log.v(TAG, ("RESULT RETURNED: " + newWaypoint.getTitle()));
@@ -165,7 +201,7 @@ public class WaypointList extends AbstractActivity {
                 Waypoint w = (Waypoint) listView.getItemAtPosition(position);
 
                 // Using getBaseContext(). not sure if this should work
-                // TODO ^
+                insert_index = position;
                 Intent i = new Intent(getBaseContext(), CreateWaypoint.class);
                 i.putExtra(CreateWaypoint.WAYPOINT_BUNDLE, w);
                 startActivityForResult(i, WAYPOINT_INTENT);
@@ -178,39 +214,16 @@ public class WaypointList extends AbstractActivity {
      * Renders Waypoint list on screen.
      */
     public void drawWaypointList() {
-        // TODO this is inefficient (perhaps something with Stack)?
+        adapter.clear();
+        listView.clearChoices();
+
         // Add each Waypoint to the list
         for(Waypoint currentWaypoint : route.getWaypointList()){
-            if(! menuItems.contains(currentWaypoint)){
-                menuItems.addLast(currentWaypoint);
-            }
+            menuItems.addLast(currentWaypoint);
         }
 
         adapter.notifyDataSetChanged(); // Make sure that the adapter knows there is new data
         listView.refreshDrawableState(); // Redraw the list on-screen
-    }
-
-    /**
-     * Starts the CreateWaypoint Intent, so that it returns a result.
-     * @param v The View object.
-     */
-    public void startCreateWaypointIntent(View v) {
-        Intent cwi = new Intent(getApplicationContext(), CreateWaypoint.class);
-
-        try {
-            // Pop latest coordinate from stack and apply to Waypoint
-            cwi.putExtra("loc", route.getCoordinateList().peek());
-
-            // Begin activity
-            startActivityForResult(cwi, WAYPOINT_INTENT);
-
-        } catch (EmptyStackException ese) {
-            Log.i(TAG, "No Locations currently in Route. Probably no GPS fix yet.");
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Waiting for location...")
-                    .setMessage("Hold on, we don't know where you are yet!")
-                    .setPositiveButton("OK", null).show();
-        }
     }
 
     // Finishes the screen
@@ -242,6 +255,7 @@ public class WaypointList extends AbstractActivity {
 
         // Checking waypoint list size and setting its textview.
         setContentView(R.layout.activity_finish_route);
+
         // Start new intent, packaging current Route with it
         Intent i = new Intent(getApplicationContext(), FinishRoute.class);
         setWaypointNum();
@@ -260,7 +274,6 @@ public class WaypointList extends AbstractActivity {
     public void setTotalDistance(){
         route.setTotalDistance(route.getDistance());
     }
-
 
     private void calculateTimestamp(){
         // Calculate timestamp

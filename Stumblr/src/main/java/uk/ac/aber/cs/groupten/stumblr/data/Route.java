@@ -81,14 +81,6 @@ public class Route extends StumblrData implements Parcelable {
     }
 
     /**
-     * Adds a Waypoint to the tail of the Route
-     * @param w The waypoint to add
-     */
-    public void addWaypoint(Waypoint w) {
-        this.route.addLast(w);
-    }
-
-    /**
      * Returns the LinkedList of Waypoint objects.
      * @return The LinkedList of Waypoint objects.
      */

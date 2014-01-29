@@ -19,6 +19,9 @@ import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
 
 public class CreateWaypoint extends AbstractActivity {
     public static final String WAYPOINT_BUNDLE = "waypoint";
+    public static final String LOCATION_BUNDLE = "loc";
+    public static final String RETURN_BUNDLE = "return_data";
+
     private Waypoint waypoint;
 
     /**
@@ -38,7 +41,7 @@ public class CreateWaypoint extends AbstractActivity {
         if (b != null) {
             Log.e(TAG, "Bundle appears to be non-null");
 
-            Location tempLocation = (Location) b.get("loc");
+            Location tempLocation = (Location) b.get(LOCATION_BUNDLE);
             if (tempLocation != null) {
                 waypoint.setLocation(tempLocation);
             } else {
@@ -62,13 +65,15 @@ public class CreateWaypoint extends AbstractActivity {
 
     public void loadWaypoint(Waypoint w) {
         // TODO
+        this.waypoint = w;
         ImageView image = ((ImageView) findViewById(R.id.imageView));
         TextView title = ((TextView) findViewById(R.id.wptitle_box));
         TextView shortDesc = ((TextView) findViewById(R.id.wpshortdesc_box));
 
-        title.setText(w.getTitle());
-        shortDesc.setText(w.getShortDesc());
-        image.setImageBitmap(w.getImage());
+        // Set up GUI attributes
+        title.setText(waypoint.getTitle());
+        shortDesc.setText(waypoint.getShortDesc());
+        image.setImageBitmap(waypoint.getImage());
     }
 
     /**
@@ -93,13 +98,12 @@ public class CreateWaypoint extends AbstractActivity {
             waypoint.setTimestamp(c.getTimeInMillis());
 
             Intent returnIntent = new Intent();
-            returnIntent.putExtra("data", waypoint);
+            returnIntent.putExtra(RETURN_BUNDLE, waypoint);
             setResult(RESULT_OK, returnIntent);
 
             // Graceful finish
             finish();
-        }
-        else {
+        } else {
             //TODO Fix toast printing when short description is too short instead of title
             // insufficient title length
             Toast.makeText(getBaseContext(), "The Waypoint title is too short.", Toast.LENGTH_LONG).show();
