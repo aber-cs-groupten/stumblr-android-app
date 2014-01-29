@@ -248,6 +248,13 @@ public class WaypointList extends AbstractActivity {
         TextView textView = (TextView) findViewById(R.id.numwpView);
         textView.setText(String.valueOf(waypointListSize));
 
+        //Displaying total distance travelled
+        float totalDistance = route.getDistance();
+        setContentView(R.layout.activity_finish_route);
+        TextView textView1 = (TextView) findViewById(R.id.distanceView);
+        totalDistance = Math.round(totalDistance);
+        textView1.setText(String.valueOf(totalDistance));
+
         // Start new intent, packaging current Route with it
         Intent i = new Intent(getApplicationContext(), FinishRoute.class);
         i.putExtra("route", this.route);

@@ -70,6 +70,7 @@ public class CreateWaypoint extends AbstractActivity {
             finish();
         }
         else {
+            //TODO Fix toast printing when short description is too short instead of title
             // insufficient title length
             Toast.makeText(getBaseContext(), "The waypoint title is to short.", Toast.LENGTH_LONG).show();
         }
