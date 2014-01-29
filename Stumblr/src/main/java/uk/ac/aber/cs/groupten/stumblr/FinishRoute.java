@@ -90,13 +90,13 @@ public class FinishRoute extends AbstractActivity {
         }
         protected void onPostExecute (HttpResponse result){
             if(result == null){
-                Toast.makeText(getBaseContext(), "Post Failed, Server Not Found", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "Upload failed, server not available :(", Toast.LENGTH_LONG).show();
             }
             else if(result.getStatusLine().getStatusCode() == 200){
-                Toast.makeText(getBaseContext(), "Post Completely Successfully!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "Upload Successful :)", Toast.LENGTH_LONG).show();
             }
             else{
-                Toast.makeText(getBaseContext(), "Post Failed, HTTP error code: " + result.getStatusLine().getStatusCode(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "Upload failed :(\nError: " + result.getStatusLine().getStatusCode(), Toast.LENGTH_LONG).show();
             }
         }
     }
