@@ -1,13 +1,10 @@
 package uk.ac.aber.cs.groupten.stumblr;
 
 import android.support.v7.app.ActionBarActivity;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 public abstract class AbstractActivity extends ActionBarActivity {
     public static final String TAG = "STUMBLR";
@@ -35,5 +32,11 @@ public abstract class AbstractActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         return ((id == R.id.action_settings) || super.onOptionsItemSelected(item));
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Do nothing!
+        Log.v(TAG, "Back button pressed... Ignoring!");
     }
 }
