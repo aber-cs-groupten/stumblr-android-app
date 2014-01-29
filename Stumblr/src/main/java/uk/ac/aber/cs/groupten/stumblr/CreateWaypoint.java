@@ -147,4 +147,13 @@ public class CreateWaypoint extends AbstractActivity {
             }
         }
     }
+
+    // http://stackoverflow.com/questions/15430787/android-go-back-to-previous-activity
+    @Override
+    public void onBackPressed () {
+        Intent i = new Intent(CreateWaypoint.this, WaypointList.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // clear back stack
+        startActivity(i);
+        finish();
+    }
 }

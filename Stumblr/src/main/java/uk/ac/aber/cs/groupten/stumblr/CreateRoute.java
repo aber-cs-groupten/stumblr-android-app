@@ -9,7 +9,7 @@ import android.widget.Toast;
 import uk.ac.aber.cs.groupten.stumblr.data.Route;
 import uk.ac.aber.cs.groupten.stumblr.data.StumblrData;
 
-public class CreateRoute extends DataEntryActivity {
+public class CreateRoute extends AbstractActivity {
     private Route route;
 
     /**
