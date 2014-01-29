@@ -72,6 +72,7 @@ public class FinishRoute extends AbstractActivity {
         }
 
         Log.v(TAG, "Route list size: " + String.valueOf(route.getWaypointList().size()));
+        Log.v(TAG, "Route disance: " + route.getDistance());
     }
 
     /*
@@ -83,30 +84,36 @@ public class FinishRoute extends AbstractActivity {
         @Override
         protected HttpResponse doInBackground(String... params) {
             HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost("http://www.parityb.it");
+            
+            // This server can be used for testing
+            //HttpPost httppost = new HttpPost("http://www.parityb.it");
+
+            // This is the real server
+            HttpPost httppost = new HttpPost("http://users.aber.ac.uk/mal60/group_project/JSON_decode.php");
+
             try {
                 JSONObject data = getData();
-                StringEntity stringData = new StringEntity(data.toString(4));
+                StringEntity stringData = new StringEntity(data.toString());
 
                 httppost.setEntity(stringData);
-
+                httppost.setHeader("Content-Type", "application/json");
                 // Execute HTTP Post Request
                 HttpResponse response = httpclient.execute(httppost);
                 return response;
             } catch (Exception e) {
-                Log.e(TAG, "IM NOT WORKING " + e.toString());
+                Log.e(TAG, "IM NOT WORKING " + e.toString()); // FIXME proper log message
                 return null;
             }
         }
         protected void onPostExecute (HttpResponse result){
             if(result == null){
-                Toast.makeText(getBaseContext(), "Post Failed, Server Not Found", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "Upload failed, server not available :(", Toast.LENGTH_LONG).show();
             }
             else if(result.getStatusLine().getStatusCode() == 200){
-                Toast.makeText(getBaseContext(), "Post Completely Successfully!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "Upload Successful :)", Toast.LENGTH_LONG).show();
             }
             else{
-                Toast.makeText(getBaseContext(), "Post Failed, HTTP error code: " + result.getStatusLine().getStatusCode(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "Upload failed :(\nError: " + result.getStatusLine().getStatusCode(), Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -114,10 +121,10 @@ public class FinishRoute extends AbstractActivity {
     /**
      * Posts the data to the server. Check if internet is available first.
      */
-    public void postData(View view) {
-        if (checkInternetEnabled() == true || checkWifiEnabled() == true){
+    public void postData(View v) {
+        if (checkInternetEnabled() || checkWifiEnabled()){
             new NetworkTask().execute();
-            finish();
+            //finish();
         }
         else{
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -138,16 +145,14 @@ public class FinishRoute extends AbstractActivity {
 
     private JSONObject getData() {
         //Data to be sent:
-        JSONObject data = new JSONObject();
+        JSONObject walk = new JSONObject();
         try {
-            JSONObject walk = new JSONObject();
-
             //Get data out of the Route object and add to the JSON package
             walk.put("walkTitle", route.getTitle());
             walk.put("shortDescription", route.getShortDesc());
             walk.put("longDescription", route.getLongDesc());
             walk.put("walkHours", route.getLengthTimeHours());
-            walk.put("startTime", route.getStartTime());
+            walk.put("totalDistance", route.getDistance());
 
             // Put the walk track into the JSON package
             JSONArray JSONCoordinates = new JSONArray();
@@ -155,8 +160,8 @@ public class FinishRoute extends AbstractActivity {
             for(int i = 0; i < coordinates.size(); i++){
                 Location currentCoordinate = coordinates.get(i);
                 JSONObject currentJSONCoordinate = new JSONObject();
-                currentJSONCoordinate.put("Latitude", currentCoordinate.getLatitude());
-                currentJSONCoordinate.put("Longitude", currentCoordinate.getLongitude());
+                currentJSONCoordinate.put("latitude", currentCoordinate.getLatitude());
+                currentJSONCoordinate.put("longitude", currentCoordinate.getLongitude());
                 JSONCoordinates.put(i, currentJSONCoordinate);
             }
 
@@ -192,11 +197,10 @@ public class FinishRoute extends AbstractActivity {
             }
 
             walk.put("waypoints", JSONWaypoints);
-            data.put("walk", walk);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return data;
+        return walk;
     }
 
     // End HTTP POST

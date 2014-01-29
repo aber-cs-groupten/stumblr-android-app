@@ -81,14 +81,6 @@ public class Route extends StumblrData implements Parcelable {
     }
 
     /**
-     * Checks if the data in the Route is valid or not, and returns a boolean.
-     * @return If the data is valid or not. (true = valid)
-     */
-    public boolean isValidData() {
-        return false;
-    }
-
-    /**
      * Adds a Waypoint to the tail of the Route
      * @param w The waypoint to add
      */
@@ -137,8 +129,6 @@ public class Route extends StumblrData implements Parcelable {
     }
 
     public float getDistance(){
-        // FIXME this needs testing
-
         float distance = 0;
         float[] results = new float[1];
         Location currentLoc;
@@ -157,13 +147,6 @@ public class Route extends StumblrData implements Parcelable {
                     nextLoc.getLatitude(),
                     nextLoc.getLongitude(),
                     results);
-
-            if (results == null) {
-                Log.e(TAG, "WHAT THE BLOODY FLYING FUCK?!");
-            } else {
-                Log.v(TAG, "Total distance: " + String.valueOf(results[0]));
-                distance += results[0];
-            }
         }
 
         Log.v(TAG, "TOTAL DISTANCE: " + String.valueOf(distance));

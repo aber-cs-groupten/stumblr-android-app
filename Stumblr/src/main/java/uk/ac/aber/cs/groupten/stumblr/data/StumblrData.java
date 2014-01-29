@@ -50,11 +50,7 @@ public abstract class StumblrData implements Parcelable {
      */
     public static boolean isValidData(String s) {
         // Check the length of text fields
-        if (s.length() < 3) {
-            return false;
-        }
-
-        return true;
+        return (s.length() > 3);
     }
 
     /**
@@ -105,7 +101,7 @@ public abstract class StumblrData implements Parcelable {
      */
     public String sanitiseStringInput(String input) {
         // Replaces ALL characters not defined in the regular expression below
-        String sanitised = input.replaceAll("[^a-zA-Z0-9,.!?:;-]*", "");
+        String sanitised = input.replaceAll("[^a-zA-Z0-9 ,.!?:;-]*", "");
         return sanitised;
     }
 }

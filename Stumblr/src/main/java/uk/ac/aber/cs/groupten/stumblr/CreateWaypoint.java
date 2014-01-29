@@ -18,6 +18,7 @@ import uk.ac.aber.cs.groupten.stumblr.data.StumblrData;
 import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
 
 public class CreateWaypoint extends AbstractActivity {
+    public static final String WAYPOINT_BUNDLE = "waypoint";
     private Waypoint waypoint;
 
     /**
@@ -34,11 +35,24 @@ public class CreateWaypoint extends AbstractActivity {
         // Unbundle Location from WaypointList
         Bundle b = getIntent().getExtras();
 
-        Location tempLocation = (Location) b.get("loc");
-        if (tempLocation != null) {
-            waypoint.setLocation(tempLocation);
+        if (b != null) {
+            Log.e(TAG, "Bundle appears to be non-null");
+
+            Location tempLocation = (Location) b.get("loc");
+            if (tempLocation != null) {
+                waypoint.setLocation(tempLocation);
+            } else {
+                Log.e(TAG, "Location passed into CreateWaypoint is null! Trying Waypoint...");
+            }
+
+            Waypoint tempWaypoint = (Waypoint) b.get(WAYPOINT_BUNDLE);
+            if (tempWaypoint != null) {
+                loadWaypoint(tempWaypoint);
+            } else {
+                Log.e(TAG, "Waypoint is also null, something went wrong here.");
+            }
         } else {
-            Log.e(TAG, "Location passed into CreateWaypoint is null!");
+            Log.e(TAG, "Bundle is null!");
         }
 
         // Forces keyboard to close
@@ -46,13 +60,26 @@ public class CreateWaypoint extends AbstractActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
+    public void loadWaypoint(Waypoint w) {
+        // TODO
+        TextView title = ((TextView) findViewById(R.id.wptitle_box));
+        TextView shortDesc = ((TextView) findViewById(R.id.wpshortdesc_box));
+
+        title.setText(w.getTitle());
+        shortDesc.setText(w.getShortDesc());
+    }
+
     /**
      * Called when "Create" button in the UI is clicked.
      * Adds data to the current Waypoint object with text specified in UI.
      */
     public void finishWaypoint(View v){
-        String wpTitle = ((TextView)findViewById(R.id.wptitle_box)).getText().toString();
-        String wpShortDesc = ((TextView)findViewById(R.id.wpshortdesc_box)).getText().toString();
+        String wpTitle = ((TextView) findViewById(R.id.wptitle_box)).getText().toString();
+        String wpShortDesc = ((TextView) findViewById(R.id.wpshortdesc_box)).getText().toString();
+
+        //Santise Inputs
+        wpTitle = waypoint.sanitiseStringInput(wpTitle);
+        wpShortDesc = waypoint.sanitiseStringInput(wpShortDesc);
 
         // checking the length of the text fields
         if (StumblrData.isValidData(wpTitle) && StumblrData.isValidData(wpShortDesc)) {
@@ -72,7 +99,7 @@ public class CreateWaypoint extends AbstractActivity {
         else {
             //TODO Fix toast printing when short description is too short instead of title
             // insufficient title length
-            Toast.makeText(getBaseContext(), "The waypoint title is to short.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "The Waypoint title is too short.", Toast.LENGTH_LONG).show();
         }
     }
 

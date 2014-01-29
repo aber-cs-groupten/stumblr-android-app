@@ -39,10 +39,8 @@ public class WaypointList extends AbstractActivity {
     private LinkedList<Waypoint> menuItems;
     private ListView listView;
 
-
     // Data objects
     private Route route;
-    private final String listEmptyString = "List is empty! Add a Waypoint below...";
 
     /**
      * Loads the activity on creation (using a bundle if one is present)
@@ -54,7 +52,7 @@ public class WaypointList extends AbstractActivity {
 
         // Receive Route object
         Bundle extras = getIntent().getExtras();
-        route = (Route) extras.get("route");
+        route = (Route) extras.get("route"); // May be null, check below
 
         // Timestamp
         route.setStartTime();
@@ -133,7 +131,7 @@ public class WaypointList extends AbstractActivity {
      * Halts the GPS service.
      */
     private void stopGPSService() {
-        if (serviceRunning == true) {
+        if (serviceRunning) {
             stopService(gpsServiceIntent);
             unregisterReceiver(receiver);
         }
@@ -150,7 +148,6 @@ public class WaypointList extends AbstractActivity {
     private void initialiseListView() {
         // Initialise list of Strings to display in
         menuItems = new LinkedList<Waypoint>();
-        // menuItems.add(listEmptyString);
 
         // Set ArrayAdapter and ListView up
         listView = (ListView) findViewById(R.id.listView);
@@ -165,12 +162,13 @@ public class WaypointList extends AbstractActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // ListView Clicked item value
-                String itemValue = (String) listView.getItemAtPosition(position);
+                Waypoint w = (Waypoint) listView.getItemAtPosition(position);
 
-                // Show Alert
-                Toast.makeText(getApplicationContext(),
-                        "Position : " + position + "  ListItem : " + itemValue, Toast.LENGTH_SHORT).show();
+                // Using getBaseContext(). not sure if this should work
+                // TODO ^
+                Intent i = new Intent(getBaseContext(), CreateWaypoint.class);
+                i.putExtra(CreateWaypoint.WAYPOINT_BUNDLE, w);
+                startActivity(i);
             }
         });
     }
@@ -180,9 +178,10 @@ public class WaypointList extends AbstractActivity {
      * Renders Waypoint list on screen.
      */
     public void drawWaypointList() {
+        // TODO this is inefficient (perhaps something with Stack)?
         // Add each Waypoint to the list
         for(Waypoint currentWaypoint : route.getWaypointList()){
-            if(!menuItems.contains(currentWaypoint)){
+            if(! menuItems.contains(currentWaypoint)){
                 menuItems.addLast(currentWaypoint);
             }
         }
@@ -240,7 +239,9 @@ public class WaypointList extends AbstractActivity {
      */
     public void finishRoute() {
         calculateTimestamp();
+
         setContentView(R.layout.activity_finish_route);
+
 
         // Start new intent, packaging current Route with it
         Intent i = new Intent(getApplicationContext(), FinishRoute.class);
@@ -270,6 +271,7 @@ public class WaypointList extends AbstractActivity {
         Log.e(TAG, (String.valueOf(endTime)));
         long timeLength = endTime - startTime;
         Log.e(TAG, (String.valueOf(timeLength)));
+
         route.setLengthTime(timeLength);
     }
 
