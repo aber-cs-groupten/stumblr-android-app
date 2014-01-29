@@ -104,8 +104,8 @@ public class FinishRoute extends AbstractActivity {
     /**
      * Posts the data to the server. Check if internet is available first.
      */
-    public void postData(View view) {
-        if (checkInternetEnabled() == true || checkWifiEnabled() == true){
+    public void postData(View v) {
+        if (checkInternetEnabled() || checkWifiEnabled()){
             new NetworkTask().execute();
             finish();
         }
