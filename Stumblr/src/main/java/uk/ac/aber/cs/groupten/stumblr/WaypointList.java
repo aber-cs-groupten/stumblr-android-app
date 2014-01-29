@@ -38,7 +38,7 @@ public class WaypointList extends AbstractActivity {
     private ArrayAdapter<Waypoint> adapter;
     private LinkedList<Waypoint> menuItems;
     private ListView listView;
-    private int waypointListSize=0;
+
 
     // Data objects
     private Route route;
@@ -240,29 +240,27 @@ public class WaypointList extends AbstractActivity {
      */
     public void finishRoute() {
         calculateTimestamp();
-
-        //TODO FIX TEXTVIEW BEING HIDDEN
-        //Checking waypoint list size and setting its textview.
-        waypointListSize = route.getWaypointList().size();
         setContentView(R.layout.activity_finish_route);
-        TextView textView = (TextView) findViewById(R.id.numwpView);
-        textView.setText(String.valueOf(waypointListSize));
-
-        //Displaying total distance travelled
-        float totalDistance = route.getDistance();
-        setContentView(R.layout.activity_finish_route);
-        TextView textView1 = (TextView) findViewById(R.id.distanceView);
-        totalDistance = Math.round(totalDistance);
-        textView1.setText(String.valueOf(totalDistance));
 
         // Start new intent, packaging current Route with it
         Intent i = new Intent(getApplicationContext(), FinishRoute.class);
+        setWaypointNum();
+        setTotalDistance();
         i.putExtra("route", this.route);
 
         // Clean up
         stopGPSService();
         startActivity(i);
     }
+
+    public void setWaypointNum(){
+        route.setTotalWaypoints(route.getWaypointList().size());
+    }
+
+    public void setTotalDistance(){
+        route.setTotalDistance(route.getDistance());
+    }
+
 
     private void calculateTimestamp(){
         // Calculate timestamp
