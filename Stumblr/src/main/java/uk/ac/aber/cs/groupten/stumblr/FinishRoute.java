@@ -76,10 +76,10 @@ public class FinishRoute extends AbstractActivity {
             HttpPost httppost = new HttpPost("http://www.parityb.it");
             try {
                 JSONObject data = getData();
-                StringEntity stringData = new StringEntity(data.toString(4));
+                StringEntity stringData = new StringEntity(data.toString());
 
                 httppost.setEntity(stringData);
-
+                httppost.setHeader("Content-Type", "application/json");
                 // Execute HTTP Post Request
                 HttpResponse response = httpclient.execute(httppost);
                 return response;
