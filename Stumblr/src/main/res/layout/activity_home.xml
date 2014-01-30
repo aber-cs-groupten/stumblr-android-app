@@ -12,9 +12,9 @@
         android:layout_height="wrap_content"
         android:text="@string/create_route"
         android:id="@+id/create_route_button"
-        android:layout_marginTop="68dp"
         android:onClick="startCreateRouteIntent"
-        android:layout_alignParentTop="true"
+        android:minWidth="180dp"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

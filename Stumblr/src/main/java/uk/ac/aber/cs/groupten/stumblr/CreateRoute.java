@@ -1,32 +1,46 @@
 package uk.ac.aber.cs.groupten.stumblr;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import uk.ac.aber.cs.groupten.stumblr.data.Route;
+import uk.ac.aber.cs.groupten.stumblr.data.StumblrData;
 
-public class CreateRoute extends DataEntryActivity {
+public class CreateRoute extends AbstractActivity {
     private Route route;
+
+    private String title;
+    private String shortDesc;
+    private String longDesc;
 
     /**
      * Loads the activity on creation (using a bundle if one is present)
+     *
      * @param savedInstanceState The bundle containing the saved instance state.
      */
     @Override
     public void stumblrOnCreate(Bundle savedInstanceState) {
-        // TODO stuff with savedinstancestate
         // Called by super().onCreate
         setContentView(R.layout.activity_create_route);
+
         // Create new blank Route object
         route = new Route();
+    }
+
+    public void getTextFromUI() {
+        // Get text from fields in UI
+        title = ((TextView) findViewById(R.id.routeTitleBox)).getText().toString();
+        shortDesc = ((TextView) findViewById(R.id.shortDescriptionBox)).getText().toString();
+        longDesc = ((TextView) findViewById(R.id.longDescriptionBox)).getText().toString();
+
+        // Sanitise the Inputs
+        title = route.sanitiseStringInput(title);
+        shortDesc = route.sanitiseStringInput(shortDesc);
+        longDesc = route.sanitiseStringInput(longDesc);
     }
 
     /**
@@ -34,14 +48,11 @@ public class CreateRoute extends DataEntryActivity {
      * Called when the "next" button is clicked in the UI.
      */
     public void startWaypointListIntent(View v) {
-        // Get text from fields in UI
-        String title = ((TextView) findViewById(R.id.routeTitleBox)).getText().toString();
-        String shortDesc = ((TextView) findViewById(R.id.shortDescriptionBox)).getText().toString();
-        String longDesc = ((TextView) findViewById(R.id.longDescriptionBox)).getText().toString();
+        getTextFromUI();
 
-        // checking the length of the text fields
-        if (title.length() > 3) {
-            if (shortDesc.length() > 3) {
+        // Check the length of text fields
+        if (StumblrData.isValidData(title)) {
+            if (StumblrData.isValidData(shortDesc)) {
                 // Set parameters of current Route object
                 route.setTitle(title);
                 route.setShortDesc(shortDesc);
@@ -51,17 +62,52 @@ public class CreateRoute extends DataEntryActivity {
                 Intent i = new Intent(getApplicationContext(), WaypointList.class);
                 i.putExtra("route", route);
                 startActivity(i);
-            }
-            else {
-                // insufficient shortDesc length
-                Toast.makeText(getBaseContext(), "The short description is to short.", Toast.LENGTH_LONG).show();
-            }
-        }
-        else {
-            // insufficient title length
-            Toast.makeText(getBaseContext(), "The title is to short.", Toast.LENGTH_LONG).show();
-        }
 
+                // Clear this activity
+                finish();
+            } else {
+                Toast.makeText(getBaseContext(),
+                        "The short description is too short. It must be > 3 characters.",
+                        Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(getBaseContext(),
+                    "The title is too short. It must be > 3 characters.",
+                    Toast.LENGTH_LONG).show();
+        }
+    }
 
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        getTextFromUI();
+
+        Log.i(TAG, "CreateRoute: onSaveInstanceState");
+
+        savedInstanceState.putString("title", title);
+        savedInstanceState.putString("shortDesc", shortDesc);
+        savedInstanceState.putString("longDesc", longDesc);
+
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        Log.i(TAG, "CreateRoute: onRestoreInstanceState");
+
+        title = savedInstanceState.getString("title");
+        shortDesc = savedInstanceState.getString("shortDesc");
+        longDesc = savedInstanceState.getString("longDesc");
+
+        ((TextView) findViewById(R.id.routeTitleBox)).setText(title);
+        ((TextView) findViewById(R.id.shortDescriptionBox)).setText(shortDesc);
+        ((TextView) findViewById(R.id.longDescriptionBox)).setText(longDesc);
+    }
+
+    @Override
+    public void onBackPressed () {
+        // Ignore
+        Log.v(TAG, "Back pressed in CreateRoute. Ignoring...");
     }
 }
