@@ -1,8 +1,8 @@
 package uk.ac.aber.cs.groupten.stumblr;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -31,7 +31,13 @@ public abstract class AbstractActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        return ((id == R.id.action_settings) || super.onOptionsItemSelected(item));
+
+        if (id == R.id.action_cancel) {
+            finish();
+            startActivity(new Intent(this, Home.class));
+        }
+
+        return ((id == R.id.action_cancel) || super.onOptionsItemSelected(item));
     }
 
     @Override

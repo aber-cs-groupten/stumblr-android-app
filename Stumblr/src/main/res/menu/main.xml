@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="uk.ac.aber.cs.groupten.stumblr.MainActivity" >
     
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
+    <item android:id="@+id/action_cancel"
+        android:title="@string/action_cancel"
         android:orderInCategory="100"
         app:showAsAction="never" />
 </menu>
