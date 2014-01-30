@@ -90,6 +90,9 @@ public class FinishRoute extends AbstractActivity {
         protected HttpResponse doInBackground(String... params) {
             HttpClient httpclient = new DefaultHttpClient();
 
+            // This server can be used for testing
+            //HttpPost httppost = new HttpPost("http://www.parityb.it");
+
             // This is the real server
             HttpPost httppost = new HttpPost("http://users.aber.ac.uk/mal60/group_project/JSON_decode.php");
 
@@ -257,12 +260,12 @@ public class FinishRoute extends AbstractActivity {
     // REFERENCE - http://stackoverflow.com/questions/20656649/how-to-convert-bitmap-to-png-and-then-to-base64-in-android
     public String encodeTobase64(Bitmap image) {
         Bitmap imagex = image;
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        boolean success = imagex.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        boolean success = imagex.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
         if(!success){
             Toast.makeText(getBaseContext(), "Base64 Encode Failed!", Toast.LENGTH_LONG).show();
         }
-        byte[] b = baos.toByteArray();
+        byte[] b = byteArrayOutputStream.toByteArray();
         String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
 
         Log.v(TAG, imageEncoded);
