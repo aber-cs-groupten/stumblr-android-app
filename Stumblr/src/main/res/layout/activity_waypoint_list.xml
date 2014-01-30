@@ -27,7 +27,8 @@
                 android:text="@string/add_waypoint"
                 android:id="@+id/add_waypoint_button"
                 android:onClick="startCreateWaypointIntent"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:textColor="#ffffff" />
 
             <Button
                 android:layout_width="fill_parent"
@@ -35,7 +36,8 @@
                 android:text="@string/finish_route"
                 android:id="@+id/finish_route_button"
                 android:onClick="confirmFinishRoute"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:textColor="#ffffff" />
 
     </LinearLayout>
 
