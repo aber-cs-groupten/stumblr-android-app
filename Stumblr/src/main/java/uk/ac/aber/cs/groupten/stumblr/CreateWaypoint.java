@@ -103,8 +103,11 @@ public class CreateWaypoint extends AbstractActivity {
         // Set up GUI attributes
         title.setText(waypoint.getTitle());
         shortDesc.setText(waypoint.getShortDesc());
-        image.setBackgroundResource(0); // Clear image
-        image.setImageBitmap(waypoint.getImage());
+
+        if (waypoint.getImage() != null) {
+            image.setBackgroundResource(0); // Clear image
+            image.setImageBitmap(waypoint.getImage());
+        }
     }
 
     /**
