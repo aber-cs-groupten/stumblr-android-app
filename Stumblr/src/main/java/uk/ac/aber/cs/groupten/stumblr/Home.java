@@ -21,9 +21,6 @@ public class Home extends AbstractActivity {
     public void startCreateRouteIntent(View v) {
         Intent i = new Intent(getApplicationContext(), CreateRoute.class);
         startActivity(i);
-
-        // Finish gracefully
-        finish();
     }
 
     // http://stackoverflow.com/questions/15430787/android-go-back-to-previous-activity
