@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.EmptyStackException;
 import java.util.LinkedList;
@@ -305,5 +306,43 @@ public class WaypointList extends AbstractActivity {
         // Clean up
         stopGPSService();
         super.onDestroy();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        Log.i(TAG, "WaypointList: onSaveInstanceState");
+
+        // Instance variables
+        savedInstanceState.putInt("insert_index", insert_index);
+        savedInstanceState.putBoolean("serviceRunning", serviceRunning);
+        savedInstanceState.putParcelable("gpsServiceIntent", gpsServiceIntent);
+
+        // Data
+        savedInstanceState.putParcelable("route", route);
+
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        Log.i(TAG, "WaypointList: onRestoreInstanceState");
+
+        // Instance variables
+        insert_index = savedInstanceState.getInt("insert_index");
+        serviceRunning = savedInstanceState.getBoolean("serviceRunning");
+        gpsServiceIntent = savedInstanceState.getParcelable("gpsServiceIntent");
+
+        // Data
+        route = savedInstanceState.getParcelable("route");
+
+        menuItems = new LinkedList<Waypoint>();
+        for (Waypoint w : route.getWaypointList()) {
+            menuItems.addLast(w);
+        }
+
+        initialiseListView();
+        //drawWaypointList();
     }
 }
