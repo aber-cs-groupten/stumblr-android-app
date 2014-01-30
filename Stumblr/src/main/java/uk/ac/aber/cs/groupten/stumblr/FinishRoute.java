@@ -258,7 +258,10 @@ public class FinishRoute extends AbstractActivity {
     public String encodeTobase64(Bitmap image) {
         Bitmap imagex = image;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        imagex.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        boolean success = imagex.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        if(!success){
+            Toast.makeText(getBaseContext(), "Base64 Encode Failed!", Toast.LENGTH_LONG).show();
+        }
         byte[] b = baos.toByteArray();
         String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
 
