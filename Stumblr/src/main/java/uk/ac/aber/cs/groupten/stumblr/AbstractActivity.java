@@ -2,7 +2,6 @@ package uk.ac.aber.cs.groupten.stumblr;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 

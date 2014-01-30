@@ -106,7 +106,7 @@ public class CreateRoute extends AbstractActivity {
     }
 
     @Override
-    public void onBackPressed () {
+    public void onBackPressed() {
         // Ignore
         Log.v(TAG, "Back pressed in CreateRoute. Ignoring...");
     }

@@ -51,7 +51,7 @@ public class GPSService extends Service implements LocationListener {
         // See: http://stackoverflow.com/a/16919410
         Intent i = new Intent(getApplicationContext(), WaypointList.class);
         PendingIntent pi = PendingIntent.getActivity(getApplicationContext(),
-                                    0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+                0, i, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // See: http://stackoverflow.com/a/6636893
         notice = new NotificationCompat.Builder(getApplicationContext())
@@ -68,7 +68,7 @@ public class GPSService extends Service implements LocationListener {
 
             // Set the info for the views that show in the notification panel.
             notice.setLatestEventInfo(this, "Stumblr is recording walk...",
-                                        "Tap to resume", contentIntent);
+                    "Tap to resume", contentIntent);
         }
 
 
