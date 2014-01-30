@@ -152,8 +152,7 @@ public class WaypointList extends AbstractActivity {
         // Set ArrayAdapter and ListView up
         listView = (ListView) findViewById(R.id.listView);
         adapter = new ArrayAdapter<Waypoint>(this,
-                android.R.layout.simple_list_item_1,
-                android.R.id.text1, menuItems);
+                R.layout.array_adapter, android.R.id.text1, menuItems);
 
         // Assign adapter to ListView
         listView.setAdapter(adapter);
