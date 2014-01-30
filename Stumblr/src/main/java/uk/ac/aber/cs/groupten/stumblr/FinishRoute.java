@@ -115,6 +115,9 @@ public class FinishRoute extends AbstractActivity {
             if (result == null) {
                 Toast.makeText(getBaseContext(), "Upload failed, server not available :(", Toast.LENGTH_LONG).show();
             } else if (result.getStatusLine().getStatusCode() == 200) {
+                // Exit gracefully
+                finish();
+
                 Toast.makeText(getBaseContext(), "Upload Successful :)", Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(getBaseContext(), "Upload failed :(\nError: " + result.getStatusLine().getStatusCode(), Toast.LENGTH_LONG).show();
@@ -129,8 +132,6 @@ public class FinishRoute extends AbstractActivity {
         if (checkInternetEnabled() || checkWifiEnabled()) {
             new NetworkTask().execute();
 
-            // Exit gracefully
-            finish();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Unable to Access Internet");
