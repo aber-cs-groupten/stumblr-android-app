@@ -1,5 +1,7 @@
 package uk.ac.aber.cs.groupten.stumblr;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -50,11 +52,26 @@ public abstract class AbstractActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_cancel) {
-            finish();
-            startActivity(new Intent(this, Home.class));
+            confirmCancel();
         }
 
         return ((id == R.id.action_cancel) || super.onOptionsItemSelected(item));
+    }
+
+    public void confirmCancel() {
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .setTitle("Cancel Recording")
+                .setMessage("Are you sure you want to cancel recording?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        startActivity(new Intent(getApplicationContext(), Home.class));
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 
     /**
