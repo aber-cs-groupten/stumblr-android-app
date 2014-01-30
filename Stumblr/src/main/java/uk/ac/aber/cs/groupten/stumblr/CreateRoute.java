@@ -58,7 +58,7 @@ public class CreateRoute extends AbstractActivity {
                 finish();
             } else {
                 Toast.makeText(getBaseContext(),
-                        "The description is too short. It must be > 3 characters.",
+                        "The short description is too short. It must be > 3 characters.",
                         Toast.LENGTH_LONG).show();
             }
         } else {
