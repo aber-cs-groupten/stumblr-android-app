@@ -7,14 +7,12 @@ import android.view.View;
 public class Home extends AbstractActivity {
     /**
      * Loads the activity on creation (using a bundle if one is present)
+     *
      * @param savedInstanceState The bundle containing the saved instance state.
      */
     public void stumblrOnCreate(Bundle savedInstanceState) {
         // Called by super().onCreate
         setContentView(R.layout.activity_home);
-        if (savedInstanceState == null) {
-            // do stuff
-        }
     }
 
     /**
@@ -23,5 +21,14 @@ public class Home extends AbstractActivity {
     public void startCreateRouteIntent(View v) {
         Intent i = new Intent(getApplicationContext(), CreateRoute.class);
         startActivity(i);
+
+        // Finish gracefully
+        finish();
+    }
+
+    // http://stackoverflow.com/questions/15430787/android-go-back-to-previous-activity
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

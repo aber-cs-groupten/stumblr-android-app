@@ -1,13 +1,10 @@
 package uk.ac.aber.cs.groupten.stumblr;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 public abstract class AbstractActivity extends ActionBarActivity {
     public static final String TAG = "STUMBLR";
@@ -34,25 +31,12 @@ public abstract class AbstractActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return ((id == R.id.action_settings) || super.onOptionsItemSelected(item));
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_abstract, container, false);
-            return rootView;
-        }
+    @Override
+    public void onBackPressed() {
+        // Do nothing!
+        Log.v(TAG, "Back button pressed... Ignoring!");
     }
 }

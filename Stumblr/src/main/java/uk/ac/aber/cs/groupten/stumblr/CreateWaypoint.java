@@ -2,6 +2,7 @@ package uk.ac.aber.cs.groupten.stumblr;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -11,53 +12,102 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Calendar;
+
+import uk.ac.aber.cs.groupten.stumblr.data.StumblrData;
 import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
 
 public class CreateWaypoint extends AbstractActivity {
+    public static final String WAYPOINT_BUNDLE = "waypoint";
+    public static final String LOCATION_BUNDLE = "loc";
+    public static final String RETURN_BUNDLE = "return_data";
+
     private Waypoint waypoint;
 
     /**
      * Loads the activity on creation (using a bundle if one is present)
+     *
      * @param savedInstanceState The bundle containing the saved instance state.
      */
     public void stumblrOnCreate(Bundle savedInstanceState) {
         // Called by super().onCreate
         setContentView(R.layout.activity_create_waypoint);
 
-        if (savedInstanceState == null) {
-            // Do stuff
-        }
-
         // Initialise Waypoint Object.
         waypoint = new Waypoint();
+
+        // Unbundle Location from WaypointList
+        Bundle b = getIntent().getExtras();
+
+        if (b != null) {
+            Log.i(TAG, "Bundle appears to be non-null");
+
+            Location tempLocation = (Location) b.get(LOCATION_BUNDLE);
+            if (tempLocation != null) {
+                waypoint.setLocation(tempLocation);
+            } else {
+                Log.i(TAG, "Location is null");
+            }
+
+            Waypoint tempWaypoint = (Waypoint) b.get(WAYPOINT_BUNDLE);
+            if (tempWaypoint != null) {
+                loadWaypoint(tempWaypoint);
+            } else {
+                Log.i(TAG, "Waypoint is null");
+            }
+        } else {
+            Log.e(TAG, "Bundle is null! Error!");
+        }
 
         // Forces keyboard to close
         // See: http://stackoverflow.com/a/2059394
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
+    public void loadWaypoint(Waypoint w) {
+        // TODO
+        this.waypoint = w;
+        ImageView image = ((ImageView) findViewById(R.id.imageView));
+        TextView title = ((TextView) findViewById(R.id.wptitle_box));
+        TextView shortDesc = ((TextView) findViewById(R.id.wpshortdesc_box));
+
+        // Set up GUI attributes
+        title.setText(waypoint.getTitle());
+        shortDesc.setText(waypoint.getShortDesc());
+        image.setImageBitmap(waypoint.getImage());
+    }
+
     /**
      * Called when "Create" button in the UI is clicked.
      * Adds data to the current Waypoint object with text specified in UI.
      */
-    public void finishWaypoint(View v){
-        String wpTitle = ((TextView)findViewById(R.id.wptitle_box)).getText().toString();
-        String wpShortDesc = ((TextView)findViewById(R.id.wpshortdesc_box)).getText().toString();
+    public void finishWaypoint(View v) {
+        String wpTitle = ((TextView) findViewById(R.id.wptitle_box)).getText().toString();
+        String wpShortDesc = ((TextView) findViewById(R.id.wpshortdesc_box)).getText().toString();
+
+        // Sanitise Inputs
+        wpTitle = waypoint.sanitiseStringInput(wpTitle);
+        wpShortDesc = waypoint.sanitiseStringInput(wpShortDesc);
 
         // checking the length of the text fields
-        if (wpTitle.length() > 3) {
+        if (!StumblrData.isValidData(wpTitle)) {
+            Toast.makeText(getBaseContext(), "The Waypoint title is too short.", Toast.LENGTH_LONG).show();
+        } else if (!StumblrData.isValidData(wpShortDesc)) {
+            Toast.makeText(getBaseContext(), "The short description is too short.", Toast.LENGTH_LONG).show();
+        } else {
             waypoint.setTitle(wpTitle);
             waypoint.setShortDesc(wpShortDesc);
 
+            //set time stamp
+            Calendar c = Calendar.getInstance();
+            waypoint.setTimestamp(c.getTimeInMillis());
+
             Intent returnIntent = new Intent();
-            returnIntent.putExtra("data", waypoint);
+            returnIntent.putExtra(RETURN_BUNDLE, waypoint);
             setResult(RESULT_OK, returnIntent);
 
+            // Graceful finish
             finish();
-        }
-        else {
-            // insufficient title length
-            Toast.makeText(getBaseContext(), "The waypoint title is to short.", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -66,8 +116,10 @@ public class CreateWaypoint extends AbstractActivity {
      *                        Camera interaction                      *
      * ****************************************************************
      */
+
     /**
      * Obtain a photo from user and add it to current Waypoint.
+     *
      * @param v The View object.
      */
     public void startCamera(View v) {
@@ -101,5 +153,10 @@ public class CreateWaypoint extends AbstractActivity {
                 Log.v(TAG, imgDimensions);
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

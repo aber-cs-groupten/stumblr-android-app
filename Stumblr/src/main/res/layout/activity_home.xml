@@ -5,16 +5,17 @@
     android:layout_height="fill_parent"
     tools:context="uk.ac.aber.cs.groupten.stumblr.Home"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="#ffffff">
+    android:background="#ffffff"
+    android:onClick="exit">
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/create_route"
         android:id="@+id/create_route_button"
-        android:layout_marginTop="68dp"
         android:onClick="startCreateRouteIntent"
-        android:layout_alignParentTop="true"
+        android:minWidth="180dp"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

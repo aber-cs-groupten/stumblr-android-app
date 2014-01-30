@@ -1,23 +1,20 @@
 package uk.ac.aber.cs.groupten.stumblr;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import uk.ac.aber.cs.groupten.stumblr.data.Route;
+import uk.ac.aber.cs.groupten.stumblr.data.StumblrData;
 
-public class CreateRoute extends DataEntryActivity {
+public class CreateRoute extends AbstractActivity {
     private Route route;
 
     /**
      * Loads the activity on creation (using a bundle if one is present)
+     *
      * @param savedInstanceState The bundle containing the saved instance state.
      */
     @Override
@@ -39,9 +36,14 @@ public class CreateRoute extends DataEntryActivity {
         String shortDesc = ((TextView) findViewById(R.id.shortDescriptionBox)).getText().toString();
         String longDesc = ((TextView) findViewById(R.id.longDescriptionBox)).getText().toString();
 
-        // checking the length of the text fields
-        if (title.length() > 3) {
-            if (shortDesc.length() > 3) {
+        // Sanitise the Inputs
+        title = route.sanitiseStringInput(title);
+        shortDesc = route.sanitiseStringInput(shortDesc);
+        longDesc = route.sanitiseStringInput(longDesc);
+
+        // Check the length of text fields
+        if (StumblrData.isValidData(title)) {
+            if (StumblrData.isValidData(shortDesc)) {
                 // Set parameters of current Route object
                 route.setTitle(title);
                 route.setShortDesc(shortDesc);
@@ -51,17 +53,18 @@ public class CreateRoute extends DataEntryActivity {
                 Intent i = new Intent(getApplicationContext(), WaypointList.class);
                 i.putExtra("route", route);
                 startActivity(i);
-            }
-            else {
-                // insufficient shortDesc length
-                Toast.makeText(getBaseContext(), "The short description is to short.", Toast.LENGTH_LONG).show();
-            }
-        }
-        else {
-            // insufficient title length
-            Toast.makeText(getBaseContext(), "The title is to short.", Toast.LENGTH_LONG).show();
-        }
 
-
+                // Clear this activity
+                finish();
+            } else {
+                Toast.makeText(getBaseContext(),
+                        "The description is too short. It must be > 3 characters.",
+                        Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(getBaseContext(),
+                    "The title is too short. It must be > 3 characters.",
+                    Toast.LENGTH_LONG).show();
+        }
     }
 }

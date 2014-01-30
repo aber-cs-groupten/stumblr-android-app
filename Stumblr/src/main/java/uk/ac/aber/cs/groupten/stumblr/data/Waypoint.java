@@ -4,9 +4,11 @@ import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
-public class Waypoint extends StumblrData {
+public class Waypoint extends StumblrData implements Parcelable {
     // CONSTRUCTORS
+
     /**
      * Default constructor for Waypoint.
      */
@@ -47,16 +49,46 @@ public class Waypoint extends StumblrData {
     }
 
     /**
-     * To be implemented.
-     * @return Validity of data (true = valid)
+     * Sets timestamp.
+     *
+     * @param l The timestamp.
      */
-    // TODO
-    public boolean isValidData() {
-        return false;
+    public void setTimestamp(long l) {
+        this.timestamp = l;
+    }
+
+    /**
+     * Returns timestamp.
+     *
+     * @return The timestamp.
+     */
+    public long getTimestamp() {
+        return this.timestamp;
+    }
+
+    /**
+     * Sets the current location.
+     *
+     * @param l The current location to set.
+     */
+    public void setLocation(Location l) {
+        this.location = l;
+        Log.v(TAG, l.toString());
+    }
+
+
+    /**
+     * Sets the current location.
+     *
+     * @param l The current location to set.
+     */
+    public Location getLocation() {
+        return this.location;
     }
 
     /**
      * Returns current Bitmap.
+     *
      * @return The current Bitmap that the Waypoint has,
      */
     public Bitmap getImage() {
@@ -65,22 +97,27 @@ public class Waypoint extends StumblrData {
 
     /**
      * Sets the current Bitmap.
+     *
      * @param b The current Bitmap.
      */
     public void setImage(Bitmap b) {
         this.image = b;
     }
 
-    // TODO
-    @Override
-    public int describeContents() {
-        return 0;
+    /**
+     * Returns a String with the title.
+     *
+     * @return The title string.
+     */
+    public String toString() {
+        return getTitle();
     }
 
     /**
      * Writes the Waypoint into a Parcel for moving between Activities.
+     *
      * @param parcel The parcel to be written to.
-     * @param i Flags.
+     * @param i      Flags.
      */
     @Override
     public void writeToParcel(Parcel parcel, int i) {
@@ -88,25 +125,26 @@ public class Waypoint extends StumblrData {
         parcel.writeString(this.getTitle());
         parcel.writeString(this.getShortDesc());
         parcel.writeValue(this.image);
+        parcel.writeValue(this.location);
     }
 
     /**
      * Reads Route data from a parcel.
+     *
      * @param inParcel
      */
     public void readFromParcel(Parcel inParcel) {
         this.timestamp = inParcel.readLong();
         this.setTitle(inParcel.readString());
         this.setShortDesc(inParcel.readString());
-        this.image = (Bitmap) inParcel.readValue(null); // TODO test this. Not sure.
-
+        this.image = (Bitmap) inParcel.readValue(null); // Gets Image
+        this.location = (Location) inParcel.readValue(null); // Gets location
     }
 
     /*
      * From: http://stackoverflow.com/a/18167140
      */
-    public static final Parcelable.Creator<Waypoint> CREATOR
-            = new Parcelable.Creator<Waypoint>() {
+    public static final Parcelable.Creator<Waypoint> CREATOR = new Parcelable.Creator<Waypoint>() {
         public Waypoint createFromParcel(Parcel in) {
             return new Waypoint(in);
         }
@@ -115,4 +153,9 @@ public class Waypoint extends StumblrData {
             return new Waypoint[size];
         }
     };
+
+    @Override // Unused
+    public int describeContents() {
+        return 0;
+    }
 }

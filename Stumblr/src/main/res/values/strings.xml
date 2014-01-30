@@ -22,8 +22,6 @@
     <string name="wp_shortdesc">Short Description</string>
 
     <string name="finish_route">Finish Route</string><string name="upload_walk">Upload Walk!</string>
-    <string name="Create">Create</string>
-    <string name="create">Create</string>
     <string name="add_waypoint">Add Waypoint</string>
-    <string name="placeholder_image">Placeholder image</string>
+    <string name="placeholder_image">Placeholder image</string><string name="exit">Exit</string>
 </resources>
