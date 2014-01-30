@@ -345,4 +345,10 @@ public class WaypointList extends AbstractActivity {
         initialiseListView();
         //drawWaypointList();
     }
+
+    @Override
+    public void onBackPressed() {
+        // Ignore
+        Log.i(TAG, "Back pressed in WaypointList - Ignoring...");
+    }
 }

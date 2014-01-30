@@ -36,7 +36,7 @@ public abstract class AbstractActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        // Do nothing!
-        Log.v(TAG, "Back button pressed... Ignoring!");
+        // Finish
+        finish();
     }
 }

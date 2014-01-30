@@ -14,7 +14,6 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 
 public class GPSService extends Service implements LocationListener {
-    final int sdkVer = Build.VERSION.SDK_INT;
     public final static String GPS_INTENT = "STUMBLR_GPS";
     public final static String GPS_DIALOG = "STUMBLR_GPS_DIALOG";
     public final static String LOC_BUNDLE_STRING = "loc";
@@ -49,21 +48,27 @@ public class GPSService extends Service implements LocationListener {
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 10, this);
 
         // Run as foreground task
-        // See: http://stackoverflow.com/a/6636893
-        // Also: http://stackoverflow.com/questions/11947928/startforeground-bad-notification-error
+        // See: http://stackoverflow.com/a/16919410
+        Intent i = new Intent(getApplicationContext(), WaypointList.class);
+        PendingIntent pi = PendingIntent.getActivity(getApplicationContext(),
+                                    0, i, PendingIntent.FLAG_UPDATE_CURRENT);
 
+        // See: http://stackoverflow.com/a/6636893
         notice = new NotificationCompat.Builder(getApplicationContext())
                 .setContentTitle("Stumblr is recording walk...")
                 .setSmallIcon(R.drawable.ic_launcher)
+                .setContentIntent(pi)
                 .build();
 
         // Be nice to older versions of Android...
-        if (sdkVer < Build.VERSION_CODES.HONEYCOMB) {
+        // See: http://stackoverflow.com/questions/11947928/startforeground-bad-notification-error
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
             PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
                     new Intent(this, GPSService.class), 0);
 
             // Set the info for the views that show in the notification panel.
-            notice.setLatestEventInfo(this, "Stumblr is recording walk...", "More test", contentIntent);
+            notice.setLatestEventInfo(this, "Stumblr is recording walk...",
+                                        "Tap to resume", contentIntent);
         }
 
 

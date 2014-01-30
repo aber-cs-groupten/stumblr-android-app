@@ -162,11 +162,6 @@ public class CreateWaypoint extends AbstractActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        finish();
-    }
-
-    @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         getTextFromUI();
 

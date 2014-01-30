@@ -24,9 +24,9 @@ public class CreateRoute extends AbstractActivity {
      */
     @Override
     public void stumblrOnCreate(Bundle savedInstanceState) {
-        // TODO stuff with savedinstancestate
         // Called by super().onCreate
         setContentView(R.layout.activity_create_route);
+
         // Create new blank Route object
         route = new Route();
     }
@@ -103,5 +103,11 @@ public class CreateRoute extends AbstractActivity {
         ((TextView) findViewById(R.id.routeTitleBox)).setText(title);
         ((TextView) findViewById(R.id.shortDescriptionBox)).setText(shortDesc);
         ((TextView) findViewById(R.id.longDescriptionBox)).setText(longDesc);
+    }
+
+    @Override
+    public void onBackPressed () {
+        // Ignore
+        Log.v(TAG, "Back pressed in CreateRoute. Ignoring...");
     }
 }

@@ -60,13 +60,13 @@ public class FinishRoute extends AbstractActivity {
             // Log a few messages just to make sure
             Log.v(TAG, route.getTitle());
 
-            //Total Distance TextView
+            // Total Distance TextView
             TextView textView1 = (TextView) findViewById(R.id.distanceVariable);
             float temp = route.getDistance();
             temp = Math.round(temp);
             textView1.setText(String.valueOf(temp));
 
-            //Total Waypoints Text View
+            // Total Waypoints Text View
             int wpTemp = route.getWaypointList().size();
             TextView textView = (TextView) findViewById(R.id.numwpView);
             textView.setText(String.valueOf(wpTemp));
