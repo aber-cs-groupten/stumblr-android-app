@@ -68,7 +68,6 @@ public class CreateWaypoint extends AbstractActivity {
     }
 
     public void loadWaypoint(Waypoint w) {
-        // TODO
         this.waypoint = w;
         ImageView image = ((ImageView) findViewById(R.id.imageView));
         TextView title = ((TextView) findViewById(R.id.wptitle_box));
