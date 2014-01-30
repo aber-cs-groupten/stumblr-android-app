@@ -53,28 +53,31 @@ public class FinishRoute extends AbstractActivity {
 
         // Receive Route object
         Bundle extras = getIntent().getExtras();
-        route = (Route) extras.get("route");
 
-        // Log a few messages just to make sure
-        Log.v(TAG, route.getTitle());
+        if (extras != null) {
+            route = (Route) extras.get("route");
 
-        //Total Distance Textview
-        TextView textView1 = (TextView) findViewById(R.id.distanceVariable);
-        float temp = route.getDistance();
-        temp = Math.round(temp);
-        textView1.setText(String.valueOf(temp));
+            // Log a few messages just to make sure
+            Log.v(TAG, route.getTitle());
 
-        //Total Waypoints Text View
-        int wpTemp = route.getWaypointList().size();
-        TextView textView = (TextView) findViewById(R.id.numwpView);
-        textView.setText(String.valueOf(wpTemp));
+            //Total Distance TextView
+            TextView textView1 = (TextView) findViewById(R.id.distanceVariable);
+            float temp = route.getDistance();
+            temp = Math.round(temp);
+            textView1.setText(String.valueOf(temp));
 
-        for (Waypoint w : route.getWaypointList()) {
-            Log.v(TAG, w.getLocation().toString());
+            //Total Waypoints Text View
+            int wpTemp = route.getWaypointList().size();
+            TextView textView = (TextView) findViewById(R.id.numwpView);
+            textView.setText(String.valueOf(wpTemp));
+
+            for (Waypoint w : route.getWaypointList()) {
+                Log.v(TAG, w.getLocation().toString());
+            }
+
+            Log.v(TAG, "Route list size: " + String.valueOf(route.getWaypointList().size()));
+            Log.v(TAG, "Route distance: " + route.getDistance());
         }
-
-        Log.v(TAG, "Route list size: " + String.valueOf(route.getWaypointList().size()));
-        Log.v(TAG, "Route distance: " + route.getDistance());
     }
 
     /*

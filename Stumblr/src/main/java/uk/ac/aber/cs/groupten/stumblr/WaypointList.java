@@ -53,18 +53,19 @@ public class WaypointList extends AbstractActivity {
 
         // Receive Route object
         Bundle extras = getIntent().getExtras();
-        route = (Route) extras.get("route"); // May be null, check below
+        if (extras != null) {
+            route = (Route) extras.get("route"); // May be null, check below
 
-        // Timestamp
-        route.setStartTime();
+            // Timestamp
+            route.setStartTime();
 
-        // Check for null
-        if (route != null) {
-            initialiseListView(); // Sets up all of the variables necessary for the ListView
-            drawWaypointList(); // Renders Waypoint list
-            startGPSService(); // Starts GPS service and sets up notification
-        } else {
-            Log.e(TAG, "Route object was null!");
+            if (route != null) {
+                initialiseListView(); // Sets up all of the variables necessary for the ListView
+                drawWaypointList(); // Renders Waypoint list
+                startGPSService(); // Starts GPS service and sets up notification
+            } else {
+                Log.e(TAG, "Route object was null!");
+            }
         }
     }
 
