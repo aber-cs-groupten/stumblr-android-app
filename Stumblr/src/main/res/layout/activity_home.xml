@@ -4,8 +4,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     tools:context="uk.ac.aber.cs.groupten.stumblr.Home"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@drawable/image_sea">
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--android:background="@drawable/image_sea"-->
 
     <Button
         android:layout_width="wrap_content"

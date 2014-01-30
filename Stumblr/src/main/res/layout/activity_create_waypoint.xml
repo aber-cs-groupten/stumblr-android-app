@@ -9,8 +9,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:windowSoftInputMode="stateAlwaysHidden|adjustResize|adjustPan"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:background="@drawable/image_sea">
+        xmlns:android="http://schemas.android.com/apk/res/android">
+        <!--android:background="@drawable/image_sea"-->
 
         <ImageView
             android:layout_width="wrap_content"

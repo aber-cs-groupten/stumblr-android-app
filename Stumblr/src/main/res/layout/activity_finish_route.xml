@@ -17,8 +17,9 @@
         android:onClick="postData"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/image_sea"
         android:textColor="#ffffff" />
+    <!--android:background="@drawable/image_sea"-->
+
 
     <TextView
         android:layout_width="wrap_content"

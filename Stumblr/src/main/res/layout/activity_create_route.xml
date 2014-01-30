@@ -20,8 +20,8 @@
             android:textAlignment="inherit"
             android:visibility="visible"
             android:orientation="vertical"
-            android:weightSum="1"
-            android:background="@drawable/image_sea">
+            android:weightSum="1">
+            <!--android:background="@drawable/image_sea"-->
 
             <TextView
                 android:layout_width="wrap_content"
