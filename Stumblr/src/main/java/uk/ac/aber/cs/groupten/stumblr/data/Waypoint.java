@@ -8,6 +8,7 @@ import android.util.Log;
 
 public class Waypoint extends StumblrData implements Parcelable {
     // CONSTRUCTORS
+
     /**
      * Default constructor for Waypoint.
      */
@@ -49,6 +50,7 @@ public class Waypoint extends StumblrData implements Parcelable {
 
     /**
      * Sets timestamp.
+     *
      * @param l The timestamp.
      */
     public void setTimestamp(long l) {
@@ -57,6 +59,7 @@ public class Waypoint extends StumblrData implements Parcelable {
 
     /**
      * Returns timestamp.
+     *
      * @return The timestamp.
      */
     public long getTimestamp() {
@@ -65,6 +68,7 @@ public class Waypoint extends StumblrData implements Parcelable {
 
     /**
      * Sets the current location.
+     *
      * @param l The current location to set.
      */
     public void setLocation(Location l) {
@@ -75,6 +79,7 @@ public class Waypoint extends StumblrData implements Parcelable {
 
     /**
      * Sets the current location.
+     *
      * @param l The current location to set.
      */
     public Location getLocation() {
@@ -83,6 +88,7 @@ public class Waypoint extends StumblrData implements Parcelable {
 
     /**
      * Returns current Bitmap.
+     *
      * @return The current Bitmap that the Waypoint has,
      */
     public Bitmap getImage() {
@@ -91,6 +97,7 @@ public class Waypoint extends StumblrData implements Parcelable {
 
     /**
      * Sets the current Bitmap.
+     *
      * @param b The current Bitmap.
      */
     public void setImage(Bitmap b) {
@@ -99,6 +106,7 @@ public class Waypoint extends StumblrData implements Parcelable {
 
     /**
      * Returns a String with the title.
+     *
      * @return The title string.
      */
     public String toString() {
@@ -107,8 +115,9 @@ public class Waypoint extends StumblrData implements Parcelable {
 
     /**
      * Writes the Waypoint into a Parcel for moving between Activities.
+     *
      * @param parcel The parcel to be written to.
-     * @param i Flags.
+     * @param i      Flags.
      */
     @Override
     public void writeToParcel(Parcel parcel, int i) {
@@ -121,6 +130,7 @@ public class Waypoint extends StumblrData implements Parcelable {
 
     /**
      * Reads Route data from a parcel.
+     *
      * @param inParcel
      */
     public void readFromParcel(Parcel inParcel) {

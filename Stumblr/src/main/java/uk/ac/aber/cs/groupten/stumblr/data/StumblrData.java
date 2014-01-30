@@ -1,12 +1,8 @@
 package uk.ac.aber.cs.groupten.stumblr.data;
 
-import android.content.Intent;
 import android.os.Parcelable;
-import android.widget.Toast;
 
 import java.util.Calendar;
-
-import uk.ac.aber.cs.groupten.stumblr.WaypointList;
 
 /**
  * Abstract class containing basic common structure for all Stumblr data formats.
@@ -34,7 +30,7 @@ public abstract class StumblrData implements Parcelable {
     }
 
     /**
-     * @param title The title to set.
+     * @param title     The title to set.
      * @param shortDesc The short description to set.
      */
     public StumblrData(String title, String shortDesc) {
@@ -44,8 +40,9 @@ public abstract class StumblrData implements Parcelable {
 
     /**
      * Checks the StumblrData item for validity. Returns a boolean. (true = valid)
-     * @return Whether the data is valid or not. (true = valid)
      *
+     * @return Whether the data is valid or not. (true = valid)
+     * <p/>
      * MUST be implemented in any subclasses.
      */
     public static boolean isValidData(String s) {
@@ -55,6 +52,7 @@ public abstract class StumblrData implements Parcelable {
 
     /**
      * Returns current time.
+     *
      * @return The current time.
      */
     public long getCurrentTime() {
@@ -64,6 +62,7 @@ public abstract class StumblrData implements Parcelable {
 
     /**
      * Returns the title.
+     *
      * @return this.title
      */
     public String getTitle() {
@@ -72,6 +71,7 @@ public abstract class StumblrData implements Parcelable {
 
     /**
      * Sets the current title.
+     *
      * @param title The title to set.
      */
     public void setTitle(String title) {
@@ -80,6 +80,7 @@ public abstract class StumblrData implements Parcelable {
 
     /**
      * Returns the short description.
+     *
      * @return shortDesc
      */
     public String getShortDesc() {
@@ -88,6 +89,7 @@ public abstract class StumblrData implements Parcelable {
 
     /**
      * Sets the short description.
+     *
      * @param shortDesc
      */
     public void setShortDesc(String shortDesc) {
@@ -96,6 +98,7 @@ public abstract class StumblrData implements Parcelable {
 
     /**
      * Sanitises given text by removing prohibited characters.
+     *
      * @param input The text to sanitise.
      * @return The sanitised string.
      */

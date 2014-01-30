@@ -1,14 +1,13 @@
 package uk.ac.aber.cs.groupten.stumblr;
 
-import android.content.BroadcastReceiver;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.location.Location;
-import android.location.LocationListener;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -16,8 +15,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.EmptyStackException;
 import java.util.LinkedList;
@@ -47,6 +44,7 @@ public class WaypointList extends AbstractActivity {
 
     /**
      * Loads the activity on creation (using a bundle if one is present)
+     *
      * @param savedInstanceState The bundle containing the saved instance state.
      */
     public void stumblrOnCreate(Bundle savedInstanceState) {
@@ -72,6 +70,7 @@ public class WaypointList extends AbstractActivity {
 
     /**
      * Starts the CreateWaypoint Intent, so that it returns a result.
+     *
      * @param v The View object.
      */
     public void startCreateWaypointIntent(View v) {
@@ -80,8 +79,6 @@ public class WaypointList extends AbstractActivity {
         try {
             // Pop latest coordinate from stack and apply to Waypoint
             cwi.putExtra(CreateWaypoint.LOCATION_BUNDLE, route.getCoordinateList().peek());
-
-            // Begin activity
             startActivityForResult(cwi, WAYPOINT_INTENT);
 
             // Set index to the end of the list
@@ -96,11 +93,21 @@ public class WaypointList extends AbstractActivity {
         }
     }
 
+    private void calculateTimestamp() {
+        long startTime = route.getStartTime();
+        long endTime = route.getCurrentTime();
+        long timeLength = endTime - startTime;
+        Log.e(TAG, (String.valueOf(timeLength)));
+
+        route.setLengthTime(timeLength);
+    }
+
     /**
      * Called when an Activity is dispatched for a result
+     *
      * @param requestCode Integer relating the intent to a request
-     * @param resultCode Used to check if a request was successful
-     * @param data The Intent used
+     * @param resultCode  Used to check if a request was successful
+     * @param data        The Intent used
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -129,7 +136,63 @@ public class WaypointList extends AbstractActivity {
         }
     }
 
+    // ListView interaction
+
+    /**
+     * Initialises the ListView and Adapter objects.
+     * See: http://androidexample.com/Create_A_Simple_Listview_-_Android_Example/index.php?view=article_discription&aid=65&aaid=90
+     * and: http://developer.android.com/guide/topics/ui/layout/listview.html
+     * Also useful: http://www.vogella.com/tutorials/AndroidListView/article.html
+     */
+    private void initialiseListView() {
+        // Initialise list of Strings to display in
+        menuItems = new LinkedList<Waypoint>();
+
+        // Set ArrayAdapter and ListView up
+        listView = (ListView) findViewById(R.id.listView);
+        adapter = new ArrayAdapter<Waypoint>(this,
+                android.R.layout.simple_list_item_1,
+                android.R.id.text1, menuItems);
+
+        // Assign adapter to ListView
+        listView.setAdapter(adapter);
+
+        // ListView Item Click Listener
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Waypoint w = (Waypoint) listView.getItemAtPosition(position);
+
+                // Using getBaseContext(). not sure if this should work
+                insert_index = position;
+                Intent i = new Intent(getBaseContext(), CreateWaypoint.class);
+                i.putExtra(CreateWaypoint.WAYPOINT_BUNDLE, w);
+                startActivityForResult(i, WAYPOINT_INTENT);
+            }
+        });
+    }
+
+    // Waypoint stuff
+
+    /**
+     * Renders Waypoint list on screen.
+     */
+    public void drawWaypointList() {
+        adapter.clear();
+        listView.clearChoices();
+
+        // Add each Waypoint to the list
+        for (Waypoint currentWaypoint : route.getWaypointList()) {
+            menuItems.addLast(currentWaypoint);
+        }
+
+        adapter.notifyDataSetChanged(); // Make sure that the adapter knows there is new data
+        listView.refreshDrawableState(); // Redraw the list on-screen
+    }
+
+
     // GPS Service interaction
+
     /**
      * Starts the GPS service.
      */
@@ -174,59 +237,29 @@ public class WaypointList extends AbstractActivity {
         serviceRunning = false;
     }
 
-    // ListView interaction
-    /**
-     * Initialises the ListView and Adapter objects.
-     * See: http://androidexample.com/Create_A_Simple_Listview_-_Android_Example/index.php?view=article_discription&aid=65&aaid=90
-     * and: http://developer.android.com/guide/topics/ui/layout/listview.html
-     * Also useful: http://www.vogella.com/tutorials/AndroidListView/article.html
-     */
-    private void initialiseListView() {
-        // Initialise list of Strings to display in
-        menuItems = new LinkedList<Waypoint>();
+    public void promptToEnableGPS() {
+        // Build alert dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Location Services Not Active");
+        builder.setMessage("Please enable Location Services!");
 
-        // Set ArrayAdapter and ListView up
-        listView = (ListView) findViewById(R.id.listView);
-        adapter = new ArrayAdapter<Waypoint>(this,
-                android.R.layout.simple_list_item_1,
-                android.R.id.text1, menuItems);
-
-        // Assign adapter to ListView
-        listView.setAdapter(adapter);
-
-        // ListView Item Click Listener
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Waypoint w = (Waypoint) listView.getItemAtPosition(position);
-
-                // Using getBaseContext(). not sure if this should work
-                insert_index = position;
-                Intent i = new Intent(getBaseContext(), CreateWaypoint.class);
-                i.putExtra(CreateWaypoint.WAYPOINT_BUNDLE, w);
-                startActivityForResult(i, WAYPOINT_INTENT);
+        // Set actions
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // Show location settings when the user acknowledges the alert dialog
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
             }
         });
-    }
 
-    // Waypoint stuff
-    /**
-     * Renders Waypoint list on screen.
-     */
-    public void drawWaypointList() {
-        adapter.clear();
-        listView.clearChoices();
-
-        // Add each Waypoint to the list
-        for(Waypoint currentWaypoint : route.getWaypointList()){
-            menuItems.addLast(currentWaypoint);
-        }
-
-        adapter.notifyDataSetChanged(); // Make sure that the adapter knows there is new data
-        listView.refreshDrawableState(); // Redraw the list on-screen
+        // Create alert
+        Dialog alertDialog = builder.create();
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.show();
     }
 
     // Finishes the screen
+
     /**
      * See: http://stackoverflow.com/a/2258147
      */
@@ -248,6 +281,7 @@ public class WaypointList extends AbstractActivity {
 
     /**
      * Passes the current Route object to FinishRoute and starts the activity.
+     *
      * @param v The View object passed in by the Android OS.
      */
     public void finishRoute() {
@@ -263,39 +297,6 @@ public class WaypointList extends AbstractActivity {
         // Clean up
         stopGPSService();
         startActivity(i);
-    }
-
-    private void calculateTimestamp(){
-        // Calculate timestamp
-        long startTime = route.getStartTime();
-        Log.e(TAG, (String.valueOf(startTime)));
-        long endTime = route.getCurrentTime();
-        Log.e(TAG, (String.valueOf(endTime)));
-        long timeLength = endTime - startTime;
-        Log.e(TAG, (String.valueOf(timeLength)));
-
-        route.setLengthTime(timeLength);
-    }
-
-    public void promptToEnableGPS() {
-        // Build alert dialog
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Location Services Not Active");
-        builder.setMessage("Please enable Location Services!");
-
-        // Set actions
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialogInterface, int i) {
-                // Show location settings when the user acknowledges the alert dialog
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(intent);
-            }
-        });
-
-        // Create alert
-        Dialog alertDialog = builder.create();
-        alertDialog.setCanceledOnTouchOutside(false);
-        alertDialog.show();
     }
 
     @Override

@@ -6,10 +6,7 @@ import android.os.Parcelable;
 import android.util.Log;
 
 import java.util.LinkedList;
-import java.util.NoSuchElementException;
 import java.util.Stack;
-
-import uk.ac.aber.cs.groupten.stumblr.WaypointList;
 
 public class Route extends StumblrData implements Parcelable {
     /**
@@ -49,7 +46,7 @@ public class Route extends StumblrData implements Parcelable {
      * Helper method for constructor
      */
     private void initRoute() {
-       initLists(); // Initialise List and Stack
+        initLists(); // Initialise List and Stack
     }
 
     private void initLists() {
@@ -67,6 +64,7 @@ public class Route extends StumblrData implements Parcelable {
 
     /**
      * Returns the LinkedList of Waypoint objects.
+     *
      * @return The LinkedList of Waypoint objects.
      */
     public LinkedList<Waypoint> getWaypointList() {
@@ -75,6 +73,7 @@ public class Route extends StumblrData implements Parcelable {
 
     /**
      * Returns list of coordinates.
+     *
      * @return The list of coordinates.
      */
     public Stack<Location> getCoordinateList() {
@@ -83,6 +82,7 @@ public class Route extends StumblrData implements Parcelable {
 
     /**
      * Adds an item to the list of coordinates.
+     *
      * @param location The Location object to add.
      */
     public void addCoordinate(Location location) {
@@ -91,6 +91,7 @@ public class Route extends StumblrData implements Parcelable {
 
     /**
      * Returns the long description of the Route.
+     *
      * @return The long description of the Route.
      */
     public String getLongDesc() {
@@ -99,13 +100,14 @@ public class Route extends StumblrData implements Parcelable {
 
     /**
      * Sets the long description.
+     *
      * @param longDesc A longer description of the Route.
      */
     public void setLongDesc(String longDesc) {
         this.longDesc = longDesc;
     }
 
-    public float getDistance(){
+    public float getDistance() {
         float distance = 0;
         float[] results = new float[1];
         Location currentLoc;
@@ -132,6 +134,7 @@ public class Route extends StumblrData implements Parcelable {
 
     /**
      * Describes contents of parcel.
+     *
      * @return Description
      */
     @Override
@@ -141,8 +144,9 @@ public class Route extends StumblrData implements Parcelable {
 
     /**
      * Writes the Route into a Parcel for moving between screens.
+     *
      * @param parcel The parcel to be written to.
-     * @param i Flags.
+     * @param i      Flags.
      */
     @Override
     public void writeToParcel(Parcel parcel, int i) {
@@ -158,6 +162,7 @@ public class Route extends StumblrData implements Parcelable {
 
     /**
      * Reads Route data from a parcel.
+     *
      * @param inParcel The parcel to read the Route from.
      */
     public void readFromParcel(Parcel inParcel) {
@@ -207,6 +212,6 @@ public class Route extends StumblrData implements Parcelable {
     }
 
     public float getLengthTimeHours() {
-        return ((float)lengthTime / 3600000);
+        return ((float) lengthTime / 3600000);
     }
 }

@@ -26,6 +26,7 @@ public class CreateWaypoint extends AbstractActivity {
 
     /**
      * Loads the activity on creation (using a bundle if one is present)
+     *
      * @param savedInstanceState The bundle containing the saved instance state.
      */
     public void stumblrOnCreate(Bundle savedInstanceState) {
@@ -80,7 +81,7 @@ public class CreateWaypoint extends AbstractActivity {
      * Called when "Create" button in the UI is clicked.
      * Adds data to the current Waypoint object with text specified in UI.
      */
-    public void finishWaypoint(View v){
+    public void finishWaypoint(View v) {
         String wpTitle = ((TextView) findViewById(R.id.wptitle_box)).getText().toString();
         String wpShortDesc = ((TextView) findViewById(R.id.wpshortdesc_box)).getText().toString();
 
@@ -89,9 +90,9 @@ public class CreateWaypoint extends AbstractActivity {
         wpShortDesc = waypoint.sanitiseStringInput(wpShortDesc);
 
         // checking the length of the text fields
-        if (! StumblrData.isValidData(wpTitle)) {
+        if (!StumblrData.isValidData(wpTitle)) {
             Toast.makeText(getBaseContext(), "The Waypoint title is too short.", Toast.LENGTH_LONG).show();
-        } else if (! StumblrData.isValidData(wpShortDesc)) {
+        } else if (!StumblrData.isValidData(wpShortDesc)) {
             Toast.makeText(getBaseContext(), "The short description is too short.", Toast.LENGTH_LONG).show();
         } else {
             waypoint.setTitle(wpTitle);
@@ -115,8 +116,10 @@ public class CreateWaypoint extends AbstractActivity {
      *                        Camera interaction                      *
      * ****************************************************************
      */
+
     /**
      * Obtain a photo from user and add it to current Waypoint.
+     *
      * @param v The View object.
      */
     public void startCamera(View v) {

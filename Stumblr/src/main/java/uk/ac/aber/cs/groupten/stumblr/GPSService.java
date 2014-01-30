@@ -34,8 +34,8 @@ public class GPSService extends Service implements LocationListener {
     }
 
     /**
-     * @param intent The intent that the Service was started from
-     * @param flags Startup flags
+     * @param intent  The intent that the Service was started from
+     * @param flags   Startup flags
      * @param startID Service ID
      * @return The service status (Sticky, non-sticky, etc)
      */

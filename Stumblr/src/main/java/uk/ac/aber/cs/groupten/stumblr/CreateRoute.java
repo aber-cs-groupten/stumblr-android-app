@@ -14,6 +14,7 @@ public class CreateRoute extends AbstractActivity {
 
     /**
      * Loads the activity on creation (using a bundle if one is present)
+     *
      * @param savedInstanceState The bundle containing the saved instance state.
      */
     @Override
