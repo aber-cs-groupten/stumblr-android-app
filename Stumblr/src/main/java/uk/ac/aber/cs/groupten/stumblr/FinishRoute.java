@@ -64,7 +64,7 @@ public class FinishRoute extends AbstractActivity {
             TextView textView1 = (TextView) findViewById(R.id.distanceVariable);
             float temp = route.getDistance();
             temp = Math.round(temp);
-            textView1.setText(String.valueOf(temp));
+            textView1.setText(String.valueOf(temp) + "m");
 
             // Total Waypoints Text View
             int wpTemp = route.getWaypointList().size();

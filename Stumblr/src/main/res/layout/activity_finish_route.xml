@@ -1,12 +1,12 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_below="@+id/textViewNumWaypoints"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="uk.ac.aber.cs.groupten.stumblr.Home"
-    tools:ignore="MergeRootFrame"
-    android:padding="10dp">
 
     <Button
         android:layout_width="wrap_content"
@@ -15,51 +15,55 @@
         android:id="@+id/button"
         android:layout_gravity="center"
         android:onClick="postData"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/numwpView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="44dp" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Number of Waypoints"
-        android:id="@+id/textViewNumWaypoints"
-        android:layout_gravity="right|top"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
+        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Distance Travelled"
         android:id="@+id/distanceView"
-        android:layout_gravity="left|top"
+        android:layout_gravity="center_horizontal"
         android:layout_below="@+id/imageMenu"/>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/numwpView"
-        android:layout_gravity="right|center_vertical"
-        android:textColor="#ff2721ff"
-        android:padding="4dp"
-        android:textAlignment="center"
-        android:layout_below="@+id/textViewNumWaypoints"
-        android:layout_toRightOf="@+id/button"
-        android:layout_marginTop="53dp"
-        android:text="empty" />
-
-    <TextView
-        android:padding="4dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/distanceVariable"
         android:layout_alignTop="@+id/numwpView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="false"
-        android:text="empty" />
+        android:text="empty"
+        android:layout_gravity="center_horizontal"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-</RelativeLayout>
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Number of Waypoints"
+        android:id="@+id/textViewNumWaypoints"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_column="1"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/numwpView"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
+        android:layout_below="@+id/textViewNumWaypoints"
+        android:layout_toRightOf="@+id/button"
+        android:text="empty"
+        />
+
+
+</LinearLayout>
