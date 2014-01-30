@@ -258,21 +258,11 @@ public class WaypointList extends AbstractActivity {
 
         // Start new intent, packaging current Route with it
         Intent i = new Intent(getApplicationContext(), FinishRoute.class);
-        setWaypointNum();
-        setTotalDistance();
         i.putExtra("route", this.route);
 
         // Clean up
         stopGPSService();
         startActivity(i);
-    }
-
-    public void setWaypointNum(){
-        route.setTotalWaypoints(route.getWaypointList().size());
-    }
-
-    public void setTotalDistance(){
-        route.setTotalDistance(route.getDistance());
     }
 
     private void calculateTimestamp(){
@@ -306,5 +296,12 @@ public class WaypointList extends AbstractActivity {
         Dialog alertDialog = builder.create();
         alertDialog.setCanceledOnTouchOutside(false);
         alertDialog.show();
+    }
+
+    @Override
+    public void onDestroy() {
+        // Clean up
+        stopGPSService();
+        super.onDestroy();
     }
 }

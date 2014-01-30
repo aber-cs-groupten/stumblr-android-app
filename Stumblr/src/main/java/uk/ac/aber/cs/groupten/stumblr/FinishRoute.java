@@ -46,13 +46,12 @@ public class FinishRoute extends AbstractActivity {
 
     /**
      * Loads the activity on creation (using a bundle if one is present)
+     *
      * @param savedInstanceState The bundle containing the saved instance state.
      */
     public void stumblrOnCreate(Bundle savedInstanceState) {
         // Called by super().onCreate
         setContentView(R.layout.activity_finish_route);
-
-        // TODO stuff with savedInstanceState
 
         // Receive Route object
         Bundle extras = getIntent().getExtras();
@@ -60,14 +59,15 @@ public class FinishRoute extends AbstractActivity {
 
         // Log a few messages just to make sure
         Log.v(TAG, route.getTitle());
+        
         //Total Distance Textview
         TextView textView1 = (TextView) findViewById(R.id.distanceVariable);
-        float temp = route.getTotalDistance();
+        float temp = route.getDistance();
         temp = Math.round(temp);
         textView1.setText(String.valueOf(temp));
 
         //Total Waypoints Text View
-        int wpTemp = route.getTotalWaypoints();
+        int wpTemp = route.getWaypointList().size();
         TextView textView = (TextView) findViewById(R.id.numwpView);
         textView.setText(String.valueOf(wpTemp));
 
@@ -88,9 +88,6 @@ public class FinishRoute extends AbstractActivity {
         @Override
         protected HttpResponse doInBackground(String... params) {
             HttpClient httpclient = new DefaultHttpClient();
-            
-            // This server can be used for testing
-            //HttpPost httppost = new HttpPost("http://www.parityb.it");
 
             // This is the real server
             HttpPost httppost = new HttpPost("http://users.aber.ac.uk/mal60/group_project/JSON_decode.php");
@@ -109,14 +106,13 @@ public class FinishRoute extends AbstractActivity {
                 return null;
             }
         }
-        protected void onPostExecute (HttpResponse result){
-            if(result == null){
+
+        protected void onPostExecute(HttpResponse result) {
+            if (result == null) {
                 Toast.makeText(getBaseContext(), "Upload failed, server not available :(", Toast.LENGTH_LONG).show();
-            }
-            else if(result.getStatusLine().getStatusCode() == 200){
+            } else if (result.getStatusLine().getStatusCode() == 200) {
                 Toast.makeText(getBaseContext(), "Upload Successful :)", Toast.LENGTH_LONG).show();
-            }
-            else{
+            } else {
                 Toast.makeText(getBaseContext(), "Upload failed :(\nError: " + result.getStatusLine().getStatusCode(), Toast.LENGTH_LONG).show();
             }
         }
@@ -126,13 +122,12 @@ public class FinishRoute extends AbstractActivity {
      * Posts the data to the server. Check if internet is available first.
      */
     public void postData(View v) {
-        if (checkInternetEnabled() || checkWifiEnabled()){
+        if (checkInternetEnabled() || checkWifiEnabled()) {
             new NetworkTask().execute();
 
             // Exit gracefully
             finish();
-        }
-        else{
+        } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Unable to Access Internet");
             builder.setMessage("Please enable Internet Services or Wifi");
@@ -162,8 +157,8 @@ public class FinishRoute extends AbstractActivity {
 
             // Put the walk track into the JSON package
             JSONArray JSONCoordinates = new JSONArray();
-            Stack<Location> coordinates =  route.getCoordinateList();
-            for(int i = 0; i < coordinates.size(); i++){
+            Stack<Location> coordinates = route.getCoordinateList();
+            for (int i = 0; i < coordinates.size(); i++) {
                 Location currentCoordinate = coordinates.get(i);
                 JSONObject currentJSONCoordinate = new JSONObject();
                 currentJSONCoordinate.put("latitude", currentCoordinate.getLatitude());
@@ -184,7 +179,7 @@ public class FinishRoute extends AbstractActivity {
             JSONArray JSONWaypoints = new JSONArray();
             LinkedList<Waypoint> waypoints = route.getWaypointList();
 
-            for(int i = 0; i < waypoints.size(); i++){ //TODO refactor this into a ForEach loop
+            for (int i = 0; i < waypoints.size(); i++) { //TODO refactor this into a ForEach loop
                 Waypoint currentWaypoint = waypoints.get(i);
                 JSONObject currentJSONWaypoint = new JSONObject();
                 currentJSONWaypoint.put("title", currentWaypoint.getTitle());
@@ -212,9 +207,11 @@ public class FinishRoute extends AbstractActivity {
     }
 
     // End HTTP POST
-    /** Ensuring Network Provider is Enabled before submitting route
-     *  REFERENCE - http://stackoverflow.com/questions/12806709/android-how-to-tell-if-mobile-network-data-is-enabled-or-disabled-even-when
-     **/
+
+    /**
+     * Ensuring Network Provider is Enabled before submitting route
+     * REFERENCE - http://stackoverflow.com/questions/12806709/android-how-to-tell-if-mobile-network-data-is-enabled-or-disabled-even-when
+     */
     public boolean checkInternetEnabled() {
 
         boolean mobileDataEnabled = false; // Assume disabled
@@ -227,13 +224,12 @@ public class FinishRoute extends AbstractActivity {
             Method method = cmClass.getDeclaredMethod("getMobileDataEnabled");
             method.setAccessible(true); // Make the method callable
             // get the setting for "mobile data"
-            mobileDataEnabled = (Boolean)method.invoke(cm);
+            mobileDataEnabled = (Boolean) method.invoke(cm);
 
             Log.d("No exceptions thrown", "Network available");
             return mobileDataEnabled;
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             // if(e instanceof ClassNotFoundException || e instanceof NoSuchMethodException ||
             //       e instanceof IllegalAccessException || e instanceof InvocationTargetException )  {
             //Connectivity Issue Handling
@@ -241,7 +237,7 @@ public class FinishRoute extends AbstractActivity {
         }
     }
 
-    public boolean checkWifiEnabled(){
+    public boolean checkWifiEnabled() {
         boolean wifiEnabled = false; //assume Wifi is disabled
         ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);

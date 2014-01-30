@@ -56,12 +56,14 @@ public class CreateRoute extends AbstractActivity {
                 // Clear this activity
                 finish();
             } else {
-                // insufficient shortDesc length
-                Toast.makeText(getBaseContext(), "The short description is too short.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(),
+                        "The description is too short. It must be > 3 characters.",
+                        Toast.LENGTH_LONG).show();
             }
         } else {
-            // insufficient title length
-            Toast.makeText(getBaseContext(), "The title is too short.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(),
+                    "The title is too short. It must be > 3 characters.",
+                    Toast.LENGTH_LONG).show();
         }
     }
 }

@@ -89,7 +89,11 @@ public class CreateWaypoint extends AbstractActivity {
         wpShortDesc = waypoint.sanitiseStringInput(wpShortDesc);
 
         // checking the length of the text fields
-        if (StumblrData.isValidData(wpTitle) && StumblrData.isValidData(wpShortDesc)) {
+        if (! StumblrData.isValidData(wpTitle)) {
+            Toast.makeText(getBaseContext(), "The Waypoint title is too short.", Toast.LENGTH_LONG).show();
+        } else if (! StumblrData.isValidData(wpShortDesc)) {
+            Toast.makeText(getBaseContext(), "The short description is too short.", Toast.LENGTH_LONG).show();
+        } else {
             waypoint.setTitle(wpTitle);
             waypoint.setShortDesc(wpShortDesc);
 
@@ -103,10 +107,6 @@ public class CreateWaypoint extends AbstractActivity {
 
             // Graceful finish
             finish();
-        } else {
-            //TODO Fix toast printing when short description is too short instead of title
-            // insufficient title length
-            Toast.makeText(getBaseContext(), "The Waypoint title is too short.", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -150,14 +150,5 @@ public class CreateWaypoint extends AbstractActivity {
                 Log.v(TAG, imgDimensions);
             }
         }
-    }
-
-    // http://stackoverflow.com/questions/15430787/android-go-back-to-previous-activity
-    @Override
-    public void onBackPressed () {
-        Intent i = new Intent(CreateWaypoint.this, WaypointList.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // clear back stack
-        startActivity(i);
-        finish();
     }
 }

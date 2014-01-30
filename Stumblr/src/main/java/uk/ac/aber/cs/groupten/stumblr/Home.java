@@ -24,4 +24,10 @@ public class Home extends AbstractActivity {
         // Finish gracefully
         finish();
     }
+
+    // http://stackoverflow.com/questions/15430787/android-go-back-to-previous-activity
+    @Override
+    public void onBackPressed () {
+        finish();
+    }
 }

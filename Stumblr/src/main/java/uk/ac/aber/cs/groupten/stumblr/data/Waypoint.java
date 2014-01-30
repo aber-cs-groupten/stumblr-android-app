@@ -134,8 +134,7 @@ public class Waypoint extends StumblrData implements Parcelable {
     /*
      * From: http://stackoverflow.com/a/18167140
      */
-    public static final Parcelable.Creator<Waypoint> CREATOR
-            = new Parcelable.Creator<Waypoint>() {
+    public static final Parcelable.Creator<Waypoint> CREATOR = new Parcelable.Creator<Waypoint>() {
         public Waypoint createFromParcel(Parcel in) {
             return new Waypoint(in);
         }
