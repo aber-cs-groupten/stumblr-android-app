@@ -5,7 +5,8 @@
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:windowSoftInputMode="stateAlwaysHidden|adjustResize|adjustPan" >
+    android:windowSoftInputMode="stateAlwaysHidden|adjustResize|adjustPan"
+    android:background="@drawable/image_sea">
 
     <LinearLayout
         android:orientation="vertical"
