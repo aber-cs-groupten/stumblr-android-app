@@ -76,6 +76,7 @@ public class CreateWaypoint extends AbstractActivity {
         // Set up GUI attributes
         title.setText(waypoint.getTitle());
         shortDesc.setText(waypoint.getShortDesc());
+        image.setBackgroundResource(0); // Clear image
         image.setImageBitmap(waypoint.getImage());
     }
 
@@ -122,7 +123,6 @@ public class CreateWaypoint extends AbstractActivity {
      *                        Camera interaction                      *
      * ****************************************************************
      */
-
     /**
      * Obtain a photo from user and add it to current Waypoint.
      *
