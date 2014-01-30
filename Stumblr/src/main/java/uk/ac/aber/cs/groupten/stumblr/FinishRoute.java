@@ -256,7 +256,6 @@ public class FinishRoute extends AbstractActivity {
      *                         Base64 Encoding                        *
      * ****************************************************************
      */
-
     // REFERENCE - http://stackoverflow.com/questions/20656649/how-to-convert-bitmap-to-png-and-then-to-base64-in-android
     public String encodeTobase64(Bitmap image) {
         Bitmap imagex = image;

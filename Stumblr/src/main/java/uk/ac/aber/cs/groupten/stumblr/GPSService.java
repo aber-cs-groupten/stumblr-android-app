@@ -1,17 +1,20 @@
 package uk.ac.aber.cs.groupten.stumblr;
 
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 
 public class GPSService extends Service implements LocationListener {
+    final int sdkVer = Build.VERSION.SDK_INT;
     public final static String GPS_INTENT = "STUMBLR_GPS";
     public final static String GPS_DIALOG = "STUMBLR_GPS_DIALOG";
     public final static String LOC_BUNDLE_STRING = "loc";
@@ -47,11 +50,22 @@ public class GPSService extends Service implements LocationListener {
 
         // Run as foreground task
         // See: http://stackoverflow.com/a/6636893
-        // TODO resume existing activity (come back to this after savedInstanceState)
+        // Also: http://stackoverflow.com/questions/11947928/startforeground-bad-notification-error
+
         notice = new NotificationCompat.Builder(getApplicationContext())
                 .setContentTitle("Stumblr is recording walk...")
                 .setSmallIcon(R.drawable.ic_launcher)
                 .build();
+
+        // Be nice to older versions of Android...
+        if (sdkVer < Build.VERSION_CODES.HONEYCOMB) {
+            PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+                    new Intent(this, GPSService.class), 0);
+
+            // Set the info for the views that show in the notification panel.
+            notice.setLatestEventInfo(this, "Stumblr is recording walk...", "More test", contentIntent);
+        }
+
 
         notice.flags |= Notification.FLAG_NO_CLEAR;
         startForeground(FG_SERVICE_ID, notice);
