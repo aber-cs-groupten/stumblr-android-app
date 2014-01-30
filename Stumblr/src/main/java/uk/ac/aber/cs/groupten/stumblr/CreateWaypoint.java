@@ -18,13 +18,35 @@ import uk.ac.aber.cs.groupten.stumblr.data.StumblrData;
 import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
 
 public class CreateWaypoint extends AbstractActivity {
+
+    /**
+     * bundle of waypoint data
+     */
     public static final String WAYPOINT_BUNDLE = "waypoint";
+
+    /**
+     * Bundle of location data
+     */
     public static final String LOCATION_BUNDLE = "loc";
+
+    /**
+     * Bundle of return data
+     */
     public static final String RETURN_BUNDLE = "return_data";
 
+    /**
+     * Waypoint title.
+     */
     private String wpTitle;
+
+    /**
+     * Short description.
+     */
     private String wpShortDesc;
 
+    /**
+     * Instance of waypoint.
+     */
     private Waypoint waypoint;
 
     /**
@@ -67,6 +89,11 @@ public class CreateWaypoint extends AbstractActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
+    /**
+     * Pass in waypoint. Set TextView and ImageView fields to data returned from getting
+     * the waypoints title, short description and image
+     * @param w passed in waypoint to be loaded.
+     */
     public void loadWaypoint(Waypoint w) {
         this.waypoint = w;
         ImageView image = ((ImageView) findViewById(R.id.imageView));
@@ -80,6 +107,9 @@ public class CreateWaypoint extends AbstractActivity {
         image.setImageBitmap(waypoint.getImage());
     }
 
+    /**
+     * Gets waypoint title and short description from the user interface.
+     */
     public void getTextFromUI() {
         wpTitle = ((TextView) findViewById(R.id.wptitle_box)).getText().toString();
         wpShortDesc = ((TextView) findViewById(R.id.wpshortdesc_box)).getText().toString();
@@ -135,6 +165,15 @@ public class CreateWaypoint extends AbstractActivity {
         }
     }
 
+    /**
+     * on Creation of a waypoint result, if the result is OK then getExtras from intent data.
+     * Then get bitmap image for waypoint image and check for null prior to setting the image to the
+     * waypoint. Update UI imageView, and log dimensions of image.
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -174,6 +213,12 @@ public class CreateWaypoint extends AbstractActivity {
         super.onSaveInstanceState(savedInstanceState);
     }
 
+    /**
+     * Restore state to savedInstanceState. Set waypoint title, short description and waypoint
+     * to appropriate data retrieved from the savedInstanceState. Then update TextViews with
+     * newly set title and short description.
+     * @param savedInstanceState
+     */
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);

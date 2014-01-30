@@ -11,10 +11,25 @@ import uk.ac.aber.cs.groupten.stumblr.data.Route;
 import uk.ac.aber.cs.groupten.stumblr.data.StumblrData;
 
 public class CreateRoute extends AbstractActivity {
+
+    /**
+     * Instance of Route.
+     */
     private Route route;
 
+    /**
+     * Title of route.
+     */
     private String title;
+
+    /**
+     * Short description of route.
+     */
     private String shortDesc;
+
+    /**
+     * Long description of route.
+     */
     private String longDesc;
 
     /**
@@ -31,8 +46,10 @@ public class CreateRoute extends AbstractActivity {
         route = new Route();
     }
 
+    /**
+     * Get text from fields in the user interface and sanitise inputs.
+     */
     public void getTextFromUI() {
-        // Get text from fields in UI
         title = ((TextView) findViewById(R.id.routeTitleBox)).getText().toString();
         shortDesc = ((TextView) findViewById(R.id.shortDescriptionBox)).getText().toString();
         longDesc = ((TextView) findViewById(R.id.longDescriptionBox)).getText().toString();
@@ -77,6 +94,10 @@ public class CreateRoute extends AbstractActivity {
         }
     }
 
+    /**
+     * On instance saved, call getTextFromUI() and set the strings to appropriate variables.
+     * @param savedInstanceState
+     */
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         getTextFromUI();
@@ -90,6 +111,11 @@ public class CreateRoute extends AbstractActivity {
         super.onSaveInstanceState(savedInstanceState);
     }
 
+    /**
+     * Restore instance state to savedInstanceState. Set title, shortDesc and longDesc by getting
+     * them from the savedInstanceState. Then set textview fields to their appropriate variables.
+     * @param savedInstanceState
+     */
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
@@ -105,6 +131,9 @@ public class CreateRoute extends AbstractActivity {
         ((TextView) findViewById(R.id.longDescriptionBox)).setText(longDesc);
     }
 
+    /**
+     * Logs when back is pressed in CreateRoute.
+     */
     @Override
     public void onBackPressed() {
         // Ignore
