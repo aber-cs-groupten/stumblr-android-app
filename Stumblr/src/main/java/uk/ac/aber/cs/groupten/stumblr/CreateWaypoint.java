@@ -40,23 +40,23 @@ public class CreateWaypoint extends AbstractActivity {
         Bundle b = getIntent().getExtras();
 
         if (b != null) {
-            Log.e(TAG, "Bundle appears to be non-null");
+            Log.i(TAG, "Bundle appears to be non-null");
 
             Location tempLocation = (Location) b.get(LOCATION_BUNDLE);
             if (tempLocation != null) {
                 waypoint.setLocation(tempLocation);
             } else {
-                Log.e(TAG, "Location passed into CreateWaypoint is null! Trying Waypoint...");
+                Log.i(TAG, "Location is null");
             }
 
             Waypoint tempWaypoint = (Waypoint) b.get(WAYPOINT_BUNDLE);
             if (tempWaypoint != null) {
                 loadWaypoint(tempWaypoint);
             } else {
-                Log.e(TAG, "Waypoint is also null, something went wrong here.");
+                Log.i(TAG, "Waypoint is null");
             }
         } else {
-            Log.e(TAG, "Bundle is null!");
+            Log.e(TAG, "Bundle is null! Error!");
         }
 
         // Forces keyboard to close
@@ -153,5 +153,10 @@ public class CreateWaypoint extends AbstractActivity {
                 Log.v(TAG, imgDimensions);
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }
