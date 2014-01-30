@@ -23,23 +23,51 @@ import uk.ac.aber.cs.groupten.stumblr.data.Route;
 import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
 
 public class WaypointList extends AbstractActivity {
-    // Constants
+
+    /**
+     * Waypoint intent constant.
+     */
     private final int WAYPOINT_INTENT = 3141;
 
-    // Index to insert new Waypoint
+    /**
+     * Index to insert new waypoint.
+     */
     private int insert_index;
 
-    // GPS broadcast receiver
+    /**
+     * GPS Broadcast reciever.
+     */
     private BroadcastReceiver receiver;
+
+    /**
+     * GPS Service intent.
+     */
     private Intent gpsServiceIntent;
+
+    /**
+     * Boolean to show if GPS service is running.
+     */
     private boolean serviceRunning = false;
 
     // ListView objects
+    /**
+     * Adapter used to put menu items into linked list
+     */
     private ArrayAdapter<Waypoint> adapter;
+
+    /**
+     * List of menu items.
+     */
     private LinkedList<Waypoint> menuItems;
+
+    /**
+     * View of the list.
+     */
     private ListView listView;
 
-    // Data objects
+    /**
+     * Instance of route.
+     */
     private Route route;
 
     /**
@@ -94,6 +122,10 @@ public class WaypointList extends AbstractActivity {
         }
     }
 
+    /**
+     * Calculate time by subtracting the endTime by the startTime.
+     * Set the length route was recorded for to the route.
+     */
     private void calculateTimestamp() {
         long startTime = route.getStartTime();
         long endTime = route.getCurrentTime();
@@ -238,6 +270,9 @@ public class WaypointList extends AbstractActivity {
         serviceRunning = false;
     }
 
+    /**
+     * Display dialog to prompt the user to enable GPS. Then take them to the settings page.
+     */
     public void promptToEnableGPS() {
         // Build alert dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -262,6 +297,8 @@ public class WaypointList extends AbstractActivity {
     // Finishes the screen
 
     /**
+     * Finish route method. Display message to check if the user is finished. If button is pressed
+     * call finishRoute and then finish the activity.
      * See: http://stackoverflow.com/a/2258147
      */
     public void confirmFinishRoute(View v) {
@@ -300,6 +337,9 @@ public class WaypointList extends AbstractActivity {
         startActivity(i);
     }
 
+    /**
+     * onDestroy, stop the GPS service.
+     */
     @Override
     public void onDestroy() {
         // Clean up
@@ -307,6 +347,10 @@ public class WaypointList extends AbstractActivity {
         super.onDestroy();
     }
 
+    /**
+     * When instance state is saved, put instance variables into it as well as route data.
+     * @param savedInstanceState
+     */
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         Log.i(TAG, "WaypointList: onSaveInstanceState");
@@ -322,6 +366,11 @@ public class WaypointList extends AbstractActivity {
         super.onSaveInstanceState(savedInstanceState);
     }
 
+    /**
+     * When instance state is restored, retrieve instance variables and
+     * data from saved instance state.
+     * @param savedInstanceState
+     */
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
@@ -345,6 +394,9 @@ public class WaypointList extends AbstractActivity {
         //drawWaypointList();
     }
 
+    /**
+     * Log when back is pressed.
+     */
     @Override
     public void onBackPressed() {
         // Ignore
