@@ -14,7 +14,6 @@
         android:id="@+id/button"
         android:layout_gravity="center"
         android:onClick="postData"
-        android:layout_below="@+id/numwpView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="44dp" />
 
