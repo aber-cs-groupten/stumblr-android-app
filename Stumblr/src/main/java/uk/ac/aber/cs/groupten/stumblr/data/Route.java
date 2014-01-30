@@ -175,8 +175,8 @@ public class Route extends StumblrData implements Parcelable {
         this.setLengthTime(inParcel.readLong());
 
         initLists();
-        inParcel.readList(this.route, Waypoint.class.getClassLoader()); // Not sure about these two lines yet
-        inParcel.readList(this.coordinates, Location.class.getClassLoader()); // TODO test this method
+        inParcel.readList(this.route, Waypoint.class.getClassLoader());
+        inParcel.readList(this.coordinates, Location.class.getClassLoader());
     }
 
     /**

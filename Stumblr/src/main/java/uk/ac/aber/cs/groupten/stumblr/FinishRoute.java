@@ -184,7 +184,7 @@ public class FinishRoute extends AbstractActivity {
             JSONArray JSONWaypoints = new JSONArray();
             LinkedList<Waypoint> waypoints = route.getWaypointList();
 
-            for (int i = 0; i < waypoints.size(); i++) { //TODO refactor this into a ForEach loop
+            for (int i = 0; i < waypoints.size(); i++) {
                 Waypoint currentWaypoint = waypoints.get(i);
                 JSONObject currentJSONWaypoint = new JSONObject();
                 currentJSONWaypoint.put("title", currentWaypoint.getTitle());
