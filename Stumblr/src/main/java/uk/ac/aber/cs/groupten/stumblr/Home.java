@@ -23,7 +23,10 @@ public class Home extends AbstractActivity {
         startActivity(i);
     }
 
-    // http://stackoverflow.com/questions/15430787/android-go-back-to-previous-activity
+    /**
+     * When back is pressed, finish activity.
+     * http://stackoverflow.com/questions/15430787/android-go-back-to-previous-activity
+     */
     @Override
     public void onBackPressed() {
         finish();

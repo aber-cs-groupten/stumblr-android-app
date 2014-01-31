@@ -9,17 +9,19 @@ import java.util.LinkedList;
 import java.util.Stack;
 
 public class Route extends StumblrData implements Parcelable {
+
     /**
-     * Timestamp for start of walk.
+     * startTime used for timestamp of start of the walk.
      */
     private long startTime;
 
     /**
-     * Timestamp for length of walk.
+     * lengthTime used for timestamp for length of walk.
      */
     private long lengthTime;
 
     /**
+     * longDesc
      * A slightly longer description of the contents of the route. Set by the user when
      * they create a Route.
      */
@@ -36,21 +38,23 @@ public class Route extends StumblrData implements Parcelable {
     private LinkedList<Waypoint> route;
 
     /**
-     * Constructor
+     * Constructor. Calls initRoute() to initialise route.
      */
     public Route() {
         initRoute();
     }
 
     /**
-     * Helper method for constructor
+     * Helper method for constructor. Calls initLists() to initialise the list and stack.
      */
     private void initRoute() {
-        initLists(); // Initialise List and Stack
+        initLists();
     }
 
+    /**
+     * List and stack initializer method.
+     */
     private void initLists() {
-        // Initialise Lists
         this.coordinates = new Stack<Location>();
         this.route = new LinkedList<Waypoint>();
     }
@@ -63,8 +67,6 @@ public class Route extends StumblrData implements Parcelable {
     }
 
     /**
-     * Returns the LinkedList of Waypoint objects.
-     *
      * @return The LinkedList of Waypoint objects.
      */
     public LinkedList<Waypoint> getWaypointList() {
@@ -72,8 +74,6 @@ public class Route extends StumblrData implements Parcelable {
     }
 
     /**
-     * Returns list of coordinates.
-     *
      * @return The list of coordinates.
      */
     public Stack<Location> getCoordinateList() {
@@ -107,6 +107,17 @@ public class Route extends StumblrData implements Parcelable {
         this.longDesc = longDesc;
     }
 
+
+    /**
+     *
+     * @return returns the route distance.
+     *
+     * Method loops through coordinate list. If list is empty, return 0.0f. Sets current location by calling getLatitude()
+     * and getLongitude() methods. On each loop, increment i and set currentLoc to coordinates
+     * held in position i of coordinates list. Do same for nextLoc but add 1 so it retrieves the
+     * coordinates of the position in front of current location. Using distanceBetween() it
+     * calculates distance between the two locations and add results to distance variable.
+     */
     public float getDistance() {
         float distance = 0;
         float[] results = new float[1];
@@ -193,26 +204,44 @@ public class Route extends StumblrData implements Parcelable {
         }
     };
 
+    /**
+     * @return startTime of the walk
+     */
     public long getStartTime() {
         return startTime;
     }
 
+    /**
+     * startTime gets set to current time.
+     */
     public void setStartTime() {
         this.startTime = getCurrentTime();
     }
 
+    /**
+     * @param start pass in start time
+     */
     public void setStartTime(long start) {
         this.startTime = start;
     }
 
+    /**
+     * @return lengthTime variable
+     */
     public long getLengthTime() {
         return lengthTime;
     }
 
+    /**
+     * @param l pass in length time and set lengthTime to it.
+     */
     public void setLengthTime(long l) {
         this.lengthTime = l;
     }
 
+    /**
+     * @return lengthTime as a casted float divided to be hours.
+     */
     public float getLengthTimeHours() {
         return ((float) lengthTime / 3600000);
     }
