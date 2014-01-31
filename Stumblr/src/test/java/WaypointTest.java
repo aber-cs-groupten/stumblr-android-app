@@ -19,7 +19,7 @@ import uk.ac.aber.cs.groupten.stumblr.*;
 
 @RunWith(RobolectricTestRunner.class)
 public class WaypointTest {
-    
+
     @Test
     public void testFirstWaypointConstructor() {
         //Get System time

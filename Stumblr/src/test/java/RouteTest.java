@@ -19,7 +19,7 @@ import uk.ac.aber.cs.groupten.stumblr.*;
 
 @RunWith(RobolectricTestRunner.class)
 public class RouteTest {
-    
+
     @Test
     public void testRouteConstructor() {
         //Create the Test Route

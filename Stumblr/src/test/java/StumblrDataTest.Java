@@ -22,14 +22,14 @@ public class StumblrDataTest {
 
     @Test
     public void testStumblrDataConstructor() {
-        StumblrData stumblrData = new StumblrData("testTitle", "testShortDesc");
+        StumblrData stumblrData = new StumblrData("testTitle", "testShortDesc") {};
         Assert.assertTrue(stumblrData.getTitle().equals("testTitle"));
         Assert.assertTrue(stumblrData.getShortDesc().equals("testShortDesc"));
     }
 
     @Test
     public void testCorrectIsValidData(){
-        StumblrData testStumblrData = new StumblrData();
+        StumblrData testStumblrData = new StumblrData() {};
         String testString = "Hello World";
         boolean isValid = testStumblrData.isValidData(testString);
         Assert.assertTrue(isValid);
@@ -37,7 +37,7 @@ public class StumblrDataTest {
 
     @Test
     public void testIncorrectIsValidData(){
-        StumblrData testStumblrData = new StumblrData();
+        StumblrData testStumblrData = new StumblrData() {};
         String testString = "Hi";
         boolean isValid = testStumblrData.isValidData(testString);
         Assert.assertTrue(!isValid);
@@ -45,7 +45,7 @@ public class StumblrDataTest {
 
     @Test
     public void testSanitiseStringInput(){
-        StumblrData testStumblrData = new StumblrData();
+        StumblrData testStumblrData = new StumblrData() {};
         String testString = "Hello' 'World!";
         String sanitisedTestString = testStumblrData.sanitiseStringInput(testString);
         Assert.assertTrue(sanitisedTestString.equals("Hello World!"));
