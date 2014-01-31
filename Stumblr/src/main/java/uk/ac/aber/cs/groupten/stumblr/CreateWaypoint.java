@@ -255,6 +255,9 @@ public class CreateWaypoint extends AbstractActivity {
 
                         int newWidth = (int) Math.floor(scaledWidth); // Convert to int
 
+                        Log.e(TAG, String.valueOf(newWidth));
+                        Log.e(TAG, String.valueOf(newHeight));
+
                         b = Bitmap.createScaledBitmap(b, newWidth, newHeight, false);
 
                         setImage(b);
