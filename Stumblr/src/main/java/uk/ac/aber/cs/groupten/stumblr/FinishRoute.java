@@ -60,13 +60,13 @@ public class FinishRoute extends AbstractActivity {
             // Log a few messages just to make sure
             Log.v(TAG, route.getTitle());
 
-            //Total Distance TextView
+            // Total Distance TextView
             TextView textView1 = (TextView) findViewById(R.id.distanceVariable);
             float temp = route.getDistance();
             temp = Math.round(temp);
             textView1.setText(String.valueOf(temp));
 
-            //Total Waypoints Text View
+            // Total Waypoints Text View
             int wpTemp = route.getWaypointList().size();
             TextView textView = (TextView) findViewById(R.id.numwpView);
             textView.setText(String.valueOf(wpTemp));
@@ -90,6 +90,9 @@ public class FinishRoute extends AbstractActivity {
         protected HttpResponse doInBackground(String... params) {
             HttpClient httpclient = new DefaultHttpClient();
 
+            // This server can be used for testing
+            //HttpPost httppost = new HttpPost("http://www.parityb.it");
+
             // This is the real server
             HttpPost httppost = new HttpPost("http://users.aber.ac.uk/mal60/group_project/JSON_decode.php");
 
@@ -112,6 +115,9 @@ public class FinishRoute extends AbstractActivity {
             if (result == null) {
                 Toast.makeText(getBaseContext(), "Upload failed, server not available :(", Toast.LENGTH_LONG).show();
             } else if (result.getStatusLine().getStatusCode() == 200) {
+                // Exit gracefully
+                finish();
+
                 Toast.makeText(getBaseContext(), "Upload Successful :)", Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(getBaseContext(), "Upload failed :(\nError: " + result.getStatusLine().getStatusCode(), Toast.LENGTH_LONG).show();
@@ -126,8 +132,6 @@ public class FinishRoute extends AbstractActivity {
         if (checkInternetEnabled() || checkWifiEnabled()) {
             new NetworkTask().execute();
 
-            // Exit gracefully
-            finish();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Unable to Access Internet");
@@ -170,17 +174,11 @@ public class FinishRoute extends AbstractActivity {
             // Put coordinates
             walk.put("walkCoordinates", JSONCoordinates);
 
-            // FIXME
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Distance....")
-                    .setMessage(String.valueOf(route.getDistance()))
-                    .setPositiveButton("OK", null);
-
             //Add data for each waypoint into the JSON package
             JSONArray JSONWaypoints = new JSONArray();
             LinkedList<Waypoint> waypoints = route.getWaypointList();
 
-            for (int i = 0; i < waypoints.size(); i++) { //TODO refactor this into a ForEach loop
+            for (int i = 0; i < waypoints.size(); i++) {
                 Waypoint currentWaypoint = waypoints.get(i);
                 JSONObject currentJSONWaypoint = new JSONObject();
                 currentJSONWaypoint.put("title", currentWaypoint.getTitle());
@@ -253,13 +251,15 @@ public class FinishRoute extends AbstractActivity {
      *                         Base64 Encoding                        *
      * ****************************************************************
      */
-
     // REFERENCE - http://stackoverflow.com/questions/20656649/how-to-convert-bitmap-to-png-and-then-to-base64-in-android
     public String encodeTobase64(Bitmap image) {
         Bitmap imagex = image;
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        imagex.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] b = baos.toByteArray();
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        boolean success = imagex.compress(Bitmap.CompressFormat.JPEG, 70, byteArrayOutputStream);
+        if(!success){
+            Toast.makeText(getBaseContext(), "Base64 Encode Failed!", Toast.LENGTH_LONG).show();
+        }
+        byte[] b = byteArrayOutputStream.toByteArray();
         String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
 
         Log.v(TAG, imageEncoded);
@@ -281,5 +281,23 @@ public class FinishRoute extends AbstractActivity {
         } catch (IOException ioe) {
             Log.e(TAG, ioe.getMessage());
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        Log.i(TAG, "FinishRoute: onSaveInstanceState");
+
+        savedInstanceState.putParcelable("route", route);
+
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        route = savedInstanceState.getParcelable("route");
+
+        Log.i(TAG, "FinishRoute: onRestoreInstanceState");
     }
 }

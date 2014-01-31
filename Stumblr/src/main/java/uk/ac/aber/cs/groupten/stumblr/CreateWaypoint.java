@@ -22,6 +22,9 @@ public class CreateWaypoint extends AbstractActivity {
     public static final String LOCATION_BUNDLE = "loc";
     public static final String RETURN_BUNDLE = "return_data";
 
+    private String wpTitle;
+    private String wpShortDesc;
+
     private Waypoint waypoint;
 
     /**
@@ -65,7 +68,6 @@ public class CreateWaypoint extends AbstractActivity {
     }
 
     public void loadWaypoint(Waypoint w) {
-        // TODO
         this.waypoint = w;
         ImageView image = ((ImageView) findViewById(R.id.imageView));
         TextView title = ((TextView) findViewById(R.id.wptitle_box));
@@ -77,13 +79,17 @@ public class CreateWaypoint extends AbstractActivity {
         image.setImageBitmap(waypoint.getImage());
     }
 
+    public void getTextFromUI() {
+        wpTitle = ((TextView) findViewById(R.id.wptitle_box)).getText().toString();
+        wpShortDesc = ((TextView) findViewById(R.id.wpshortdesc_box)).getText().toString();
+    }
+
     /**
      * Called when "Create" button in the UI is clicked.
      * Adds data to the current Waypoint object with text specified in UI.
      */
     public void finishWaypoint(View v) {
-        String wpTitle = ((TextView) findViewById(R.id.wptitle_box)).getText().toString();
-        String wpShortDesc = ((TextView) findViewById(R.id.wpshortdesc_box)).getText().toString();
+        getTextFromUI();
 
         // Sanitise Inputs
         wpTitle = waypoint.sanitiseStringInput(wpTitle);
@@ -156,7 +162,29 @@ public class CreateWaypoint extends AbstractActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        finish();
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        getTextFromUI();
+
+        Log.i(TAG, "CreateWaypoint: onSaveInstanceState");
+
+        savedInstanceState.putString("wpTitle", wpTitle);
+        savedInstanceState.putString("wpShortDesc", wpShortDesc);
+        savedInstanceState.putParcelable("waypoint", waypoint);
+
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        Log.i(TAG, "CreateWaypoint: onRestoreInstanceState");
+
+        wpTitle = savedInstanceState.getString("wpTitle");
+        wpShortDesc = savedInstanceState.getString("wpShortDesc");
+        waypoint = savedInstanceState.getParcelable("waypoint");
+
+        ((TextView) findViewById(R.id.wptitle_box)).setText(wpTitle);
+        ((TextView) findViewById(R.id.wpshortdesc_box)).setText(wpShortDesc);
     }
 }
