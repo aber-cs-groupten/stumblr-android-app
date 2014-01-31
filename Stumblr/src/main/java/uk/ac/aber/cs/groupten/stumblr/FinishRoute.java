@@ -217,7 +217,7 @@ public class FinishRoute extends AbstractActivity {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         Log.d("Connectivity Service", "Getting System Context");
         try {
-            Class cmClass = Class.forName(cm.getClass().getName());
+            Class<?> cmClass = Class.forName(cm.getClass().getName());
             Method method = cmClass.getDeclaredMethod("getMobileDataEnabled");
             method.setAccessible(true); // Make the method callable
             // get the setting for "mobile data"
