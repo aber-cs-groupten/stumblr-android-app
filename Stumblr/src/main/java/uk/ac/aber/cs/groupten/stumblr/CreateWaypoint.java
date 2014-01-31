@@ -76,6 +76,14 @@ public class CreateWaypoint extends AbstractActivity {
     public void stumblrOnCreate(Bundle savedInstanceState) {
         // Called by super().onCreate
         setContentView(R.layout.activity_create_waypoint);
+        Intent cameraCheckIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Intent galleryCheckIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+    //if device has no camera or gallery, remove imageView.
+        if(cameraCheckIntent.resolveActivity(getPackageManager()) == null &&
+                galleryCheckIntent.resolveActivity(getPackageManager()) == null){
+            findViewById(R.id.imageView).setVisibility(View.GONE);
+        }
 
         // Initialise Waypoint Object.
         waypoint = new Waypoint();
@@ -182,10 +190,14 @@ public class CreateWaypoint extends AbstractActivity {
      */
     public void startCamera() {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Intent galleryCheckIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        galleryCheckIntent.setType("image/*");
+
         if (cameraIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(cameraIntent, CAMERA_REQ_CODE);
         }
-        else{
+        else if(cameraIntent.resolveActivity(getPackageManager()) == null){
             AlertDialog a = new AlertDialog.Builder(this)
                     .setTitle("No Device Camera Found.")
                     .setMessage("Would you like to get the image from your gallery?")
@@ -196,7 +208,21 @@ public class CreateWaypoint extends AbstractActivity {
                         }
                     })
                     .setNeutralButton("No", null).show();
-    }
+        }
+        else if (galleryCheckIntent.resolveActivity(getPackageManager()) == null){
+            AlertDialog a = new AlertDialog.Builder(this)
+                    .setTitle("No Gallery Found.")
+                    .setMessage("Would you like to use your camera?")
+                    .setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        startCamera();
+                        }
+                    })
+                    .setNeutralButton("No", null)
+                    .show();
+        }
+
     }
 
 
@@ -252,7 +278,7 @@ public class CreateWaypoint extends AbstractActivity {
                 Bitmap b = (Bitmap) extras.get("data");
                 setImage(b);
 
-            // http://stackoverflow.com/a/5086706
+                // http://stackoverflow.com/a/5086706
             } else if (requestCode == GALLERY_REQ_CODE) {
                 Uri imgUri = data.getData();
 
@@ -266,8 +292,8 @@ public class CreateWaypoint extends AbstractActivity {
                         int newHeight = (int) default_restrict;
 
                         double scaledWidth = ((default_restrict /
-                                                (double) b.getHeight()) *
-                                                (double) b.getWidth());
+                                (double) b.getHeight()) *
+                                (double) b.getWidth());
 
                         int newWidth = (int) Math.floor(scaledWidth); // Convert to int
 
