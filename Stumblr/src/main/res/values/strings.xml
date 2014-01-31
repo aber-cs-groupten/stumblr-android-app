@@ -2,7 +2,7 @@
 <resources>
     <!-- Menus -->
     <string name="app_name">Stumblr</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_cancel">Cancel</string>
 
     <!-- Home -->
     <string name="create_waypoint">Create Waypoint</string>

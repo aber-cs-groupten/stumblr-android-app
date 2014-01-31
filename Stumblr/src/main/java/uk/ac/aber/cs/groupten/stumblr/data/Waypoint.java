@@ -141,7 +141,7 @@ public class Waypoint extends StumblrData implements Parcelable {
         this.location = (Location) inParcel.readValue(null); // Gets location
     }
 
-    /*
+    /**
      * From: http://stackoverflow.com/a/18167140
      */
     public static final Parcelable.Creator<Waypoint> CREATOR = new Parcelable.Creator<Waypoint>() {
@@ -149,13 +149,20 @@ public class Waypoint extends StumblrData implements Parcelable {
             return new Waypoint(in);
         }
 
+        /**
+         * @param size pass in size of new array.
+         * @return Waypoint type array with passed in size.
+         */
         public Waypoint[] newArray(int size) {
             return new Waypoint[size];
         }
     };
 
-    @Override // Unused
-    public int describeContents() {
+   @Override // Unused
+   /**
+    * Unused method. Required for parcelable implementation.
+    */
+   public int describeContents() {
         return 0;
     }
 }

@@ -64,7 +64,7 @@ public class FinishRoute extends AbstractActivity {
             TextView textView1 = (TextView) findViewById(R.id.distanceVariable);
             float temp = route.getDistance();
             temp = Math.round(temp);
-            textView1.setText(String.valueOf(temp));
+            textView1.setText(String.valueOf(temp) + "m");
 
             // Total Waypoints Text View
             int wpTemp = route.getWaypointList().size();
@@ -106,7 +106,7 @@ public class FinishRoute extends AbstractActivity {
                 HttpResponse response = httpclient.execute(httppost);
                 return response;
             } catch (Exception e) {
-                Log.e(TAG, "IM NOT WORKING " + e.toString()); // FIXME proper log message
+                Log.e(TAG, e.toString());
                 return null;
             }
         }
@@ -204,7 +204,6 @@ public class FinishRoute extends AbstractActivity {
         writeFile(walk.toString());
         return walk;
     }
-
     // End HTTP POST
 
     /**
@@ -212,14 +211,13 @@ public class FinishRoute extends AbstractActivity {
      * REFERENCE - http://stackoverflow.com/questions/12806709/android-how-to-tell-if-mobile-network-data-is-enabled-or-disabled-even-when
      */
     public boolean checkInternetEnabled() {
-
         boolean mobileDataEnabled = false; // Assume disabled
         Context context;
         context = getApplicationContext();
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         Log.d("Connectivity Service", "Getting System Context");
         try {
-            Class cmClass = Class.forName(cm.getClass().getName());
+            Class<?> cmClass = Class.forName(cm.getClass().getName());
             Method method = cmClass.getDeclaredMethod("getMobileDataEnabled");
             method.setAccessible(true); // Make the method callable
             // get the setting for "mobile data"
@@ -230,8 +228,8 @@ public class FinishRoute extends AbstractActivity {
 
         } catch (Exception e) {
             // if(e instanceof ClassNotFoundException || e instanceof NoSuchMethodException ||
-            //       e instanceof IllegalAccessException || e instanceof InvocationTargetException )  {
-            //Connectivity Issue Handling
+            // e instanceof IllegalAccessException || e instanceof InvocationTargetException )  {
+            // Connectivity Issue Handling
             return mobileDataEnabled;
         }
     }
@@ -255,8 +253,8 @@ public class FinishRoute extends AbstractActivity {
     public String encodeTobase64(Bitmap image) {
         Bitmap imagex = image;
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        boolean success = imagex.compress(Bitmap.CompressFormat.JPEG, 70, byteArrayOutputStream);
-        if(!success){
+        boolean success = imagex.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
+        if (!success) {
             Toast.makeText(getBaseContext(), "Base64 Encode Failed!", Toast.LENGTH_LONG).show();
         }
         byte[] b = byteArrayOutputStream.toByteArray();

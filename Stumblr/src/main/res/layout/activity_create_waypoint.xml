@@ -18,7 +18,7 @@
             android:layout_gravity="center_horizontal"
             android:minWidth="240dp"
             android:minHeight="240dp"
-            android:onClick="startCamera"
+            android:onClick="getImage"
             android:background="@drawable/image_placeholder"
             android:layout_marginTop="20dp"
             android:contentDescription="@string/location_image"
