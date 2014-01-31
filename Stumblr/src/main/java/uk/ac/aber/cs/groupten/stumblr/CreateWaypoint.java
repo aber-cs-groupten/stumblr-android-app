@@ -126,6 +126,11 @@ public class CreateWaypoint extends AbstractActivity {
      */
     public void loadWaypoint(Waypoint w) {
         this.waypoint = w;
+
+        // Image from: http://colouringbook.org/art/svg/coloring-book/fotocamera-foto-camera-icon-
+        // coloring-book-colouring-sheet-coloring-book-colouring-page-youtube-facebook-
+        // linkedin-twitter-google-pinterest/
+        // (long link - sorry). Image is Creative Commons licenced.
         ImageView image = ((ImageView) findViewById(R.id.imageView));
         TextView title = ((TextView) findViewById(R.id.wptitle_box));
         TextView shortDesc = ((TextView) findViewById(R.id.wpshortdesc_box));
