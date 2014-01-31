@@ -196,7 +196,7 @@ public class CreateWaypoint extends AbstractActivity {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         Intent galleryCheckIntent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        galleryCheckIntent.setType("image/*");
+      //  galleryCheckIntent.setType("image/*");
         Log.e(TAG, "checking initial gallery intent");
 
         if (cameraIntent.resolveActivity(getPackageManager()) != null) {
