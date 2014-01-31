@@ -1,8 +1,10 @@
 package uk.ac.aber.cs.groupten.stumblr;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
@@ -183,7 +185,22 @@ public class CreateWaypoint extends AbstractActivity {
         if (cameraIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(cameraIntent, CAMERA_REQ_CODE);
         }
+        else{
+            AlertDialog a = new AlertDialog.Builder(this)
+                    .setIcon(android.R.drawable.ic_input_get)
+                    .setTitle("No Device Camera Found")
+                    .setMessage("Would you like to get the image from your gallery?")
+                    .setNegativeButton("Gallery", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            startGallery();
+                        }
+                    }
+                    ).show();
+        }
     }
+
+
 
     // http://stackoverflow.com/a/10168114
     public void startGallery() {
