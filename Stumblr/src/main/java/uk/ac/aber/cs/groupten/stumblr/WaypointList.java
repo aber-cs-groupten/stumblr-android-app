@@ -399,7 +399,6 @@ public class WaypointList extends AbstractActivity {
      */
     @Override
     public void onBackPressed() {
-        // Ignore
-        Log.i(TAG, "Back pressed in WaypointList - Ignoring...");
+        super.confirmCancel();
     }
 }

@@ -106,7 +106,7 @@ public class FinishRoute extends AbstractActivity {
                 HttpResponse response = httpclient.execute(httppost);
                 return response;
             } catch (Exception e) {
-                Log.e(TAG, "IM NOT WORKING " + e.toString()); // FIXME proper log message
+                Log.e(TAG, e.toString());
                 return null;
             }
         }
@@ -204,7 +204,6 @@ public class FinishRoute extends AbstractActivity {
         writeFile(walk.toString());
         return walk;
     }
-
     // End HTTP POST
 
     /**
@@ -212,7 +211,6 @@ public class FinishRoute extends AbstractActivity {
      * REFERENCE - http://stackoverflow.com/questions/12806709/android-how-to-tell-if-mobile-network-data-is-enabled-or-disabled-even-when
      */
     public boolean checkInternetEnabled() {
-
         boolean mobileDataEnabled = false; // Assume disabled
         Context context;
         context = getApplicationContext();
@@ -230,8 +228,8 @@ public class FinishRoute extends AbstractActivity {
 
         } catch (Exception e) {
             // if(e instanceof ClassNotFoundException || e instanceof NoSuchMethodException ||
-            //       e instanceof IllegalAccessException || e instanceof InvocationTargetException )  {
-            //Connectivity Issue Handling
+            // e instanceof IllegalAccessException || e instanceof InvocationTargetException )  {
+            // Connectivity Issue Handling
             return mobileDataEnabled;
         }
     }

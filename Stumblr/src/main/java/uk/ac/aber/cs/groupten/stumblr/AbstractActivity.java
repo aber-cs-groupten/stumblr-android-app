@@ -9,9 +9,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public abstract class AbstractActivity extends ActionBarActivity {
-
+    /**
+     * Logging tag.
+     */
     public static final String TAG = "STUMBLR";
-    public static final int CAMERA_REQ_CODE = 1337;
 
     /**
      * @param savedInstanceState saved state of the application.
