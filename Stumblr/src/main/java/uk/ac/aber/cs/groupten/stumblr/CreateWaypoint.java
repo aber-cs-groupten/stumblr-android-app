@@ -101,6 +101,19 @@ public class CreateWaypoint extends AbstractActivity {
             Log.e(TAG, "Bundle is null! Error!");
         }
 
+        // Check if camera and gallery are enabled/disabled
+        final Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        boolean cam = (cameraIntent.resolveActivity(getPackageManager()) != null);
+
+        final Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        boolean gal = (galleryIntent.resolveActivity(getPackageManager()) != null);
+
+        if ((!cam) && (! gal)) {
+            findViewById(R.id.imageView).setVisibility(View.GONE); // Disable
+            Toast.makeText(this, "No camera or gallery found on device...", Toast.LENGTH_LONG).show();
+        }
+
         // Forces keyboard to close
         // See: http://stackoverflow.com/a/2059394
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
