@@ -70,7 +70,8 @@ public class CreateWaypoint extends AbstractActivity {
 
     /**
      * Loads the activity on creation (using a bundle if one is present)
-     *
+     * Check if the device has no camera or gallery. If neither, hide imageview
+     * and display toast notifying user that neither is available.
      * @param savedInstanceState The bundle containing the saved instance state.
      */
     public void stumblrOnCreate(Bundle savedInstanceState) {
@@ -187,7 +188,8 @@ public class CreateWaypoint extends AbstractActivity {
      */
     /**
      * Obtain a photo from user and add it to current Waypoint.
-     *
+     * If no camera found, offer to use gallery. If no gallery found
+     * offer to use camera.
      * @param v The View object.
      */
     public void startCamera() {
@@ -213,6 +215,7 @@ public class CreateWaypoint extends AbstractActivity {
                     .setNeutralButton("No", null).show();
         }
         else if (galleryCheckIntent.resolveActivity(getPackageManager()) == null){
+            Log.e(TAG, "checking gallery intent");
             AlertDialog a = new AlertDialog.Builder(this)
                     .setIcon(android.R.drawable.ic_input_get)
                     .setTitle("No Gallery Found.")
