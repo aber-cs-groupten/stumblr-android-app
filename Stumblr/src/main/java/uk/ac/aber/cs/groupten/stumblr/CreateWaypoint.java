@@ -83,6 +83,8 @@ public class CreateWaypoint extends AbstractActivity {
         if(cameraCheckIntent.resolveActivity(getPackageManager()) == null &&
                 galleryCheckIntent.resolveActivity(getPackageManager()) == null){
             findViewById(R.id.imageView).setVisibility(View.GONE);
+            Toast.makeText(getBaseContext(), "No Camera or Gallery Found on Device", Toast.LENGTH_LONG).show();
+
         }
 
         // Initialise Waypoint Object.
@@ -199,6 +201,7 @@ public class CreateWaypoint extends AbstractActivity {
         }
         else if(cameraIntent.resolveActivity(getPackageManager()) == null){
             AlertDialog a = new AlertDialog.Builder(this)
+                    .setIcon(android.R.drawable.ic_input_get)
                     .setTitle("No Device Camera Found.")
                     .setMessage("Would you like to get the image from your gallery?")
                     .setNegativeButton("Yes", new DialogInterface.OnClickListener() {
@@ -211,6 +214,7 @@ public class CreateWaypoint extends AbstractActivity {
         }
         else if (galleryCheckIntent.resolveActivity(getPackageManager()) == null){
             AlertDialog a = new AlertDialog.Builder(this)
+                    .setIcon(android.R.drawable.ic_input_get)
                     .setTitle("No Gallery Found.")
                     .setMessage("Would you like to use your camera?")
                     .setNegativeButton("Yes", new DialogInterface.OnClickListener() {
