@@ -197,11 +197,13 @@ public class CreateWaypoint extends AbstractActivity {
         Intent galleryCheckIntent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         galleryCheckIntent.setType("image/*");
+        Log.e(TAG, "checking initial gallery intent");
 
         if (cameraIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(cameraIntent, CAMERA_REQ_CODE);
         }
         else if(cameraIntent.resolveActivity(getPackageManager()) == null){
+            Log.e(TAG, "checking camera intent");
             AlertDialog a = new AlertDialog.Builder(this)
                     .setIcon(android.R.drawable.ic_input_get)
                     .setTitle("No Device Camera Found.")
