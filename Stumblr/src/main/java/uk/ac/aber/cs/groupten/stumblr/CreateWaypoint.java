@@ -155,7 +155,7 @@ public class CreateWaypoint extends AbstractActivity {
             waypoint.setTitle(wpTitle);
             waypoint.setShortDesc(wpShortDesc);
 
-            //set time stamp
+            // Set timestamp
             Calendar c = Calendar.getInstance();
             waypoint.setTimestamp(c.getTimeInMillis());
 
@@ -175,20 +175,15 @@ public class CreateWaypoint extends AbstractActivity {
      */
     /**
      * Obtain a photo from user and add it to current Waypoint.
-     *
-     * @param v The View object.
      */
-    public void startCamera() {
-        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+    public void startCamera(Intent cameraIntent) {
         if (cameraIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(cameraIntent, CAMERA_REQ_CODE);
         }
     }
 
     // http://stackoverflow.com/a/10168114
-    public void startGallery() {
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+    public void startGallery(Intent galleryIntent) {
         galleryIntent.setType("image/*");
 
         if (galleryIntent.resolveActivity(getPackageManager()) != null) {
@@ -197,23 +192,46 @@ public class CreateWaypoint extends AbstractActivity {
     }
 
     public void getImage(View v) {
-        AlertDialog a = new AlertDialog.Builder(this)
-                .setIcon(android.R.drawable.ic_input_get)
-                .setTitle("Add Image")
-                .setMessage("Would you like to get the image from your gallery or camera?")
-                .setNegativeButton("Gallery", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        startGallery();
-                    }
-                })
-                .setNeutralButton("Camera", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        startCamera();
-                    }
-                })
-                .show();
+        boolean cam;
+        boolean gal;
+
+        final Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        cam = (cameraIntent.resolveActivity(getPackageManager()) != null);
+
+        final Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        gal = (galleryIntent.resolveActivity(getPackageManager()) != null);
+
+        if (cam && gal) {
+            new AlertDialog.Builder(this)
+                    .setIcon(android.R.drawable.ic_input_get)
+                    .setTitle("Add Image")
+                    .setMessage("Would you like to get the image from your gallery or camera?")
+                    .setNegativeButton("Gallery", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            startGallery(galleryIntent);
+                        }
+                    })
+                    .setNeutralButton("Camera", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            startCamera(cameraIntent);
+                        }
+                    })
+                    .show();
+        } else if (cam) {
+            startCamera(cameraIntent);
+        } else if (gal) {
+            startGallery(galleryIntent);
+        } else {
+            new AlertDialog.Builder(this)
+                    .setIcon(android.R.drawable.ic_input_get)
+                    .setTitle("Could not find gallery or camera!")
+                    .setMessage("We can't get an image because we couldn't find a gallery or camera!")
+                    .setNeutralButton("OK", null)
+                    .show();
+        }
     }
 
     /**
