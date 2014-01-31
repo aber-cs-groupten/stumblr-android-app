@@ -187,17 +187,16 @@ public class CreateWaypoint extends AbstractActivity {
         }
         else{
             AlertDialog a = new AlertDialog.Builder(this)
-                    .setIcon(android.R.drawable.ic_input_get)
-                    .setTitle("No Device Camera Found")
+                    .setTitle("No Device Camera Found.")
                     .setMessage("Would you like to get the image from your gallery?")
-                    .setNegativeButton("Gallery", new DialogInterface.OnClickListener() {
+                    .setNegativeButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             startGallery();
                         }
-                    }
-                    ).show();
-        }
+                    })
+                    .setNeutralButton("No", null).show();
+    }
     }
 
 
