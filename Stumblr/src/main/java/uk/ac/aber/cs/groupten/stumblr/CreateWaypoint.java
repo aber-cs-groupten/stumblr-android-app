@@ -194,10 +194,7 @@ public class CreateWaypoint extends AbstractActivity {
      */
     public void startCamera() {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        Intent galleryCheckIntent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-      //  galleryCheckIntent.setType("image/*");
-        Log.e(TAG, "checking initial gallery intent");
+
 
         if (cameraIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(cameraIntent, CAMERA_REQ_CODE);
@@ -216,22 +213,6 @@ public class CreateWaypoint extends AbstractActivity {
                     })
                     .setNeutralButton("No", null).show();
         }
-        else if (galleryCheckIntent.resolveActivity(getPackageManager()) == null){
-            Log.e(TAG, "checking gallery intent");
-            AlertDialog a = new AlertDialog.Builder(this)
-                    .setIcon(android.R.drawable.ic_input_get)
-                    .setTitle("No Gallery Found.")
-                    .setMessage("Would you like to use your camera?")
-                    .setNegativeButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        startCamera();
-                        }
-                    })
-                    .setNeutralButton("No", null)
-                    .show();
-        }
-
     }
 
 
