@@ -1,8 +1,12 @@
 package uk.ac.aber.cs.groupten.stumblr;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -12,6 +16,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+import java.io.IOError;
+import java.io.IOException;
 import java.util.Calendar;
 
 import uk.ac.aber.cs.groupten.stumblr.data.StumblrData;
@@ -20,17 +27,27 @@ import uk.ac.aber.cs.groupten.stumblr.data.Waypoint;
 public class CreateWaypoint extends AbstractActivity {
 
     /**
-     * bundle of waypoint data
+     * Request code for camera intent
+     */
+    public static final int CAMERA_REQ_CODE = 1337;
+
+    /**
+     * Request code for gallery intent
+     */
+    public static final int GALLERY_REQ_CODE = 7007;
+
+    /**
+     * Bundle string for identifying Waypoint data
      */
     public static final String WAYPOINT_BUNDLE = "waypoint";
 
     /**
-     * Bundle of location data
+     * Bundle string for identifying location data
      */
     public static final String LOCATION_BUNDLE = "loc";
 
     /**
-     * Bundle of return data
+     * Bundle string for identifying return data
      */
     public static final String RETURN_BUNDLE = "return_data";
 
@@ -161,11 +178,42 @@ public class CreateWaypoint extends AbstractActivity {
      *
      * @param v The View object.
      */
-    public void startCamera(View v) {
+    public void startCamera() {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (cameraIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(cameraIntent, CAMERA_REQ_CODE);
         }
+    }
+
+    // http://stackoverflow.com/a/10168114
+    public void startGallery() {
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        galleryIntent.setType("image/*");
+
+        if (galleryIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(galleryIntent, GALLERY_REQ_CODE);
+        }
+    }
+
+    public void getImage(View v) {
+        AlertDialog a = new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_input_get)
+                .setTitle("Add Image")
+                .setMessage("Would you like to get the image from your gallery or camera?")
+                .setNegativeButton("Gallery", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startGallery();
+                    }
+                })
+                .setNeutralButton("Camera", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startCamera();
+                    }
+                })
+                .show();
     }
 
     /**
@@ -181,26 +229,52 @@ public class CreateWaypoint extends AbstractActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK && requestCode == CAMERA_REQ_CODE) {
+        if ((resultCode == RESULT_OK)) {
             Bundle extras = data.getExtras();
-            Bitmap b = (Bitmap) extras.get("data"); // This may be null - so test for null below
 
-            if (b != null) {
-                // Set the Waypoint image.
-                waypoint.setImage(b);
+            if (requestCode == CAMERA_REQ_CODE) {
+                Bitmap b = (Bitmap) extras.get("data");
+                setImage(b);
 
-                // Update the ImageView in the UI
-                findViewById(R.id.imageView).setBackgroundResource(0);
-                ((ImageView) findViewById(R.id.imageView)).setImageBitmap(b);
+            // http://stackoverflow.com/a/5086706
+            } else if (requestCode == GALLERY_REQ_CODE) {
+                Uri imgUri = data.getData();
 
-                // Log message containing dimensions of image
-                String imgDimensions = "Image captured. Height: " +
-                        String.valueOf(b.getHeight()) +
-                        " Width: " + String.valueOf(b.getWidth());
+                if (imgUri != null) {
+                    // http://stackoverflow.com/a/4717740
+                    try {
+                        double default_restrict = 160.0d;
 
-                Log.v(TAG, imgDimensions);
+                        Bitmap b = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imgUri);
+
+                        int newHeight = (int) default_restrict;
+
+                        double scaledWidth = ((default_restrict /
+                                                (double) b.getHeight()) *
+                                                (double) b.getWidth());
+
+                        int newWidth = (int) Math.floor(scaledWidth); // Convert to int
+
+                        b = Bitmap.createScaledBitmap(b, newWidth, newHeight, false);
+
+                        setImage(b);
+                    } catch (FileNotFoundException fnfe) {
+                        Log.e(TAG, fnfe.getMessage());
+                    } catch (IOException ioe) {
+                        Log.e(TAG, ioe.getMessage());
+                    }
+                }
             }
         }
+    }
+
+    public void setImage(Bitmap b) {
+        // Set the Waypoint image.
+        waypoint.setImage(b);
+
+        // Update the ImageView in the UI
+        findViewById(R.id.imageView).setBackgroundResource(0);
+        ((ImageView) findViewById(R.id.imageView)).setImageBitmap(b);
     }
 
     @Override
